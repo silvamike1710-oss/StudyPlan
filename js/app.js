@@ -362,9 +362,22 @@ const subjectList = document.getElementById("subjectList");
 const studySearch = document.getElementById("studySearch");
 const searchResults = document.getElementById("searchResults");
 const mainContent = document.getElementById("mainContent");
+const subjectPicker = document.querySelector(".subject-picker");
+const compactLayout = window.matchMedia("(max-width: 900px)");
 const statusText = document.getElementById("statusText");
 const subjectDialog = document.getElementById("subjectDialog");
 const partDialog = document.getElementById("partDialog");
+
+function syncSubjectPicker(event) {
+  subjectPicker.open = !event.matches;
+}
+
+function closeMobileSubjectPicker() {
+  if (compactLayout.matches) subjectPicker.open = false;
+}
+
+syncSubjectPicker(compactLayout);
+compactLayout.addEventListener("change", syncSubjectPicker);
 
 function subjectKey(name) {
   const normalized = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
@@ -694,6 +707,8 @@ mainContent.addEventListener("input", event => {
 });
 
 function renderSubjects() {
+  const selectedSubjectLabel = document.getElementById("selectedSubjectLabel");
+  if (selectedSubjectLabel) selectedSubjectLabel.textContent = activeSubject()?.name ?? "Selecione uma matéria";
   const renderSubject = subject => {
     const done = subject.completed.length;
     const total = subject.parts.length;
@@ -900,6 +915,7 @@ searchResults.addEventListener("click", event => {
   studySearch.value = "";
   renderSearchResults();
   render();
+  closeMobileSubjectPicker();
   statusText.textContent = `Resultado aberto: ${subject.name}.`;
 });
 
@@ -907,6 +923,7 @@ subjectList.addEventListener("click", event => {
   const button = event.target.closest("[data-subject]");
   if (!button) return;
   activeSubjectId = button.dataset.subject;
+  closeMobileSubjectPicker();
   if (activeView === "quizzes" || activeView === "exams") {
     if (activeSubjectId === "essay") {
       practiceSession = null;

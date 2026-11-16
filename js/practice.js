@@ -220,7 +220,7 @@ function renderExamChart(chart) {
       ${grid}<line x1="66" y1="${chartBottom}" x2="570" y2="${chartBottom}" stroke="#333"/>
       ${bars}<text x="12" y="18" font-size="10" fill="#333">${escapeHtml(chart.unit)}</text>
     </svg>
-    <table><caption class="sr-only">${escapeHtml(chart.title)}: dados em tabela</caption><tbody>${rows}</tbody></table>
+    <div class="table-scroll"><table><caption class="sr-only">${escapeHtml(chart.title)}: dados em tabela</caption><tbody>${rows}</tbody></table></div>
     <figcaption>${escapeHtml(chart.source ?? "Dados hipotéticos, elaborados para fins didáticos; não representam estatísticas oficiais.")}</figcaption>
   </figure>`;
 }
@@ -366,11 +366,11 @@ function renderAttemptResults(session) {
     const percentage = total ? Math.round(stats.correct * 100 / total) : 0;
     return `<tr><th scope="row">${escapeHtml(topic)}</th><td>${stats.correct}</td><td>${stats.wrong}</td><td>${stats.blank}</td><td>${percentage}%</td></tr>`;
   }).join("");
-  return `<table class="exam-result-table">
+  return `<div class="table-scroll"><table class="exam-result-table">
     <caption class="sr-only">Desempenho por matéria e tópico</caption>
     <thead><tr><th>Matéria · tópico</th><th>Acertos</th><th>Erros</th><th>Em branco</th><th>Acerto</th></tr></thead>
     <tbody>${rows}</tbody>
-  </table><p>O resultado mostra acertos e tópicos para revisar. Não é uma nota ENEM: a TRI não pode ser estimada por este simulado.</p>`;
+  </table></div><p>O resultado mostra acertos e tópicos para revisar. Não é uma nota ENEM: a TRI não pode ser estimada por este simulado.</p>`;
 }
 
 function renderPracticeSession() {
@@ -570,9 +570,9 @@ function renderReviewDashboard() {
       <div class="review-card"><strong>Questões no caderno de erros</strong>${wrongCount}</div>
     </div>
     <button class="win-button primary" type="button" data-action="start-errors"${wrongCount ? "" : " disabled"}>Revisar questões erradas</button>
-    ${weeklyRows ? `<h2>Evolução semanal</h2><table class="exam-result-table"><thead><tr><th>Período</th><th>Acertos</th><th>Percentual</th></tr></thead><tbody>${weeklyRows}</tbody></table>` : ""}
+    ${weeklyRows ? `<h2>Evolução semanal</h2><div class="table-scroll"><table class="exam-result-table"><thead><tr><th>Período</th><th>Acertos</th><th>Percentual</th></tr></thead><tbody>${weeklyRows}</tbody></table></div>` : ""}
     <h2>Histórico recente</h2>
-    ${attempts.length ? `<table class="exam-result-table"><thead><tr><th>Data</th><th>Prática</th><th>Resultado</th></tr></thead><tbody>${rows}</tbody></table>` : `<p>Ainda não há práticas concluídas. Faça um quiz ou prova para começar seu histórico.</p>`}
+    ${attempts.length ? `<div class="table-scroll"><table class="exam-result-table"><thead><tr><th>Data</th><th>Prática</th><th>Resultado</th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p>Ainda não há práticas concluídas. Faça um quiz ou prova para começar seu histórico.</p>`}
     <h2>Erros recentes</h2>
     ${wrongCount ? attempts.flatMap(attempt => attempt.wrongQuestions ?? []).slice(-10).reverse().map(({ question, selectedAnswer }) =>
       `<article class="practice-error"><p><strong>${escapeHtml(question.subjectName ?? question.subjectId)} · ${escapeHtml(question.topic ?? question.partTitle)}</strong></p>

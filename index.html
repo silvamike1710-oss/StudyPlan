@@ -34,14 +34,20 @@
 
       <div class="workspace">
         <aside class="sidebar">
-          <h2 class="section-label">Meu plano de estudos</h2>
-          <div class="search-box">
-            <label for="studySearch">Pesquisar matéria, assunto ou parte</label>
-            <input id="studySearch" type="search" autocomplete="off" placeholder="Ex.: porcentagem, Física..." aria-controls="searchResults">
-          </div>
-          <div class="search-results" id="searchResults" role="listbox" aria-label="Resultados da pesquisa"></div>
-          <div class="subject-list" id="subjectList" aria-label="Matérias"></div>
-          <button class="win-button sidebar-add" id="addSubjectSide">＋ Nova matéria</button>
+          <details class="subject-picker" open>
+            <summary>
+              <span>Matérias e pesquisa</span>
+              <strong id="selectedSubjectLabel"></strong>
+            </summary>
+            <h2 class="section-label">Meu plano de estudos</h2>
+            <div class="search-box">
+              <label for="studySearch">Pesquisar matéria, assunto ou parte</label>
+              <input id="studySearch" type="search" autocomplete="off" placeholder="Ex.: porcentagem, Física..." aria-controls="searchResults">
+            </div>
+            <div class="search-results" id="searchResults" role="listbox" aria-label="Resultados da pesquisa"></div>
+            <div class="subject-list" id="subjectList" aria-label="Matérias"></div>
+            <button class="win-button sidebar-add" id="addSubjectSide">＋ Nova matéria</button>
+          </details>
           <hr class="side-rule">
           <div class="study-tip">
             <strong>✦ Dica de estudo</strong>
