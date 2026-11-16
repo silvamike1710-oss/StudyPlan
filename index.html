@@ -90,7 +90,35 @@
     .practice-question { margin: 12px 0; padding: 12px; background: #eee; border: 1px solid #999; }
     .practice-question h3 { margin: 0 0 9px; font-size: 13px; }
     .practice-question .question-source { margin: -4px 0 8px; color: #555; font-size: 11px; }
+    .exam-stimulus { margin: 10px 0 14px; padding: 13px 15px; background: #fff; border: 1px solid #888; line-height: 1.7; }
+    .exam-stimulus h4 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    .exam-stimulus p { margin: 0 0 9px; }
+    .exam-stimulus p:last-child { margin-bottom: 0; }
+    .exam-graphic { margin: 12px 0; padding: 11px; background: #fff; border: 1px solid #888; }
+    .exam-graphic h4 { margin: 0 0 4px; font-size: 13px; }
+    .exam-graphic p { margin: 4px 0 8px; color: #444; font-size: 11px; }
+    .exam-graphic svg { display: block; width: 100%; max-height: 340px; }
+    .exam-graphic table { width: 100%; margin-top: 8px; border-collapse: collapse; font-size: 11px; }
+    .exam-graphic th, .exam-graphic td { padding: 4px 6px; border: 1px solid #aaa; text-align: left; }
+    .exam-graphic figcaption { margin-top: 7px; color: #555; font-size: 10px; }
+    .exam-instructions { margin: 0 0 14px; padding: 10px; background: #e7f0fa; border: 1px solid #71869b; line-height: 1.5; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
     .practice-result { margin: 14px 0; padding: 12px; background: #e4efdF; border: 1px solid #68815e; font-weight: bold; }
+    .home-content { max-width: 860px; margin: 0 auto; }
+    .home-welcome { margin: 7px 0 18px; padding: 20px; color: #fff; background: linear-gradient(120deg, #000080, #1084d0); border: 2px solid; border-color: var(--line-light) var(--line-deep) var(--line-deep) var(--line-light); }
+    .home-welcome h1 { margin: 0 0 8px; font-size: 25px; font-weight: normal; }
+    .home-welcome p { max-width: 600px; margin: 0; line-height: 1.6; }
+    .home-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+    .home-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .home-card { padding: 13px; background: #e5e5e5; border: 1px solid #888; line-height: 1.5; }
+    .home-card h2 { margin: 0 0 6px; font-size: 14px; }
+    .home-card p { margin: 0; font-size: 12px; }
+    .tip-carousel { padding: 14px; background: #ffffdf; border: 1px solid #aaa98b; }
+    .tip-carousel-heading { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .tip-carousel h2 { margin: 0; font-size: 14px; }
+    .tip-carousel p { min-height: 44px; margin: 12px 0; line-height: 1.6; }
+    .tip-controls { display: flex; align-items: center; gap: 7px; }
+    .tip-count { min-width: 48px; color: #555; text-align: center; font-size: 11px; }
     .subject-button {
       display: flex; align-items: center; gap: 9px; width: 100%; padding: 8px 7px;
       text-align: left; background: transparent; border: 1px solid transparent;
@@ -222,6 +250,7 @@
         </div>
       </header>
       <nav class="menu-bar" aria-label="Navegação principal">
+        <button class="menu-button active" type="button" data-view="home">Home</button>
         <button class="menu-button active" type="button" data-view="study">Estudar</button>
         <button class="menu-button" type="button" data-view="quizzes">Quizzes</button>
         <button class="menu-button" type="button" data-view="exams">Provas</button>
@@ -3304,8 +3333,10 @@
     let activePartIndex = 0;
     let activeDifficultyFilter = "all";
     let activeCategoryFilter = null;
-    let activeView = "study";
+    let activeView = "home";
     let practiceSession = null;
+    let activeTipIndex = Math.floor(Math.random() * 8);
+    let tipRotationTimer = null;
 
     const subjectList = document.getElementById("subjectList");
     const studySearch = document.getElementById("studySearch");
@@ -3508,8 +3539,68 @@
         button.classList.toggle("active", button.dataset.view === activeView);
         button.setAttribute("aria-current", button.dataset.view === activeView ? "page" : "false");
       });
-      if (activeView === "study") renderLesson();
+      if (tipRotationTimer !== null) {
+        clearInterval(tipRotationTimer);
+        tipRotationTimer = null;
+      }
+      if (activeView === "home") renderHome();
+      else if (activeView === "study") renderLesson();
       else renderPractice();
+    }
+
+    const studyTips = [
+      { title: "Recupere antes de revisar", text: "Depois de estudar uma aula, feche a teoria e tente explicar os conceitos com suas próprias palavras. Em seguida, use o quiz para descobrir o que precisa revisar." },
+      { title: "Estude em blocos curtos", text: "Escolha uma parte pequena, estude com foco e faça uma pausa breve. Uma meta clara ajuda a começar e a acompanhar o progresso." },
+      { title: "Errou? Use o erro como pista", text: "Ao errar uma questão, identifique por que a alternativa correta faz sentido e qual ideia levou ao erro. Volte à teoria e tente novamente mais tarde." },
+      { title: "Alterne teoria e prática", text: "Intercale leitura, resolução de questões e revisão. Praticar sem consultar a aula ajuda a perceber o que você realmente lembra." },
+      { title: "Revise em dias diferentes", text: "Retome o conteúdo depois de um intervalo e novamente alguns dias depois. Revisões espaçadas ajudam a manter o conhecimento por mais tempo." },
+      { title: "Matemática: mostre o caminho", text: "Anote dados, fórmula, substituição e unidades. Assim fica mais fácil localizar erros de cálculo e explicar cada etapa." },
+      { title: "Faça leitura ativa", text: "Em textos, observe título, autoria, gênero e contexto. Depois procure evidências que sustentem sua interpretação." },
+      { title: "Planeje a redação", text: "Antes de escrever, delimite o tema, formule uma tese e organize os argumentos. Reserve um tempo no fim para revisar." }
+    ];
+
+    function renderHome() {
+      const tip = studyTips[activeTipIndex];
+      mainContent.innerHTML = `
+        <div class="home-content">
+          <div class="home-welcome">
+            <h1>Bem-vindo ao Plano de Estudos 95!</h1>
+            <p>Seu espaço de preparação para o ENEM e vestibulares: estude por matéria, avance por níveis de dificuldade e pratique no seu ritmo.</p>
+            <div class="home-actions">
+              <button class="win-button primary" type="button" data-view="study">📚 Começar a estudar</button>
+              <button class="win-button" type="button" data-view="quizzes">✏️ Fazer um quiz</button>
+              <button class="win-button" type="button" data-view="exams">📝 Praticar prova</button>
+            </div>
+          </div>
+          <div class="home-cards">
+            <article class="home-card"><h2>📖 Teoria por partes</h2><p>Encontre explicações, exemplos resolvidos e desafios organizados por matéria, área e dificuldade.</p></article>
+            <article class="home-card"><h2>🎯 Quizzes de revisão</h2><p>Escolha uma matéria ou misture conteúdos para testar o que aprendeu e conferir as respostas.</p></article>
+            <article class="home-card"><h2>🧠 Provas para praticar</h2><p>Monte uma prática mais longa com questões do plano e acompanhe seu resultado ao final.</p></article>
+            <article class="home-card"><h2>💾 Seu progresso</h2><p>As partes concluídas e suas matérias personalizadas ficam salvas neste navegador.</p></article>
+          </div>
+          <section class="tip-carousel" aria-label="Dicas de estudo">
+            <div class="tip-carousel-heading">
+              <h2>💡 ${escapeHtml(tip.title)}</h2>
+              <div class="tip-controls">
+                <button class="win-button" type="button" data-tip-step="-1" aria-label="Dica anterior">◀</button>
+                <span class="tip-count">${activeTipIndex + 1} / ${studyTips.length}</span>
+                <button class="win-button" type="button" data-tip-step="1" aria-label="Próxima dica">▶</button>
+              </div>
+            </div>
+            <p id="homeTipText" aria-live="polite">${escapeHtml(tip.text)}</p>
+          </section>
+          <p class="toolbar-note" style="margin-top:12px">O conteúdo oferece uma base ampla; confira também o edital e as leituras obrigatórias da instituição onde você pretende prestar vestibular.</p>
+        </div>`;
+      tipRotationTimer = setInterval(() => {
+        if (activeView !== "home") return;
+        activeTipIndex = (activeTipIndex + 1) % studyTips.length;
+        const title = mainContent.querySelector(".tip-carousel h2");
+        const text = mainContent.querySelector("#homeTipText");
+        const count = mainContent.querySelector(".tip-count");
+        if (title) title.textContent = `💡 ${studyTips[activeTipIndex].title}`;
+        if (text) text.textContent = studyTips[activeTipIndex].text;
+        if (count) count.textContent = `${activeTipIndex + 1} / ${studyTips.length}`;
+      }, 10000);
     }
 
     function renderPractice() {
@@ -3549,7 +3640,7 @@
             <p class="practice-summary" id="practiceAvailability"></p>
             <button class="win-button primary" type="button" data-action="start-practice">▶ ${isExam ? "Iniciar prova" : "Iniciar quiz"}</button>
           </fieldset>
-          <p> ${isExam ? `A prova terá até ${questionCount} questões.` : `O quiz terá até ${questionCount} questões.`} Se o filtro escolhido tiver menos questões, serão usadas todas as disponíveis.</p>
+          <p>${isExam ? `A prova terá até ${questionCount} questões, incluindo uma questão de interpretação de gráfico.` : `O quiz terá até ${questionCount} questões.`} Se o filtro escolhido tiver menos questões, serão usadas todas as questões de aula disponíveis.</p>
         </div>`;
       updatePracticeAvailability();
     }
@@ -3567,11 +3658,123 @@
             subjectId: subject.id,
             subjectName: subject.name,
             partTitle: part.title,
+            partIntro: part.intro,
+            partPoints: part.points,
             partIndex,
             questionIndex
           }));
         });
       });
+    }
+
+    const examChartData = {
+      languages: {
+        title: "Formatos de leitura em uma atividade escolar",
+        description: "Participantes podiam marcar mais de um formato; valores em percentual.",
+        labels: ["Digital", "Impresso", "Ambos", "Outros"],
+        values: [48, 26, 20, 6],
+        unit: "%",
+        stimulus: "Uma escola realizou uma atividade didática hipotética para conhecer os formatos de leitura usados por seus participantes. A tabela resume as respostas. Como era permitido marcar mais de uma opção, os percentuais não precisam somar 100%.",
+        text: "De acordo com os dados, qual formato foi indicado pelo maior percentual de participantes?",
+        choices: ["Digital", "Impresso", "Ambos", "Outros"],
+        answer: 0
+      },
+      math: {
+        title: "Custo total conforme a quantidade de itens",
+        description: "Simulação de uma compra com preço unitário constante.",
+        labels: ["0 itens", "5 itens", "10 itens", "15 itens"],
+        values: [0, 12.5, 25, 37.5],
+        unit: "R$",
+        stimulus: "Uma papelaria simulou o custo de uma compra de determinado produto, sem taxas adicionais e mantendo o mesmo preço por unidade. Os valores do gráfico são hipotéticos e mostram como o custo total varia com a quantidade.",
+        text: "Com base na relação apresentada, qual é o preço de cada unidade?",
+        choices: ["R$ 1,50", "R$ 2,00", "R$ 2,50", "R$ 5,00"],
+        answer: 2
+      },
+      nature: {
+        title: "Altura de mudas em diferentes períodos",
+        description: "Experimento hipotético; crescimento medido em centímetros.",
+        labels: ["0 h", "2 h", "4 h", "6 h"],
+        values: [2, 6, 9, 10],
+        unit: "cm",
+        stimulus: "Em um experimento didático hipotético, mudas receberam condições controladas de iluminação. O gráfico indica a altura observada em cada medição; para comparar o crescimento, observe a diferença entre as alturas de medições consecutivas.",
+        text: "Em qual intervalo ocorreu o maior aumento de altura?",
+        choices: ["Entre 0 h e 2 h", "Entre 2 h e 4 h", "Entre 4 h e 6 h", "O aumento foi igual em todos os intervalos"],
+        answer: 0
+      },
+      humanities: {
+        title: "Tempo médio de deslocamento em uma simulação",
+        description: "Dados hipotéticos de duração, em minutos.",
+        labels: ["A pé", "Bicicleta", "Ônibus", "Carro"],
+        values: [30, 20, 45, 35],
+        unit: "min",
+        stimulus: "Um levantamento hipotético comparou o tempo médio de deslocamento de um grupo em diferentes meios de transporte. As durações foram registradas em minutos para um mesmo trajeto, apenas para fins de interpretação dos dados.",
+        text: "Qual meio de transporte apresentou o menor tempo médio no levantamento?",
+        choices: ["A pé", "Bicicleta", "Ônibus", "Carro"],
+        answer: 1
+      },
+      essay: {
+        title: "Fontes consultadas em uma atividade de redação",
+        description: "Respostas hipotéticas; cada participante podia indicar uma fonte.",
+        labels: ["Livros", "Notícias", "Dados", "Entrevistas"],
+        values: [30, 25, 28, 17],
+        unit: "%",
+        stimulus: "Em uma atividade hipotética de preparação para redação, participantes indicaram uma fonte que costumam consultar para construir repertório. Os percentuais apresentados foram criados para este exercício e não representam uma pesquisa real.",
+        text: "Qual fonte foi indicada com maior frequência?",
+        choices: ["Livros", "Notícias", "Dados", "Entrevistas"],
+        answer: 0
+      }
+    };
+
+    function getExamChart(subjectId) {
+      const area = examKnowledgeAreas.find(item => item.subjectIds.includes(subjectId));
+      return examChartData[area?.id] ?? examChartData.humanities;
+    }
+
+    function renderExamChart(chart) {
+      const max = Math.max(...chart.values);
+      const axisMax = Math.ceil(max / 10) * 10 || 10;
+      const chartTop = 30;
+      const chartBottom = 230;
+      const chartHeight = chartBottom - chartTop;
+      const barWidth = 56;
+      const positions = [126, 250, 374, 498];
+      const grid = Array.from({ length: 5 }, (_, index) => {
+        const value = axisMax - axisMax * index / 4;
+        const y = chartTop + chartHeight * index / 4;
+        return `<line x1="66" y1="${y}" x2="570" y2="${y}" stroke="#bbb" stroke-dasharray="3 3"/>
+          <text x="58" y="${y + 4}" text-anchor="end" font-size="10" fill="#333">${Number.isInteger(value) ? value : value.toFixed(1)}</text>`;
+      }).join("");
+      const bars = chart.values.map((value, index) => {
+        const height = chartHeight * value / axisMax;
+        const x = positions[index] - barWidth / 2;
+        const y = chartBottom - height;
+        return `<rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="#316ac5" stroke="#173d78"/>
+          <text x="${positions[index]}" y="${Math.max(y - 6, 15)}" text-anchor="middle" font-size="11" fill="#222">${value}</text>
+          <text x="${positions[index]}" y="250" text-anchor="middle" font-size="10" fill="#222">${escapeHtml(chart.labels[index])}</text>`;
+      }).join("");
+      const rows = chart.labels.map((label, index) =>
+        `<tr><th scope="row">${escapeHtml(label)}</th><td>${chart.values[index]} ${escapeHtml(chart.unit)}</td></tr>`
+      ).join("");
+      return `<figure class="exam-graphic">
+        <h4>${escapeHtml(chart.title)}</h4>
+        <p>${escapeHtml(chart.description)}</p>
+        <svg viewBox="0 0 620 270" role="img" aria-label="${escapeHtml(`${chart.title}: ${chart.labels.map((label, index) => `${label}, ${chart.values[index]} ${chart.unit}`).join("; ")}`)}">
+          ${grid}<line x1="66" y1="${chartBottom}" x2="570" y2="${chartBottom}" stroke="#333"/>
+          ${bars}<text x="12" y="18" font-size="10" fill="#333">${escapeHtml(chart.unit)}</text>
+        </svg>
+        <table><caption class="sr-only">${escapeHtml(chart.title)}: dados em tabela</caption><tbody>${rows}</tbody></table>
+        <figcaption>Dados hipotéticos, elaborados para fins didáticos; não representam estatísticas oficiais.</figcaption>
+      </figure>`;
+    }
+
+    function renderExamStimulus(question) {
+      const points = Array.isArray(question.partPoints) ? question.partPoints.slice(0, 5) : [];
+      const text = points.map(([title, description]) =>
+        `<p><strong>${escapeHtml(title)}.</strong> ${escapeHtml(description)}</p>`
+      ).join("");
+      return `<div class="exam-stimulus"><h4>Texto-base · síntese didática</h4>
+        <p>${escapeHtml(question.partIntro || "Leia o contexto e relacione as informações apresentadas ao conteúdo estudado.")}</p>
+        ${text}</div>`;
     }
 
     function updatePracticeAvailability() {
@@ -3580,7 +3783,7 @@
       const count = getPracticeQuestionPool().length;
       const requested = activeView === "exams" ? 20 : 10;
       summary.textContent = count
-        ? `${count} questões disponíveis. ${Math.min(requested, count)} serão selecionadas para esta prática.`
+        ? `${count} questões de aula disponíveis. ${activeView === "exams" ? `A prova terá ${Math.min(requested - 1, count) + 1} questões, incluindo uma questão de interpretação de gráfico` : `${Math.min(requested, count)} serão selecionadas para esta prática`}.`
         : "Não há questões para esta seleção. Escolha outra matéria ou dificuldade.";
       const startButton = mainContent.querySelector('[data-action="start-practice"]');
       if (startButton) startButton.disabled = count === 0;
@@ -3595,11 +3798,13 @@
         <div class="crumb"><span>Plano de Estudos 95</span><span>›</span><span class="crumb-current">${title}</span></div>
         <div class="lesson-heading"><div><h1>${title}</h1><p>${escapeHtml(session.label)}</p></div></div>
         ${checked ? `<div class="practice-result" role="status">Resultado: ${session.score} de ${session.questions.length} (${Math.round(session.score * 100 / session.questions.length)}%).</div>` : `<p class="practice-summary">${session.questions.length} questões. Responda todas e então confira seu resultado.</p>`}
+        ${isExam ? `<p class="exam-instructions">Leia os textos-base e, quando houver, o gráfico antes de responder. Os dados ilustrativos estão identificados e não são estatísticas oficiais.</p>` : ""}
         <div class="practice-questions">
           ${session.questions.map((question, index) => `
             <fieldset class="practice-question" data-practice-question="${index}">
               <legend>Questão ${index + 1}</legend>
               <p class="question-source">${escapeHtml(question.subjectName)} · ${escapeHtml(question.partTitle)}</p>
+              ${isExam && question.examChart ? `<div class="exam-stimulus"><h4>Texto-base</h4><p>${escapeHtml(question.examChart.stimulus)}</p></div>${renderExamChart(question.examChart)}` : isExam ? renderExamStimulus(question) : ""}
               <h3>${escapeHtml(question.text)}</h3>
               <div class="answers">${question.choices.map((choice, choiceIndex) => {
                 const selected = session.answers[index] === choiceIndex;
@@ -3623,16 +3828,28 @@
     function startPractice() {
       const pool = getPracticeQuestionPool();
       const isExam = activeView === "exams";
-      const count = Math.min(isExam ? 20 : 10, pool.length);
-      if (!count) {
+      const questionCount = Math.min(isExam ? 19 : 10, pool.length);
+      if (!questionCount) {
         updatePracticeAvailability();
         return;
       }
       const shuffled = pool
         .map(question => ({ question, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
-        .slice(0, count)
+        .slice(0, questionCount)
         .map(({ question }) => question);
+      if (isExam) {
+        const chart = getExamChart(shuffled[0].subjectId);
+        shuffled.push({
+          subjectId: shuffled[0].subjectId,
+          subjectName: shuffled[0].subjectName,
+          partTitle: "Leitura e interpretação de dados",
+          text: chart.text,
+          choices: chart.choices,
+          answer: chart.answer,
+          examChart: chart
+        });
+      }
       const selectedSubject = mainContent.querySelector("#practiceSubject").value;
       const subjectName = selectedSubject === "all"
         ? "Todas as matérias"
@@ -3670,9 +3887,17 @@
       if (!button) return;
       activeView = button.dataset.view;
       render();
-      statusText.textContent = activeView === "study"
-        ? "Plano de estudos."
-        : activeView === "quizzes" ? "Área de quizzes." : "Área de provas.";
+      statusText.textContent = activeView === "home"
+        ? "Página inicial."
+        : activeView === "study" ? "Plano de estudos."
+          : activeView === "quizzes" ? "Área de quizzes." : "Área de provas.";
+    });
+
+    mainContent.addEventListener("click", event => {
+      const step = event.target.closest("[data-tip-step]");
+      if (!step || activeView !== "home") return;
+      activeTipIndex = (activeTipIndex + Number(step.dataset.tipStep) + studyTips.length) % studyTips.length;
+      renderHome();
     });
 
     mainContent.addEventListener("change", event => {
@@ -3729,10 +3954,16 @@
         return;
       }
       const categoryOf = item => item.category ?? "Outros";
-      const categories = [...new Set(subject.parts.map(categoryOf))];
       const difficultyOf = (item, index) => item.difficulty ?? difficultyForIndex(index, subject.parts.length);
       const difficultyMatches = (item, index) =>
         activeDifficultyFilter === "all" || difficultyOf(item, index) === activeDifficultyFilter;
+      const categories = [...new Set(subject.parts
+        .map((item, index) => ({ item, index }))
+        .filter(({ item, index }) => difficultyMatches(item, index))
+        .map(({ item }) => categoryOf(item)))];
+      if (activeCategoryFilter !== null && !categories.includes(activeCategoryFilter)) {
+        activeCategoryFilter = null;
+      }
       const visibleParts = subject.parts
         .map((item, index) => ({ item, index }))
         .filter(({ item, index }) =>
@@ -3914,6 +4145,12 @@
     });
 
     mainContent.addEventListener("click", event => {
+      const viewButton = event.target.closest("[data-view]");
+      if (viewButton) {
+        activeView = viewButton.dataset.view;
+        render();
+        return;
+      }
       const action = event.target.closest("[data-action]")?.dataset.action;
       if (action === "start-practice") {
         startPractice();
@@ -3971,7 +4208,6 @@
       const partTab = event.target.closest("[data-part]");
       if (partTab) {
         activePartIndex = Number(partTab.dataset.part);
-        activeCategoryFilter = activeSubject().parts[activePartIndex]?.category ?? null;
         renderLesson();
         return;
       }
