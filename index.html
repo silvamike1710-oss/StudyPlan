@@ -53,8 +53,10 @@
       border-color: var(--line-light) var(--line-deep) var(--line-deep) var(--line-light);
       font-weight: bold;
     }
-    .menu-bar { display: flex; gap: 22px; padding: 8px 11px; border-bottom: 1px solid var(--line-dark); }
-    .menu-bar span:first-letter { text-decoration: underline; }
+    .menu-bar { display: flex; flex-wrap: wrap; gap: 4px; padding: 5px 8px; border-bottom: 1px solid var(--line-dark); }
+    .menu-button { padding: 5px 9px; background: transparent; border: 1px solid transparent; font-size: 12px; }
+    .menu-button:hover { background: #d6d6d6; border-color: #999; }
+    .menu-button.active { background: #fff; border: 1px dotted #222; font-weight: bold; }
     .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 13px; border-bottom: 1px solid var(--line-dark); }
     .toolbar-note { color: #505050; font-size: 12px; }
     .win-button {
@@ -78,6 +80,15 @@
     .search-result { padding: 7px; text-align: left; background: #fff; border: 1px solid #888; font-size: 11px; line-height: 1.4; }
     .search-result:hover, .search-result:focus { background: #dce8f5; }
     .search-result small { display: block; color: #555; }
+    .practice-setup { max-width: 760px; margin: 18px auto; }
+    .practice-setup .group-box { margin-bottom: 14px; }
+    .practice-setup .form-row { margin-bottom: 14px; }
+    .practice-setup select { width: 100%; padding: 8px; background: #fff; border: 2px solid; border-color: var(--line-dark) var(--line-light) var(--line-light) var(--line-dark); }
+    .practice-summary { margin: 0 0 14px; padding: 10px; background: #ffffdf; border: 1px solid #aaa98b; line-height: 1.5; }
+    .practice-question { margin: 12px 0; padding: 12px; background: #eee; border: 1px solid #999; }
+    .practice-question h3 { margin: 0 0 9px; font-size: 13px; }
+    .practice-question .question-source { margin: -4px 0 8px; color: #555; font-size: 11px; }
+    .practice-result { margin: 14px 0; padding: 12px; background: #e4efdF; border: 1px solid #68815e; font-weight: bold; }
     .subject-button {
       display: flex; align-items: center; gap: 9px; width: 100%; padding: 8px 7px;
       text-align: left; background: transparent; border: 1px solid transparent;
@@ -208,8 +219,10 @@
           <button class="title-control" tabindex="-1">×</button>
         </div>
       </header>
-      <nav class="menu-bar" aria-label="Application menu">
-        <span>Arquivo</span><span>Estudar</span><span>Exibir</span><span>Ajuda</span>
+      <nav class="menu-bar" aria-label="Navegação principal">
+        <button class="menu-button active" type="button" data-view="study">Estudar</button>
+        <button class="menu-button" type="button" data-view="quizzes">Quizzes</button>
+        <button class="menu-button" type="button" data-view="exams">Provas</button>
       </nav>
       <div class="toolbar">
         <span class="toolbar-note">Seu cantinho para aprender um pouquinho de cada vez.</span>
@@ -2778,6 +2791,8 @@
     let activePartIndex = 0;
     let activeDifficultyFilter = "all";
     let activeCategoryFilter = null;
+    let activeView = "study";
+    let practiceSession = null;
 
     const subjectList = document.getElementById("subjectList");
     const studySearch = document.getElementById("studySearch");
@@ -2974,8 +2989,187 @@
 
     function render() {
       renderSubjects();
-      renderLesson();
+      document.querySelectorAll("[data-view]").forEach(button => {
+        button.classList.toggle("active", button.dataset.view === activeView);
+        button.setAttribute("aria-current", button.dataset.view === activeView ? "page" : "false");
+      });
+      if (activeView === "study") renderLesson();
+      else renderPractice();
     }
+
+    function renderPractice() {
+      if (practiceSession?.view === activeView) {
+        renderPracticeSession();
+        return;
+      }
+
+      const isExam = activeView === "exams";
+      const title = isExam ? "Provas para praticar" : "Quizzes de revisão";
+      const description = isExam
+        ? "Faça uma prova simulada com questões variadas do seu plano. Ao final, confira o resultado e as respostas."
+        : "Escolha uma matéria ou misture conteúdos para revisar. As questões vêm das aulas do seu plano.";
+      const questionCount = isExam ? 20 : 10;
+      mainContent.innerHTML = `
+        <div class="crumb"><span>Plano de Estudos 95</span><span>›</span><span class="crumb-current">${title}</span></div>
+        <div class="lesson-heading"><div><h1>${title}</h1><p>${description}</p></div></div>
+        <div class="practice-setup">
+          <fieldset class="group-box">
+            <legend>⚙️ &nbsp;Configurar prática</legend>
+            <div class="form-row">
+              <label for="practiceSubject">Matéria</label>
+              <select id="practiceSubject">
+                <option value="all">Todas as matérias</option>
+                ${subjects.map(subject => `<option value="${escapeHtml(subject.id)}">${escapeHtml(subject.name)}</option>`).join("")}
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="practiceDifficulty">Dificuldade</label>
+              <select id="practiceDifficulty">
+                <option value="all">Todas as dificuldades</option>
+                <option value="basic">Básico</option>
+                <option value="intermediate">Intermediário</option>
+                <option value="advanced">Avançado</option>
+              </select>
+            </div>
+            <p class="practice-summary" id="practiceAvailability"></p>
+            <button class="win-button primary" type="button" data-action="start-practice">▶ ${isExam ? "Iniciar prova" : "Iniciar quiz"}</button>
+          </fieldset>
+          <p> ${isExam ? `A prova terá até ${questionCount} questões.` : `O quiz terá até ${questionCount} questões.`} Se o filtro escolhido tiver menos questões, serão usadas todas as disponíveis.</p>
+        </div>`;
+      updatePracticeAvailability();
+    }
+
+    function getPracticeQuestionPool() {
+      const subjectId = mainContent.querySelector("#practiceSubject")?.value ?? "all";
+      const difficulty = mainContent.querySelector("#practiceDifficulty")?.value ?? "all";
+      return subjects.flatMap(subject => {
+        if (subjectId !== "all" && subject.id !== subjectId) return [];
+        return subject.parts.flatMap((part, partIndex) => {
+          const partDifficulty = part.difficulty ?? difficultyForIndex(partIndex, subject.parts.length);
+          if (difficulty !== "all" && partDifficulty !== difficulty) return [];
+          return (Array.isArray(part.questions) ? part.questions : []).map((question, questionIndex) => ({
+            ...question,
+            subjectId: subject.id,
+            subjectName: subject.name,
+            partTitle: part.title,
+            partIndex,
+            questionIndex
+          }));
+        });
+      });
+    }
+
+    function updatePracticeAvailability() {
+      const summary = mainContent.querySelector("#practiceAvailability");
+      if (!summary) return;
+      const count = getPracticeQuestionPool().length;
+      const requested = activeView === "exams" ? 20 : 10;
+      summary.textContent = count
+        ? `${count} questões disponíveis. ${Math.min(requested, count)} serão selecionadas para esta prática.`
+        : "Não há questões para esta seleção. Escolha outra matéria ou dificuldade.";
+      const startButton = mainContent.querySelector('[data-action="start-practice"]');
+      if (startButton) startButton.disabled = count === 0;
+    }
+
+    function renderPracticeSession() {
+      const session = practiceSession;
+      const isExam = session.view === "exams";
+      const title = isExam ? "Prova em andamento" : "Quiz em andamento";
+      const checked = session.score !== null;
+      mainContent.innerHTML = `
+        <div class="crumb"><span>Plano de Estudos 95</span><span>›</span><span class="crumb-current">${title}</span></div>
+        <div class="lesson-heading"><div><h1>${title}</h1><p>${escapeHtml(session.label)}</p></div></div>
+        ${checked ? `<div class="practice-result" role="status">Resultado: ${session.score} de ${session.questions.length} (${Math.round(session.score * 100 / session.questions.length)}%).</div>` : `<p class="practice-summary">${session.questions.length} questões. Responda todas e então confira seu resultado.</p>`}
+        <div class="practice-questions">
+          ${session.questions.map((question, index) => `
+            <fieldset class="practice-question" data-practice-question="${index}">
+              <legend>Questão ${index + 1}</legend>
+              <p class="question-source">${escapeHtml(question.subjectName)} · ${escapeHtml(question.partTitle)}</p>
+              <h3>${escapeHtml(question.text)}</h3>
+              <div class="answers">${question.choices.map((choice, choiceIndex) => {
+                const selected = session.answers[index] === choiceIndex;
+                const correct = checked && choiceIndex === question.answer;
+                const incorrect = checked && selected && choiceIndex !== question.answer;
+                return `<label class="answer${correct ? " correct" : ""}${incorrect ? " incorrect" : ""}">
+                  <input type="radio" name="practice-${index}" value="${choiceIndex}"${selected ? " checked" : ""}${checked ? " disabled" : ""}>
+                  <span>${escapeHtml(choice)}</span>
+                </label>`;
+              }).join("")}</div>
+            </fieldset>`).join("")}
+        </div>
+        <div class="quiz-actions">
+          ${checked
+            ? `<button class="win-button primary" type="button" data-action="new-practice">${isExam ? "Nova prova" : "Novo quiz"}</button>`
+            : `<button class="win-button primary" type="button" data-action="submit-practice">Conferir resultado</button>`}
+          <button class="win-button" type="button" data-action="practice-home">Voltar</button>
+        </div>`;
+    }
+
+    function startPractice() {
+      const pool = getPracticeQuestionPool();
+      const isExam = activeView === "exams";
+      const count = Math.min(isExam ? 20 : 10, pool.length);
+      if (!count) {
+        updatePracticeAvailability();
+        return;
+      }
+      const shuffled = pool
+        .map(question => ({ question, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .slice(0, count)
+        .map(({ question }) => question);
+      const selectedSubject = mainContent.querySelector("#practiceSubject").value;
+      const subjectName = selectedSubject === "all"
+        ? "Todas as matérias"
+        : subjects.find(subject => subject.id === selectedSubject)?.name ?? "Matéria";
+      const difficulty = mainContent.querySelector("#practiceDifficulty").value;
+      const difficultyName = difficulty === "all" ? "todas as dificuldades" : difficultyNames[difficulty].toLowerCase();
+      practiceSession = {
+        view: activeView,
+        questions: shuffled,
+        answers: Array(shuffled.length).fill(null),
+        score: null,
+        label: `${subjectName} · ${difficultyName}`
+      };
+      renderPracticeSession();
+    }
+
+    function submitPractice() {
+      if (!practiceSession) return;
+      const unanswered = practiceSession.answers.findIndex(answer => answer === null);
+      if (unanswered !== -1) {
+        statusText.textContent = `Responda à questão ${unanswered + 1} antes de conferir.`;
+        mainContent.querySelector(`[data-practice-question="${unanswered}"]`)?.scrollIntoView({ block: "center", behavior: "smooth" });
+        return;
+      }
+      practiceSession.score = practiceSession.questions.reduce(
+        (score, question, index) => score + (practiceSession.answers[index] === question.answer ? 1 : 0),
+        0
+      );
+      renderPracticeSession();
+      statusText.textContent = `Prática concluída: ${practiceSession.score} de ${practiceSession.questions.length}.`;
+    }
+
+    document.querySelector(".menu-bar").addEventListener("click", event => {
+      const button = event.target.closest("[data-view]");
+      if (!button) return;
+      activeView = button.dataset.view;
+      render();
+      statusText.textContent = activeView === "study"
+        ? "Plano de estudos."
+        : activeView === "quizzes" ? "Área de quizzes." : "Área de provas.";
+    });
+
+    mainContent.addEventListener("change", event => {
+      if (event.target.matches("#practiceSubject, #practiceDifficulty")) {
+        updatePracticeAvailability();
+        return;
+      }
+      const answer = event.target.closest('input[type="radio"][name^="practice-"]');
+      if (!answer || !practiceSession || practiceSession.score !== null) return;
+      const questionIndex = Number(answer.name.slice("practice-".length));
+      practiceSession.answers[questionIndex] = Number(answer.value);
+    });
 
     function renderSubjects() {
       subjectList.innerHTML = subjects.map(subject => {
@@ -3150,6 +3344,7 @@
       if (!result) return;
       const subject = subjects.find(item => item.id === result.dataset.searchSubject);
       if (!subject) return;
+      activeView = "study";
       activeSubjectId = subject.id;
       activePartIndex = Number(result.dataset.searchPart);
       activeDifficultyFilter = "all";
@@ -3163,6 +3358,7 @@
     subjectList.addEventListener("click", event => {
       const button = event.target.closest("[data-subject]");
       if (!button) return;
+      activeView = "study";
       activeSubjectId = button.dataset.subject;
       activePartIndex = 0;
       activeDifficultyFilter = "all";
@@ -3172,6 +3368,26 @@
     });
 
     mainContent.addEventListener("click", event => {
+      const action = event.target.closest("[data-action]")?.dataset.action;
+      if (action === "start-practice") {
+        startPractice();
+        return;
+      }
+      if (action === "submit-practice") {
+        submitPractice();
+        return;
+      }
+      if (action === "new-practice") {
+        practiceSession = null;
+        renderPractice();
+        return;
+      }
+      if (action === "practice-home") {
+        activeView = "study";
+        practiceSession = null;
+        render();
+        return;
+      }
       const levelTab = event.target.closest("[data-level]");
       if (levelTab) {
         const subject = activeSubject();
@@ -3213,7 +3429,6 @@
         renderLesson();
         return;
       }
-      const action = event.target.closest("[data-action]")?.dataset.action;
       if (action === "add-part") partDialog.showModal();
       if (action === "add-subject") subjectDialog.showModal();
       if (action === "check-quiz") checkQuiz();
