@@ -72,6 +72,8 @@
     .sidebar { padding: 13px 10px; border-right: 1px solid var(--line-dark); }
     .section-label { margin: 3px 4px 10px; color: #555; text-transform: uppercase; letter-spacing: .08em; font-size: 10px; font-weight: bold; }
     .subject-list { display: grid; gap: 4px; }
+    .subject-group { display: grid; gap: 3px; margin-bottom: 10px; }
+    .subject-group-title { margin: 5px 3px 2px; padding-bottom: 4px; border-bottom: 1px solid #aaa; color: #343434; font-size: 10px; line-height: 1.35; font-weight: bold; }
     .search-box { display: grid; gap: 5px; margin: 0 0 10px; }
     .search-box label { color: #444; font-size: 11px; font-weight: bold; }
     .search-box input { width: 100%; padding: 7px; background: white; border: 2px solid; border-color: var(--line-dark) var(--line-light) var(--line-light) var(--line-dark); }
@@ -3261,6 +3263,33 @@
       "philosophy", "sociology", "portuguese", "literature", "english",
       "spanish", "arts", "physicalEducation", "communication", "essay"
     ];
+    const examKnowledgeAreas = [
+      {
+        id: "languages",
+        name: "Linguagens, códigos e suas tecnologias",
+        subjectIds: ["portuguese", "literature", "english", "spanish", "arts", "physicalEducation", "communication"]
+      },
+      {
+        id: "math",
+        name: "Matemática e suas tecnologias",
+        subjectIds: ["math"]
+      },
+      {
+        id: "nature",
+        name: "Ciências da natureza e suas tecnologias",
+        subjectIds: ["biology", "physics", "chemistry"]
+      },
+      {
+        id: "humanities",
+        name: "Ciências humanas e suas tecnologias",
+        subjectIds: ["history", "geography", "philosophy", "sociology"]
+      },
+      {
+        id: "essay",
+        name: "Redação",
+        subjectIds: ["essay"]
+      }
+    ];
     const defaultSubjects = defaultSubjectOrder.map(id => ({
       id,
       name: starterLibrary[id].name,
@@ -3658,14 +3687,34 @@
     });
 
     function renderSubjects() {
-      subjectList.innerHTML = subjects.map(subject => {
+      const renderSubject = subject => {
         const done = subject.completed.length;
         const total = subject.parts.length;
         return `<button class="subject-button${subject.id === activeSubjectId ? " active" : ""}" data-subject="${escapeHtml(subject.id)}" aria-pressed="${subject.id === activeSubjectId}">
           <span class="subject-emoji" aria-hidden="true">${escapeHtml(subject.icon)}</span>
           <span class="subject-meta"><strong>${escapeHtml(subject.name)}</strong><small>${subject.priority ? `${escapeHtml(subject.priority)} · ` : ""}${done}/${total} partes estudadas</small></span>
         </button>`;
-      }).join("");
+      };
+      const groupedIds = new Set(examKnowledgeAreas.flatMap(area => area.subjectIds));
+      subjectList.innerHTML = [
+        ...examKnowledgeAreas.map(area => {
+          const areaSubjects = subjects.filter(subject => area.subjectIds.includes(subject.id));
+          if (!areaSubjects.length) return "";
+          return `<section class="subject-group" aria-labelledby="subject-group-${area.id}">
+            <h3 class="subject-group-title" id="subject-group-${area.id}">${escapeHtml(area.name)}</h3>
+            ${areaSubjects.map(renderSubject).join("")}
+          </section>`;
+        }),
+        ...(() => {
+          const otherSubjects = subjects.filter(subject => !groupedIds.has(subject.id));
+          return otherSubjects.length
+            ? [`<section class="subject-group" aria-labelledby="subject-group-other">
+                <h3 class="subject-group-title" id="subject-group-other">Outras matérias</h3>
+                ${otherSubjects.map(renderSubject).join("")}
+              </section>`]
+            : [];
+        })()
+      ].join("");
     }
 
     function renderLesson() {
@@ -3844,8 +3893,19 @@
     subjectList.addEventListener("click", event => {
       const button = event.target.closest("[data-subject]");
       if (!button) return;
-      activeView = "study";
       activeSubjectId = button.dataset.subject;
+      if (activeView === "quizzes" || activeView === "exams") {
+        practiceSession = null;
+        render();
+        const practiceSubject = mainContent.querySelector("#practiceSubject");
+        if (practiceSubject) {
+          practiceSubject.value = activeSubjectId;
+          updatePracticeAvailability();
+        }
+        statusText.textContent = `${activeSubject().name} selecionada para ${activeView === "quizzes" ? "quiz" : "prova"}.`;
+        return;
+      }
+      activeView = "study";
       activePartIndex = 0;
       activeDifficultyFilter = "all";
       activeCategoryFilter = null;
