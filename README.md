@@ -17,7 +17,7 @@ Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicad
 
 O banco de prova é autoral e ainda é menor que um caderno oficial do ENEM. A interface mostra a quantidade real de questões disponíveis por área, sem duplicar questões para preencher 45 itens. Para cadastrar uma questão, acrescente um objeto em `js/data/exam-questions.js`, com cinco alternativas, índice `answer` de 0 a 4, uma explicação e `lessonRef` apontando para um título de parte existente no currículo. Use `keepOrder: true` quando a sequência das opções tiver significado (por exemplo, uma escala crescente) e tipos de apoio `text`, `chart`, `line`, `table` ou `svg`; o SVG aceita somente elementos e atributos estáticos permitidos pelo renderizador.
 
-Os quizzes gerados a partir da teoria pedem para relacionar uma descrição ao conceito correto, usando opções da mesma parte da aula. As alternativas são embaralhadas quando a ordem não tem significado.
+Os quizzes gerados a partir da teoria pedem para relacionar uma descrição ao conceito correto, usando opções da mesma parte da aula. As alternativas são embaralhadas quando a ordem não tem significado. Para uma parte personalizada, informe ao menos três ideias, uma por linha; o formato `Conceito: descrição` produz opções mais claras.
 
 O cronômetro das provas é proporcional ao número de questões disponíveis no banco atual (aproximadamente três minutos por questão), não à duração de um caderno oficial completo. A seção de Linguagens permite selecionar Inglês ou Espanhol.
 

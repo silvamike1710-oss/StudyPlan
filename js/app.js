@@ -691,9 +691,13 @@ mainContent.addEventListener("change", event => {
   }
   if (event.target.matches("#practiceSubject")) {
     const areaSelect = mainContent.querySelector("#practiceArea");
+    const foreignLanguage = mainContent.querySelector("#foreignLanguage");
     if (areaSelect && event.target.value !== "all") {
       const subjectArea = examKnowledgeAreas.find(area => area.subjectIds.includes(event.target.value));
       if (subjectArea) areaSelect.value = `area:${subjectArea.id}`;
+    }
+    if (foreignLanguage && ["english", "spanish"].includes(event.target.value)) {
+      foreignLanguage.value = event.target.value;
     }
     updatePracticeAvailability();
     return;
@@ -894,29 +898,36 @@ function createPart(title, notes) {
   const subject = activeSubject();
   if (!subject) return;
   const lines = notes.split(/\n+/).map(line => line.trim()).filter(Boolean);
+  const usedTitles = new Set();
   const points = lines.map((line, index) => {
     const separator = line.indexOf(":");
-    return separator > 0
-      ? [line.slice(0, separator).trim(), line.slice(separator + 1).trim()]
-      : [`Ideia principal ${index + 1}`, line];
+    const rawTitle = separator > 0
+      ? line.slice(0, separator).trim()
+      : line.split(/[.!?;]/, 1)[0].trim().split(/\s+/).slice(0, 6).join(" ");
+    const description = separator > 0 ? line.slice(separator + 1).trim() : line;
+    let title = rawTitle || `Ideia ${index + 1}`;
+    let suffix = 2;
+    while (usedTitles.has(title)) title = `${rawTitle} (${suffix++})`;
+    usedTitles.add(title);
+    return [title, description];
   });
-  const questions = points.slice(0, 3).map((point, index) => ({
-    text: `Qual afirmação corresponde melhor a "${point[0]}"?`,
-    choices: [
-      point[1],
-      points.length > 1 ? points[(index + 1) % points.length][1] : "Essa ideia não aparece nas anotações",
-      "Nenhuma dessas ideias"
-    ],
-    answer: 0
-  }));
+  const intro = `Esta parte aborda ${title.trim()}. Revise cada ideia principal e depois responda às questões para conferir o que aprendeu.`;
+  const note = points[0]?.[1] ?? "";
+  const questions = curriculumPart(
+    "Outros",
+    title.trim(),
+    intro,
+    points,
+    note
+  ).questions;
   subject.parts.push({
     ...(subject.id === "math" ? { category: "Outros" } : {}),
     title: title.trim(),
     difficulty: difficultyForIndex(subject.parts.length, subject.parts.length + 1),
-    intro: `Esta parte aborda ${title.trim()}. Revise cada ideia principal e depois responda às questões para conferir o que aprendeu.`,
+    intro,
     heading: "Ideias principais",
     points,
-    note: points[0]?.[1] ?? "",
+    note,
     questions
   });
   activePartIndex = subject.parts.length - 1;
@@ -1186,6 +1197,12 @@ document.getElementById("partForm").addEventListener("submit", event => {
   const form = event.currentTarget;
   if (!form.partTheory.value.trim()) {
     form.partTheory.setCustomValidity("Adicione pelo menos uma ideia principal para criar esta parte de estudo.");
+    form.reportValidity();
+    return;
+  }
+  const ideaCount = form.partTheory.value.split(/\n+/).filter(line => line.trim()).length;
+  if (ideaCount < 3) {
+    form.partTheory.setCustomValidity("Para criar um quiz com alternativas coerentes, escreva ao menos três ideias, uma por linha.");
     form.reportValidity();
     return;
   }

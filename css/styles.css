@@ -292,6 +292,14 @@ dialog::backdrop { background: rgb(0 0 0 / 35%); }
   width: 100%; padding: 7px; background: white; border: 2px solid;
   border-color: var(--line-dark) var(--line-light) var(--line-light) var(--line-dark);
 }
+.form-row select {
+  width: 100%;
+  min-width: 0;
+  padding: 7px;
+  background: #fff;
+  border: 2px solid;
+  border-color: var(--line-dark) var(--line-light) var(--line-light) var(--line-dark);
+}
 .form-row textarea { min-height: 105px; resize: vertical; line-height: 1.5; }
 .dialog-help { margin: -4px 0 13px; color: #555; font-size: 11px; line-height: 1.5; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
@@ -302,7 +310,7 @@ dialog::backdrop { background: rgb(0 0 0 / 35%); }
   body { padding: 12px; }
   .workspace { grid-template-columns: 1fr; }
   .win-button, .menu-button, .difficulty-tab, .category-tab, .part-tab { min-height: 44px; }
-  .search-box input, .form-row input, .form-row textarea, .practice-setup select { min-height: 44px; }
+  .search-box input, .form-row input, .form-row select, .practice-setup select { min-height: 44px; }
   .question-nav-button { flex: 0 0 44px; width: 44px; min-height: 44px; }
   .sidebar { border-right: 0; border-bottom: 1px solid var(--line-dark); padding-bottom: 11px; }
   .subject-picker > summary {
@@ -364,10 +372,12 @@ dialog::backdrop { background: rgb(0 0 0 / 35%); }
   .practice-resume { align-items: stretch; flex-direction: column; }
   .subject-list { grid-template-columns: 1fr; }
   .subject-button { min-height: 44px; }
-  .search-box input, .form-row input, .form-row textarea, .practice-setup select, .essay-editor {
+  .search-box input, .form-row input, .form-row select, .practice-setup select {
     min-height: 44px;
     font-size: 16px;
   }
+  .form-row textarea { min-height: 140px; font-size: 16px; }
+  .essay-editor { min-height: 340px; font-size: 16px; }
   .difficulty-tab, .category-tab, .part-tab { min-height: 40px; }
   .difficulty-note { margin-left: 0; }
   .group-box { padding: 12px 10px 10px; }

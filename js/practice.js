@@ -54,6 +54,22 @@ function toLessonPracticeQuestion(question, subject, partIndex, questionIndex) {
   };
 }
 
+function practiceQuestionRef(question) {
+  if (question.questionRef) return question.questionRef;
+  if (question.id && examQuestionBank.some(source => source.id === question.id)) {
+    return { type: "exam", id: question.id };
+  }
+  if (Number.isInteger(question.partIndex) && Number.isInteger(question.questionIndex)) {
+    return {
+      type: "lesson",
+      subjectId: question.subjectId,
+      partIndex: question.partIndex,
+      questionIndex: question.questionIndex
+    };
+  }
+  return null;
+}
+
 function restorePracticeQuestion(ref, choiceOrder) {
   if (!ref) return null;
   let question;
@@ -69,7 +85,10 @@ function restorePracticeQuestion(ref, choiceOrder) {
     }
   }
   if (!question) return null;
-  if (Array.isArray(choiceOrder) && choiceOrder.length === question.choices.length) {
+  const validOrder = Array.isArray(choiceOrder) && choiceOrder.length === question.choices.length &&
+    choiceOrder.every(index => Number.isInteger(index) && index >= 0 && index < question.choices.length) &&
+    new Set(choiceOrder).size === question.choices.length;
+  if (validOrder) {
     question.choices = choiceOrder.map(index => question.choices[index]);
     question.answer = choiceOrder.indexOf(question.answer);
     question.choiceOrder = choiceOrder;
@@ -93,6 +112,20 @@ function loadSavedPracticeSession() {
       name: section.name,
       questions: section.questionIndexes.map(index => saved.questions[index]).filter(Boolean)
     }));
+  } else if (Array.isArray(saved.questions)) {
+    saved.questions = saved.questions.map(question => {
+      const ref = practiceQuestionRef(question);
+      if (!ref) return question;
+      question.questionRef = ref;
+      if (!Array.isArray(question.choiceOrder)) {
+        const source = restorePracticeQuestion(ref);
+        const order = question.choices.map(choice => source?.choices.indexOf(choice) ?? -1);
+        if (order?.every(index => index >= 0) && order.length === question.choices.length) {
+          question.choiceOrder = order;
+        }
+      }
+      return question;
+    });
   }
   if (!Array.isArray(saved.questions) || saved.questions.length !== saved.answers.length) return null;
   saved.flagged = Array.isArray(saved.flagged) ? saved.flagged : [];
@@ -142,12 +175,7 @@ function getErrorNotebook() {
   for (const attempt of getAttempts()) {
     for (const item of attempt.wrongQuestions ?? []) {
       const question = item.question;
-      const ref = item.ref ?? question?.questionRef ??
-        (question?.id && examQuestionBank.some(source => source.id === question.id)
-          ? { type: "exam", id: question.id }
-          : Number.isInteger(question?.partIndex) && Number.isInteger(question?.questionIndex)
-            ? { type: "lesson", subjectId: question.subjectId, partIndex: question.partIndex, questionIndex: question.questionIndex }
-            : null);
+      const ref = item.ref ?? (question ? practiceQuestionRef(question) : null);
       if (!ref) continue;
       const key = JSON.stringify(ref);
       validBook[key] ??= { ref, streak: 0, times: 1, lastWrongAt: attempt.date ?? Date.now() };
@@ -389,6 +417,16 @@ function renderStaticSvg(support) {
   const elements = (support.elements ?? []).filter(item => allowedTags.has(item.tag)).map(item => {
     const attributes = Object.entries(item.attributes ?? {})
       .filter(([name]) => allowedAttributes.has(name))
+      .filter(([name, value]) => {
+        const attribute = String(value);
+        if (name === "fill" || name === "stroke") {
+          return /^(#[0-9a-f]{3,8}|[a-z]{3,20}|none|currentColor|transparent)$/i.test(attribute);
+        }
+        if (name === "text-anchor") return /^(start|middle|end)$/.test(attribute);
+        if (name === "points") return /^[-\d.,\s]+$/.test(attribute);
+        if (name === "d") return /^[MmLlHhVvCcSsQqTtAaZz0-9.,\s+-]+$/.test(attribute);
+        return /^-?\d+(?:\.\d+)?$/.test(attribute);
+      })
       .map(([name, value]) => `${name}="${escapeHtml(String(value))}"`).join(" ");
     const content = item.tag === "text" ? escapeHtml(item.text ?? "") : "";
     return `<${item.tag}${attributes ? ` ${attributes}` : ""}>${content}</${item.tag}>`;
@@ -571,7 +609,7 @@ function renderPracticeSession() {
     ? `<div class="exam-booklet">
         <header class="exam-booklet-header"><h2>Caderno de questões · simulado</h2><p>Questões originais elaboradas a partir do conteúdo do seu plano de estudos.</p></header>
         ${session.sections.map(section => `<section class="exam-area">
-          <h2 class="exam-area-heading">${escapeHtml(section.name)} · questões ${String(section.questions[0]?.examNumber ?? 0).padStart(2, "0")} a ${String(section.questions.at(-1)?.examNumber ?? 0).padStart(2, "0")}</h2>
+          <h2 class="exam-area-heading">${escapeHtml(section.name)} · questões ${String(section.questions[0]?.examNumber ?? 0).padStart(2, "0")} a ${String(section.questions[section.questions.length - 1]?.examNumber ?? 0).padStart(2, "0")}</h2>
           ${section.questions.map(question => renderPracticeQuestion(question, question.sessionIndex, true, checked)).join("")}
         </section>`).join("")}
       </div>`

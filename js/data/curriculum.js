@@ -1610,13 +1610,16 @@ const starterLibrary = {
 function curriculumPart(category, title, intro, points, note) {
   const sampleIndices = [...new Set([0, Math.floor((points.length - 1) / 2), points.length - 1])]
     .filter(index => points[index]);
-  const questions = sampleIndices.map((pointIndex, questionIndex) => {
+  const questions = sampleIndices.map(pointIndex => {
     const point = points[pointIndex];
     const labels = points.map(item => item[0]);
     const distractors = labels.filter((_, index) => index !== pointIndex);
     const choices = [point[0], ...distractors.slice(0, 2)];
-    const answer = questionIndex % choices.length;
-    choices.splice(answer, 0, choices.shift());
+    for (let index = choices.length - 1; index > 0; index--) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [choices[index], choices[randomIndex]] = [choices[randomIndex], choices[index]];
+    }
+    const answer = choices.indexOf(point[0]);
     return {
       text: `Qual conceito corresponde a esta descrição? ${point[1]}`,
       choices,
