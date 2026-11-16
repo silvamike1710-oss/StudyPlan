@@ -15,6 +15,12 @@ Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicad
 
 ## Provas e dados salvos
 
-O banco de prova é autoral e ainda é menor que um caderno oficial do ENEM. A interface mostra a quantidade real de questões disponíveis por área, sem duplicar questões para preencher 45 itens. Para cadastrar uma questão, acrescente um objeto em `js/data/exam-questions.js`, com cinco alternativas, índice `answer` de 0 a 4, uma explicação e `lessonRef` apontando para um título de parte existente no currículo.
+O banco de prova é autoral e ainda é menor que um caderno oficial do ENEM. A interface mostra a quantidade real de questões disponíveis por área, sem duplicar questões para preencher 45 itens. Para cadastrar uma questão, acrescente um objeto em `js/data/exam-questions.js`, com cinco alternativas, índice `answer` de 0 a 4, uma explicação e `lessonRef` apontando para um título de parte existente no currículo. Use `keepOrder: true` quando a sequência das opções tiver significado (por exemplo, uma escala crescente) e tipos de apoio `text`, `chart`, `line`, `table` ou `svg`; o SVG aceita somente elementos e atributos estáticos permitidos pelo renderizador.
 
-O navegador guarda respostas em andamento, rascunho de redação e até 50 práticas concluídas no `localStorage`. O histórico é local a este navegador; não é sincronizado entre dispositivos.
+Os quizzes gerados a partir da teoria pedem para relacionar uma descrição ao conceito correto, usando opções da mesma parte da aula. As alternativas são embaralhadas quando a ordem não tem significado.
+
+O cronômetro das provas é proporcional ao número de questões disponíveis no banco atual (aproximadamente três minutos por questão), não à duração de um caderno oficial completo. A seção de Linguagens permite selecionar Inglês ou Espanhol.
+
+O navegador guarda respostas em andamento por referências compactas às questões, um caderno de erros sem cópias integrais dos enunciados, rascunhos/temas de redação e até 50 práticas no `localStorage`. Redações finalizadas ou arquivadas podem ser relidas na tela Revisão. A estimativa de linhas usa aproximadamente 10 palavras por linha manuscrita e não substitui a contagem na folha oficial. A autoavaliação por competência não calcula nota.
+
+O histórico é local a este navegador; não é sincronizado entre dispositivos.

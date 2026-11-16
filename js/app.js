@@ -584,7 +584,8 @@ function render() {
     clearInterval(essayTimer);
     essayTimer = null;
   }
-  document.body.classList.toggle("focus-mode", activeView === "exams" && practiceSession?.focusMode === true);
+  const focusExam = activeView === "exams" && practiceSession?.focusMode && practiceSession.score === null;
+  document.body.classList.toggle("focus-mode", Boolean(focusExam));
   if (activeView === "home") renderHome();
   else if (activeView === "study") renderLesson();
   else if (activeView === "essay") renderEssayPractice();
@@ -608,6 +609,10 @@ function renderHome() {
   const tip = studyTips[activeTipIndex];
   mainContent.innerHTML = `
     <div class="home-content">
+      ${practiceSession && practiceSession.score === null ? `<div class="practice-resume">
+        <p>Você tem ${practiceSession.view === "exams" ? "uma prova" : practiceSession.view === "review" ? "uma revisão" : "um quiz"} em andamento: ${escapeHtml(practiceSession.label)}${practiceSession.endsAt ? ` · tempo restante ${formatTime(practiceSession.endsAt - Date.now())}` : ""}.</p>
+        <button class="win-button primary" type="button" data-action="resume-practice">Continuar prática</button>
+      </div>` : ""}
       <div class="home-welcome">
         <h1>Bem-vindo ao Plano de Estudos 95!</h1>
         <p>Seu espaço de preparação para o ENEM e vestibulares: estude por matéria, avance por níveis de dificuldade e pratique no seu ritmo.</p>
@@ -663,9 +668,18 @@ document.querySelector(".menu-bar").addEventListener("click", event => {
 
 mainContent.addEventListener("click", event => {
   const step = event.target.closest("[data-tip-step]");
+  if (step && activeView === "home") {
+    activeTipIndex = (activeTipIndex + Number(step.dataset.tipStep) + studyTips.length) % studyTips.length;
+    renderHome();
+    return;
+  }
+  const action = event.target.closest("[data-action]")?.dataset.action;
+  if (action === "resume-practice" && practiceSession?.score === null) {
+    activeView = practiceSession.view;
+    render();
+    return;
+  }
   if (!step || activeView !== "home") return;
-  activeTipIndex = (activeTipIndex + Number(step.dataset.tipStep) + studyTips.length) % studyTips.length;
-  renderHome();
 });
 
 mainContent.addEventListener("change", event => {
@@ -688,8 +702,19 @@ mainContent.addEventListener("change", event => {
     updatePracticeAvailability();
     return;
   }
+  if (event.target.matches("#foreignLanguage")) {
+    updatePracticeAvailability();
+    return;
+  }
   if (event.target.matches("[data-essay-competency]")) {
     saveEssayDraft(readStoredJson(essayDraftStorageKey, {}));
+    return;
+  }
+  if (event.target.matches("#essayTheme")) {
+    const draft = readStoredJson(essayDraftStorageKey, {});
+    draft.themeId = event.target.value;
+    saveEssayDraft(draft);
+    renderEssayPractice();
     return;
   }
   const answer = event.target.closest('input[type="radio"][name^="practice-"]');
@@ -942,6 +967,10 @@ subjectList.addEventListener("click", event => {
       const practiceArea = mainContent.querySelector("#practiceArea");
       const subjectArea = examKnowledgeAreas.find(area => area.subjectIds.includes(activeSubjectId));
       if (practiceArea && subjectArea) practiceArea.value = `area:${subjectArea.id}`;
+      const foreignLanguage = mainContent.querySelector("#foreignLanguage");
+      if (foreignLanguage && ["english", "spanish"].includes(activeSubjectId)) {
+        foreignLanguage.value = activeSubjectId;
+      }
       updatePracticeAvailability();
     }
     statusText.textContent = `${activeSubject().name} selecionada para ${activeView === "quizzes" ? "quiz" : "prova"}.`;
@@ -1017,7 +1046,8 @@ mainContent.addEventListener("click", event => {
     return;
   }
   if (action === "clear-essay") {
-    if (!confirm("Apagar o rascunho salvo e começar outro?")) return;
+    if (!confirm("Guardar este rascunho no histórico e começar outro?")) return;
+    if (!archiveEssayDraft()) return;
     if (essayTimer !== null) {
       clearInterval(essayTimer);
       essayTimer = null;
@@ -1109,6 +1139,14 @@ function checkQuiz() {
       label.classList.toggle("correct", choiceIndex === question.answer);
       label.classList.toggle("incorrect", chosen && Number(chosen.value) === choiceIndex && choiceIndex !== question.answer);
     });
+    const previousExplanation = questionElement.querySelector(".quiz-explanation");
+    if (previousExplanation) previousExplanation.remove();
+    if (question.explanation) {
+      const explanation = document.createElement("p");
+      explanation.className = "quiz-explanation";
+      explanation.textContent = question.explanation;
+      questionElement.append(explanation);
+    }
     if (!chosen) unanswered = true;
     else if (Number(chosen.value) === question.answer) score++;
   });

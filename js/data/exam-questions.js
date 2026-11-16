@@ -12,6 +12,7 @@ const examQuestionBank = [
     statement: "Qual valor será pago pela mochila com o desconto anunciado?",
     choices: ["R$ 180", "R$ 204", "R$ 216", "R$ 225", "R$ 240"],
     answer: 1,
+    keepOrder: true,
     explanation: "Calcule 15% de R$ 240: 0,15 × 240 = R$ 36. Subtraia o desconto: 240 − 36 = R$ 204.",
     lessonRef: { subjectId: "math", partTitle: "Porcentagem e variação percentual" }
   },
@@ -21,13 +22,16 @@ const examQuestionBank = [
     topic: "Razões, proporções e regra de três",
     difficulty: "basic",
     support: [{
-      type: "text",
-      content: "Uma equipe de uma unidade de conservação percorre 18 km em três horas, mantendo ritmo médio constante durante o trajeto.",
-      source: "Situação-problema original."
+      type: "table",
+      title: "Trecho percorrido pela equipe",
+      headers: ["Tempo", "Distância"],
+      rows: [["1 hora", "6 km"], ["3 horas", "18 km"]],
+      source: "Dados hipotéticos de uma situação-problema original."
     }],
     statement: "Mantido esse ritmo médio, quantos quilômetros a equipe percorrerá em cinco horas?",
     choices: ["24 km", "27 km", "30 km", "36 km", "45 km"],
     answer: 2,
+    keepOrder: true,
     explanation: "A razão é 18 ÷ 3 = 6 km por hora. Em cinco horas, 6 × 5 = 30 km.",
     lessonRef: { subjectId: "math", partTitle: "Razões, proporções e regra de três" }
   },
@@ -50,6 +54,7 @@ const examQuestionBank = [
     statement: "A meta é manter o consumo abaixo de 400 L por dia. Em quantos dos dias registrados a meta foi atingida?",
     choices: ["Em nenhum dia", "Em um dia", "Em dois dias", "Em três dias", "Em quatro dias"],
     answer: 1,
+    keepOrder: true,
     explanation: "Terça-feira registrou 390 L e quinta-feira 340 L. Os dois valores estão abaixo de 400 L, portanto a meta foi atingida em dois dias.",
     lessonRef: { subjectId: "math", partTitle: "Tabelas, gráficos e medidas de tendência central" }
   },
@@ -88,8 +93,34 @@ const examQuestionBank = [
     statement: "Entre as medições consecutivas, qual foi a variação média da altura por semana?",
     choices: ["1 cm/semana", "2 cm/semana", "3 cm/semana", "5 cm/semana", "9 cm/semana"],
     answer: 2,
+    keepOrder: true,
     explanation: "A altura aumenta 3 cm a cada intervalo de uma semana: (14 − 5) ÷ 3 = 3 cm por semana.",
     lessonRef: { subjectId: "math", partTitle: "Função afim e função quadrática" }
+  },
+  {
+    id: "mat-0006",
+    subjectId: "math",
+    topic: "Quadriláteros, polígonos, perímetro e área",
+    difficulty: "basic",
+    support: [{
+      type: "svg",
+      title: "Molde de uma peça decorativa",
+      description: "A figura representa um paralelogramo com base e altura indicadas.",
+      viewBox: "0 0 360 200",
+      elements: [
+        { tag: "polygon", attributes: { points: "95,155 250,155 290,55 135,55", fill: "#dce8f5", stroke: "#173d78", "stroke-width": "3" } },
+        { tag: "line", attributes: { x1: "135", y1: "55", x2: "135", y2: "155", stroke: "#333", "stroke-width": "2" } },
+        { tag: "text", attributes: { x: "170", y: "178", "font-size": "16", "text-anchor": "middle" }, text: "base = 8 cm" },
+        { tag: "text", attributes: { x: "105", y: "112", "font-size": "15", "text-anchor": "end" }, text: "altura = 5 cm" }
+      ],
+      source: "Ilustração esquemática original, sem escala."
+    }],
+    statement: "Qual é a área do paralelogramo representado?",
+    choices: ["13 cm²", "26 cm²", "40 cm²", "80 cm²", "160 cm²"],
+    answer: 2,
+    keepOrder: true,
+    explanation: "A área do paralelogramo é base × altura: 8 × 5 = 40 cm². A altura é perpendicular à base, não o comprimento do lado inclinado.",
+    lessonRef: { subjectId: "math", partTitle: "Quadriláteros, polígonos, perímetro e área" }
   },
   {
     id: "nat-0001",
@@ -126,6 +157,7 @@ const examQuestionBank = [
     statement: "Qual é a velocidade média do ônibus nesse trecho?",
     choices: ["30 km/h", "40 km/h", "60 km/h", "120 km/h", "240 km/h"],
     answer: 2,
+    keepOrder: true,
     explanation: "A velocidade média é a distância dividida pelo tempo: 120 km ÷ 2 h = 60 km/h.",
     lessonRef: { subjectId: "physics", partTitle: "Movimento, referencial e velocidade" }
   },
@@ -170,6 +202,7 @@ const examQuestionBank = [
     statement: "Considerando apenas os valores observados, em qual temperatura ocorreu a maior taxa de germinação?",
     choices: ["10 °C", "20 °C", "30 °C", "40 °C", "A taxa foi igual em todas"],
     answer: 2,
+    keepOrder: true,
     explanation: "A maior taxa registrada é 80%, correspondente a 30 °C. O resultado descreve este experimento hipotético e não deve ser generalizado para todas as espécies.",
     lessonRef: { subjectId: "biology", partTitle: "Grupos vegetais, tecidos e órgãos" }
   },
@@ -179,7 +212,7 @@ const examQuestionBank = [
     topic: "Movimento, referencial e velocidade",
     difficulty: "intermediate",
     support: [{
-      type: "chart",
+      type: "line",
       chart: {
         title: "Velocidade de um carrinho em movimento",
         description: "Medições hipotéticas durante um movimento retilíneo.",
@@ -192,6 +225,7 @@ const examQuestionBank = [
     statement: "Considerando o aumento uniforme indicado, qual é a aceleração média do carrinho?",
     choices: ["0,5 m/s²", "1 m/s²", "2 m/s²", "4 m/s²", "12 m/s²"],
     answer: 2,
+    keepOrder: true,
     explanation: "A velocidade passa de 0 m/s para 12 m/s em 6 s. A aceleração média é Δv/Δt = 12/6 = 2 m/s².",
     lessonRef: { subjectId: "physics", partTitle: "Movimento, referencial e velocidade" }
   },
@@ -446,7 +480,30 @@ const examQuestionBank = [
     statement: "Qual é a diferença, em pontos percentuais, entre a barreira mais citada e a menos citada?",
     choices: ["5 p.p.", "10 p.p.", "15 p.p.", "20 p.p.", "35 p.p."],
     answer: 3,
+    keepOrder: true,
     explanation: "A maior parcela é conexão, com 35%, e a menor é acessibilidade, com 15%. A diferença é 35 − 15 = 20 pontos percentuais.",
     lessonRef: { subjectId: "communication", partTitle: "Exclusão digital e acessibilidade" }
+  },
+  {
+    id: "lin-0007",
+    subjectId: "spanish",
+    topic: "Interpretação, vocabulário e intenção",
+    difficulty: "basic",
+    support: [{
+      type: "text",
+      content: "«En el barrio, la biblioteca abre sus puertas también por la noche. Vecinas y vecinos pueden leer, estudiar y participar en talleres gratuitos.»",
+      source: "Aviso original em espanhol, elaborado para este exercício."
+    }],
+    statement: "De acordo com o aviso, a biblioteca oferece",
+    choices: [
+      "oficinas gratuitas e espaço para leitura e estudo.",
+      "somente empréstimos pagos durante o dia.",
+      "aulas noturnas exclusivas para funcionários.",
+      "a venda de livros e materiais escolares.",
+      "o fechamento do espaço durante a noite."
+    ],
+    answer: 0,
+    explanation: "O aviso informa que a biblioteca abre à noite e oferece leitura, estudo e oficinas gratuitas. Não menciona venda de materiais ou restrição a funcionários.",
+    lessonRef: { subjectId: "spanish", partTitle: "Interpretação, vocabulário e variedades" }
   }
 ];

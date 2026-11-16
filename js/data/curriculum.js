@@ -1608,22 +1608,20 @@ const starterLibrary = {
 };
 
 function curriculumPart(category, title, intro, points, note) {
-  const sampleIndices = [...new Set([0, Math.floor((points.length - 1) / 2), points.length - 1])];
+  const sampleIndices = [...new Set([0, Math.floor((points.length - 1) / 2), points.length - 1])]
+    .filter(index => points[index]);
   const questions = sampleIndices.map((pointIndex, questionIndex) => {
     const point = points[pointIndex];
-    const distractors = points.filter((_, index) => index !== pointIndex);
-    const answer = (questionIndex + 1) % 3;
-    const choices = [
-      point[1],
-      distractors[questionIndex % distractors.length][1],
-      distractors[(questionIndex + 1) % distractors.length][1]
-    ];
-    const correct = choices.shift();
-    choices.splice(answer, 0, correct);
+    const labels = points.map(item => item[0]);
+    const distractors = labels.filter((_, index) => index !== pointIndex);
+    const choices = [point[0], ...distractors.slice(0, 2)];
+    const answer = questionIndex % choices.length;
+    choices.splice(answer, 0, choices.shift());
     return {
-      text: `Qual afirmação descreve melhor ${point[0]}?`,
+      text: `Qual conceito corresponde a esta descrição? ${point[1]}`,
       choices,
-      answer
+      answer,
+      explanation: `${point[0]}: ${point[1]}`
     };
   });
   return {

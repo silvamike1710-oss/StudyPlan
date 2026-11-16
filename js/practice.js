@@ -6,6 +6,7 @@ const examDays = {
 const attemptsStorageKey = "studyplan95.attempts.v1";
 const activePracticeStorageKey = "studyplan95.practice.v1";
 const essayDraftStorageKey = "studyplan95.essay-draft.v1";
+const errorNotebookStorageKey = "studyplan95.errors.v1";
 
 function readStoredJson(key, fallback) {
   const saved = localStorage.getItem(key);
@@ -25,11 +26,75 @@ function reportStorageFailure(message, error) {
   }
 }
 
+function toExamPracticeQuestion(question) {
+  const subject = subjects.find(item => item.id === question.subjectId);
+  const partIndex = subject?.parts.findIndex(part => part.title === question.lessonRef.partTitle) ?? -1;
+  return {
+    ...question,
+    text: question.statement,
+    partTitle: question.lessonRef.partTitle,
+    partIndex,
+    subjectName: subject?.name ?? question.subjectId,
+    examSupport: question.support,
+    questionRef: { type: "exam", id: question.id }
+  };
+}
+
+function toLessonPracticeQuestion(question, subject, partIndex, questionIndex) {
+  return {
+    ...question,
+    subjectId: subject.id,
+    subjectName: subject.name,
+    partTitle: subject.parts[partIndex].title,
+    partIntro: subject.parts[partIndex].intro,
+    partPoints: subject.parts[partIndex].points,
+    partIndex,
+    questionIndex,
+    questionRef: { type: "lesson", subjectId: subject.id, partIndex, questionIndex }
+  };
+}
+
+function restorePracticeQuestion(ref, choiceOrder) {
+  if (!ref) return null;
+  let question;
+  if (ref.type === "exam") {
+    const source = examQuestionBank.find(item => item.id === ref.id);
+    if (source) question = toExamPracticeQuestion(source);
+  } else if (ref.type === "lesson") {
+    const subject = subjects.find(item => item.id === ref.subjectId);
+    const part = subject?.parts[ref.partIndex];
+    const source = part?.questions?.[ref.questionIndex];
+    if (subject && part && source) {
+      question = toLessonPracticeQuestion(source, subject, ref.partIndex, ref.questionIndex);
+    }
+  }
+  if (!question) return null;
+  if (Array.isArray(choiceOrder) && choiceOrder.length === question.choices.length) {
+    question.choices = choiceOrder.map(index => question.choices[index]);
+    question.answer = choiceOrder.indexOf(question.answer);
+    question.choiceOrder = choiceOrder;
+  }
+  return question;
+}
+
 function loadSavedPracticeSession() {
   const saved = readStoredJson(activePracticeStorageKey, null);
   if (!saved || !["exams", "quizzes", "review"].includes(saved.view) ||
-      !Array.isArray(saved.questions) || !Array.isArray(saved.answers) ||
-      saved.questions.length !== saved.answers.length) return null;
+      !Array.isArray(saved.answers)) return null;
+  if (Array.isArray(saved.questionRefs)) {
+    saved.questions = saved.questionRefs
+      .map(item => {
+        const question = restorePracticeQuestion(item.ref, item.choiceOrder);
+        return question ? { ...question, ...item.metadata } : null;
+      })
+      .filter(Boolean);
+    saved.sections = (saved.sections ?? []).map(section => ({
+      id: section.id,
+      name: section.name,
+      questions: section.questionIndexes.map(index => saved.questions[index]).filter(Boolean)
+    }));
+  }
+  if (!Array.isArray(saved.questions) || saved.questions.length !== saved.answers.length) return null;
   saved.flagged = Array.isArray(saved.flagged) ? saved.flagged : [];
   saved.sections = Array.isArray(saved.sections) ? saved.sections : [];
   return saved;
@@ -41,7 +106,25 @@ function saveActivePracticeSession() {
       localStorage.removeItem(activePracticeStorageKey);
       return;
     }
-    localStorage.setItem(activePracticeStorageKey, JSON.stringify(practiceSession));
+    const { questions, sections, ...sessionData } = practiceSession;
+    localStorage.setItem(activePracticeStorageKey, JSON.stringify({
+      ...sessionData,
+      questionRefs: questions.map(question => ({
+        ref: question.questionRef,
+        choiceOrder: question.choiceOrder,
+        metadata: {
+          examAreaId: question.examAreaId,
+          examAreaName: question.examAreaName,
+          examNumber: question.examNumber,
+          sessionIndex: question.sessionIndex
+        }
+      })),
+      sections: sections.map(section => ({
+        id: section.id,
+        name: section.name,
+        questionIndexes: section.questions.map(question => question.sessionIndex)
+      }))
+    }));
   } catch (error) {
     reportStorageFailure("Não foi possível salvar a prática em andamento.", error);
   }
@@ -52,8 +135,57 @@ function getAttempts() {
   return Array.isArray(attempts) ? attempts : [];
 }
 
+function getErrorNotebook() {
+  const book = readStoredJson(errorNotebookStorageKey, {});
+  const validBook = book && typeof book === "object" && !Array.isArray(book) ? book : {};
+  if (Object.keys(validBook).length) return validBook;
+  for (const attempt of getAttempts()) {
+    for (const item of attempt.wrongQuestions ?? []) {
+      const question = item.question;
+      const ref = item.ref ?? question?.questionRef ??
+        (question?.id && examQuestionBank.some(source => source.id === question.id)
+          ? { type: "exam", id: question.id }
+          : Number.isInteger(question?.partIndex) && Number.isInteger(question?.questionIndex)
+            ? { type: "lesson", subjectId: question.subjectId, partIndex: question.partIndex, questionIndex: question.questionIndex }
+            : null);
+      if (!ref) continue;
+      const key = JSON.stringify(ref);
+      validBook[key] ??= { ref, streak: 0, times: 1, lastWrongAt: attempt.date ?? Date.now() };
+    }
+  }
+  if (Object.keys(validBook).length) {
+    try {
+      localStorage.setItem(errorNotebookStorageKey, JSON.stringify(validBook));
+    } catch (error) {
+      reportStorageFailure("Não foi possível migrar o caderno de erros salvo.", error);
+    }
+  }
+  return validBook;
+}
+
+function updateErrorNotebook(session) {
+  const book = getErrorNotebook();
+  session.questions.forEach((question, index) => {
+    const ref = question.questionRef;
+    if (!ref) return;
+    const key = JSON.stringify(ref);
+    if (session.answers[index] === question.answer) {
+      if (book[key] && ++book[key].streak >= 2) delete book[key];
+    } else {
+      book[key] = {
+        ref,
+        streak: 0,
+        times: (book[key]?.times ?? 0) + 1,
+        lastWrongAt: Date.now()
+      };
+    }
+  });
+  localStorage.setItem(errorNotebookStorageKey, JSON.stringify(book));
+}
+
 function saveAttempt(session) {
   const attempts = getAttempts();
+  updateErrorNotebook(session);
   const attempt = {
     date: Date.now(),
     view: session.view,
@@ -65,7 +197,8 @@ function saveAttempt(session) {
     byTopic: summarizeAttempt(session),
     wrongQuestions: session.questions
       .map((question, index) => session.answers[index] === question.answer ? null : ({
-        question,
+        ref: question.questionRef,
+        choiceOrder: question.choiceOrder,
         selectedAnswer: session.answers[index]
       }))
       .filter(Boolean)
@@ -123,6 +256,13 @@ function renderPractice() {
             ${subjects.filter(subject => subject.id !== "essay").map(subject => `<option value="${escapeHtml(subject.id)}">${escapeHtml(subject.name)}</option>`).join("")}
           </select>
         </div>
+        ${isExam ? `<div class="form-row">
+          <label for="foreignLanguage">Língua estrangeira da prova</label>
+          <select id="foreignLanguage">
+            <option value="english">Inglês</option>
+            <option value="spanish">Espanhol</option>
+          </select>
+        </div>` : ""}
         <div class="form-row">
           <label for="practiceDifficulty">Dificuldade</label>
           <select id="practiceDifficulty">
@@ -135,7 +275,7 @@ function renderPractice() {
         <p class="practice-summary" id="practiceAvailability"></p>
         <button class="win-button primary" type="button" data-action="start-practice">▶ ${isExam ? "Iniciar prova" : "Iniciar quiz"}</button>
       </fieldset>
-      <p>${isExam ? `O ENEM oficial tem 45 questões por área. Este banco autoral tem ${examQuestionBank.length} questões por enquanto; a tela informa quantas há em cada caderno, sem completar a prova com questões repetidas.` : `O quiz terá até ${questionCount} questões.`} O cronômetro dos simulados segue a duração de referência do dia selecionado. A redação é praticada separadamente.</p>
+      <p>${isExam ? `O ENEM oficial tem 45 questões por área. Este banco autoral tem ${examQuestionBank.length} questões por enquanto; a tela informa quantas há em cada caderno, sem completar a prova com questões repetidas. O cronômetro é proporcional ao número de questões disponíveis e não representa a duração de uma prova oficial completa.` : `O quiz terá até ${questionCount} questões.`} A redação é praticada separadamente.</p>
     </div>`;
   updatePracticeAvailability();
 }
@@ -144,26 +284,20 @@ function getPracticeQuestionPool() {
   const subjectId = mainContent.querySelector("#practiceSubject")?.value ?? "all";
   const difficulty = mainContent.querySelector("#practiceDifficulty")?.value ?? "all";
   const selectedArea = mainContent.querySelector("#practiceArea")?.value ?? "all";
+  const foreignLanguage = mainContent.querySelector("#foreignLanguage")?.value ?? "english";
   if (activeView === "exams") {
     return examQuestionBank.flatMap(question => {
       if (subjectId !== "all" && subjectId !== question.subjectId) return [];
       if (difficulty !== "all" && question.difficulty !== difficulty) return [];
+      if (question.subjectId === "english" && foreignLanguage !== "english") return [];
+      if (question.subjectId === "spanish" && foreignLanguage !== "spanish") return [];
       if (selectedArea.startsWith("area:") &&
           !examKnowledgeAreas.find(area => area.id === selectedArea.slice(5))?.subjectIds.includes(question.subjectId)) return [];
       if (selectedArea === "day1" && !examDays.day1.areas.some(areaId =>
         examKnowledgeAreas.find(area => area.id === areaId)?.subjectIds.includes(question.subjectId))) return [];
       if (selectedArea === "day2" && !examDays.day2.areas.some(areaId =>
         examKnowledgeAreas.find(area => area.id === areaId)?.subjectIds.includes(question.subjectId))) return [];
-      const subject = subjects.find(item => item.id === question.subjectId);
-      const partIndex = subject?.parts.findIndex(part => part.title === question.lessonRef.partTitle) ?? -1;
-      return [{
-        ...question,
-        text: question.statement,
-        partTitle: question.lessonRef.partTitle,
-        partIndex,
-        subjectName: subject?.name ?? question.subjectId,
-        examSupport: question.support
-      }];
+      return [toExamPracticeQuestion(question)];
     });
   }
   return subjects.flatMap(subject => {
@@ -172,44 +306,50 @@ function getPracticeQuestionPool() {
     return subject.parts.flatMap((part, partIndex) => {
       const partDifficulty = part.difficulty ?? difficultyForIndex(partIndex, subject.parts.length);
       if (difficulty !== "all" && partDifficulty !== difficulty) return [];
-      return (Array.isArray(part.questions) ? part.questions : []).map((question, questionIndex) => ({
-        ...question,
-        subjectId: subject.id,
-        subjectName: subject.name,
-        partTitle: part.title,
-        partIntro: part.intro,
-        partPoints: part.points,
-        partIndex,
-        questionIndex
-      }));
+      return (Array.isArray(part.questions) ? part.questions : [])
+        .map((question, questionIndex) => toLessonPracticeQuestion(question, subject, partIndex, questionIndex));
     });
   });
 }
 
 function renderExamChart(chart) {
-  const max = Math.max(...chart.values);
-  const axisMax = Math.ceil(max / 10) * 10 || 10;
+  const dataMin = Math.min(0, ...chart.values);
+  const dataMax = Math.max(0, ...chart.values);
+  const rawStep = (dataMax - dataMin) / 4 || 1;
+  const magnitude = 10 ** Math.floor(Math.log10(rawStep));
+  const normalizedStep = rawStep / magnitude;
+  const step = (normalizedStep <= 1 ? 1 : normalizedStep <= 2 ? 2 : normalizedStep <= 5 ? 5 : 10) * magnitude;
+  const axisMin = Math.floor(dataMin / step) * step;
+  const axisMax = Math.ceil(dataMax / step) * step || 1;
   const chartTop = 30;
   const chartBottom = 230;
   const chartHeight = chartBottom - chartTop;
-  const barWidth = 56;
+  const axisRange = axisMax - axisMin || 1;
+  const zeroY = chartBottom - chartHeight * (0 - axisMin) / axisRange;
+  const barWidth = Math.min(56, 484 / chart.labels.length * 0.7);
   const positions = chart.labels.map((_, index) =>
     86 + (index + 0.5) * 484 / chart.labels.length
   );
-  const grid = Array.from({ length: 5 }, (_, index) => {
-    const value = axisMax - axisMax * index / 4;
-    const y = chartTop + chartHeight * index / 4;
+  const tickCount = Math.max(1, Math.round(axisRange / step));
+  const grid = Array.from({ length: tickCount + 1 }, (_, index) => {
+    const value = axisMax - step * index;
+    const y = chartTop + chartHeight * index / tickCount;
     return `<line x1="66" y1="${y}" x2="570" y2="${y}" stroke="#bbb" stroke-dasharray="3 3"/>
-      <text x="58" y="${y + 4}" text-anchor="end" font-size="10" fill="#333">${Number.isInteger(value) ? value : value.toFixed(1)}</text>`;
+      <text x="58" y="${y + 4}" text-anchor="end" font-size="10" fill="#333">${escapeHtml(Number(value.toPrecision(4)).toLocaleString("pt-BR"))}</text>`;
   }).join("");
   const bars = chart.values.map((value, index) => {
-    const height = chartHeight * value / axisMax;
+    const valueY = chartBottom - chartHeight * (value - axisMin) / axisRange;
+    const height = Math.abs(zeroY - valueY);
     const x = positions[index] - barWidth / 2;
-    const y = chartBottom - height;
+    const y = Math.min(zeroY, valueY);
     return `<rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="#316ac5" stroke="#173d78"/>
-      <text x="${positions[index]}" y="${Math.max(y - 6, 15)}" text-anchor="middle" font-size="11" fill="#222">${value}</text>
+      <text x="${positions[index]}" y="${value >= 0 ? Math.max(y - 6, 15) : Math.min(y + height + 14, 244)}" text-anchor="middle" font-size="11" fill="#222">${escapeHtml(value.toLocaleString("pt-BR"))}</text>
       <text x="${positions[index]}" y="250" text-anchor="middle" font-size="10" fill="#222">${escapeHtml(chart.labels[index])}</text>`;
   }).join("");
+  const line = chart.type === "line"
+    ? `<polyline points="${chart.values.map((value, index) => `${positions[index]},${chartBottom - chartHeight * (value - axisMin) / axisRange}`).join(" ")}" fill="none" stroke="#173d78" stroke-width="3"/>
+      ${chart.values.map((value, index) => `<circle cx="${positions[index]}" cy="${chartBottom - chartHeight * (value - axisMin) / axisRange}" r="5" fill="#316ac5" stroke="#173d78"/>`).join("")}`
+    : bars;
   const rows = chart.labels.map((label, index) =>
     `<tr><th scope="row">${escapeHtml(label)}</th><td>${chart.values[index]} ${escapeHtml(chart.unit)}</td></tr>`
   ).join("");
@@ -217,21 +357,60 @@ function renderExamChart(chart) {
     <h4>${escapeHtml(chart.title)}</h4>
     <p>${escapeHtml(chart.description)}</p>
     <svg viewBox="0 0 620 270" role="img" aria-label="${escapeHtml(`${chart.title}: ${chart.labels.map((label, index) => `${label}, ${chart.values[index]} ${chart.unit}`).join("; ")}`)}">
-      ${grid}<line x1="66" y1="${chartBottom}" x2="570" y2="${chartBottom}" stroke="#333"/>
-      ${bars}<text x="12" y="18" font-size="10" fill="#333">${escapeHtml(chart.unit)}</text>
+      ${grid}<line x1="66" y1="${zeroY}" x2="570" y2="${zeroY}" stroke="#333"/>
+      ${line}<text x="12" y="18" font-size="10" fill="#333">${escapeHtml(chart.unit)}</text>
     </svg>
     <div class="table-scroll"><table><caption class="sr-only">${escapeHtml(chart.title)}: dados em tabela</caption><tbody>${rows}</tbody></table></div>
     <figcaption>${escapeHtml(chart.source ?? "Dados hipotéticos, elaborados para fins didáticos; não representam estatísticas oficiais.")}</figcaption>
   </figure>`;
 }
 
+function renderSupportTable(support) {
+  const headers = Array.isArray(support.headers) ? support.headers : [];
+  const rows = Array.isArray(support.rows) ? support.rows : [];
+  return `<figure class="exam-graphic">
+    ${support.title ? `<h4>${escapeHtml(support.title)}</h4>` : ""}
+    ${support.description ? `<p>${escapeHtml(support.description)}</p>` : ""}
+    <div class="table-scroll"><table>
+      ${support.caption ? `<caption>${escapeHtml(support.caption)}</caption>` : ""}
+      ${headers.length ? `<thead><tr>${headers.map(header => `<th scope="col">${escapeHtml(header)}</th>`).join("")}</tr></thead>` : ""}
+      <tbody>${rows.map(row => `<tr>${row.map((cell, index) => `<${index === 0 && headers.length ? "th scope=\"row\"" : "td"}>${escapeHtml(cell)}</${index === 0 && headers.length ? "th" : "td"}>`).join("")}</tr>`).join("")}</tbody>
+    </table></div>
+    ${support.source ? `<figcaption>${escapeHtml(support.source)}</figcaption>` : ""}
+  </figure>`;
+}
+
+function renderStaticSvg(support) {
+  const allowedTags = new Set(["rect", "line", "circle", "polyline", "polygon", "path", "text"]);
+  const allowedAttributes = new Set([
+    "x", "y", "x1", "x2", "y1", "y2", "cx", "cy", "r", "width", "height",
+    "fill", "stroke", "stroke-width", "points", "d", "font-size", "text-anchor"
+  ]);
+  const elements = (support.elements ?? []).filter(item => allowedTags.has(item.tag)).map(item => {
+    const attributes = Object.entries(item.attributes ?? {})
+      .filter(([name]) => allowedAttributes.has(name))
+      .map(([name, value]) => `${name}="${escapeHtml(String(value))}"`).join(" ");
+    const content = item.tag === "text" ? escapeHtml(item.text ?? "") : "";
+    return `<${item.tag}${attributes ? ` ${attributes}` : ""}>${content}</${item.tag}>`;
+  }).join("");
+  return `<figure class="exam-graphic">
+    ${support.title ? `<h4>${escapeHtml(support.title)}</h4>` : ""}
+    ${support.description ? `<p>${escapeHtml(support.description)}</p>` : ""}
+    <svg viewBox="${escapeHtml(support.viewBox ?? "0 0 600 300")}" role="img" aria-label="${escapeHtml(support.title ?? "Figura de apoio")}">${elements}</svg>
+    ${support.source ? `<figcaption>${escapeHtml(support.source)}</figcaption>` : ""}
+  </figure>`;
+}
+
 function renderExamSupport(question) {
-  return question.examSupport.map((support, index) => {
-    if (support.type === "chart") {
-      return renderExamChart({ ...support.chart, source: support.source });
+  const supports = Array.isArray(question.examSupport) ? question.examSupport : [];
+  return supports.map((support, index) => {
+    if (support.type === "chart" || support.type === "line") {
+      return renderExamChart({ ...support.chart, type: support.type, source: support.source });
     }
+    if (support.type === "table") return renderSupportTable(support);
+    if (support.type === "svg") return renderStaticSvg(support);
     return `<article class="exam-stimulus">
-      <h4>Texto de apoio${question.examSupport.filter(item => item.type === "text").length > 1 ? ` ${index + 1}` : ""}</h4>
+      <h4>Texto de apoio${supports.filter(item => item.type === "text").length > 1 ? ` ${index + 1}` : ""}</h4>
       <p>${escapeHtml(support.content)}</p>
       ${support.source ? `<p><small>${escapeHtml(support.source)}</small></p>` : ""}
     </article>`;
@@ -257,12 +436,20 @@ function shuffleList(items) {
 }
 
 function shuffleChoices(question) {
+  if (question.keepOrder) {
+    return { ...question, choiceOrder: question.choices.map((_, index) => index) };
+  }
   const order = shuffleList(question.choices.map((_, index) => index));
   return {
     ...question,
     choices: order.map(index => question.choices[index]),
-    answer: order.indexOf(question.answer)
+    answer: order.indexOf(question.answer),
+    choiceOrder: order
   };
+}
+
+function getExamDurationMinutes(questionCount) {
+  return Math.max(10, Math.round(questionCount * 3));
 }
 
 function updatePracticeAvailability() {
@@ -277,11 +464,10 @@ function updatePracticeAvailability() {
     const count = sectionCounts.reduce((sum, sectionCount) => sum + sectionCount, 0);
     const cadernoCount = sectionCounts.length;
     const cadernoLabel = cadernoCount === 1 ? "1 caderno de área" : `${cadernoCount} cadernos de área`;
-    const areaId = mainContent.querySelector("#practiceArea")?.value ?? "full";
-    const timerMinutes = examDays[areaId]?.minutes ?? (areas[0]?.id === "math" || areas[0]?.id === "nature" ? 150 : 165);
+    const timerMinutes = getExamDurationMinutes(count);
     const duration = formatTime(timerMinutes * 60000);
     summary.textContent = count
-      ? `${count} questões autorais disponíveis em ${cadernoLabel}. Referência de tempo para esta modalidade: ${duration}. O caderno oficial tem 45 questões por área.`
+      ? `${count} questões autorais disponíveis em ${cadernoLabel}. Tempo de referência proporcional ao banco atual: ${duration} (cerca de 3 minutos por questão). O caderno oficial tem 45 questões por área.`
       : "Não há questões para esta seleção. Escolha outra matéria ou dificuldade.";
   } else {
     const count = pool.length;
@@ -297,10 +483,12 @@ function updatePracticeAvailability() {
 
 function renderPracticeQuestion(question, index, isExam, checked) {
   const examNumber = question.examNumber ?? index + 1;
+  const hasSupport = Array.isArray(question.examSupport);
+  const showLetters = isExam || hasSupport;
   return `<fieldset class="practice-question${isExam ? " exam-question" : ""}" data-practice-question="${index}">
     <legend>${isExam ? `Questão ${String(examNumber).padStart(2, "0")}` : `Questão ${index + 1}`}</legend>
     <p class="question-source">${escapeHtml(question.subjectName)} · ${escapeHtml(question.topic ?? question.partTitle)}</p>
-    ${isExam ? renderExamSupport(question) : ""}
+    ${hasSupport ? renderExamSupport(question) : ""}
     <h3>${escapeHtml(question.statement ?? question.text)}</h3>
     <div class="answers">${question.choices.map((choice, choiceIndex) => {
       const selected = practiceSession.answers[index] === choiceIndex;
@@ -308,7 +496,7 @@ function renderPracticeQuestion(question, index, isExam, checked) {
       const incorrect = checked && selected && choiceIndex !== question.answer;
       return `<label class="answer${correct ? " correct" : ""}${incorrect ? " incorrect" : ""}">
         <input type="radio" name="practice-${index}" value="${choiceIndex}"${selected ? " checked" : ""}${checked ? " disabled" : ""}>
-        <span><span class="answer-letter">${isExam ? `${String.fromCharCode(65 + choiceIndex)})` : ""}</span>${escapeHtml(choice)}</span>
+        <span><span class="answer-letter">${showLetters ? `${String.fromCharCode(65 + choiceIndex)})` : ""}</span>${escapeHtml(choice)}</span>
       </label>`;
     }).join("")}</div>
     ${isExam && !checked ? `<button class="win-button answer-flag" type="button" data-flag-question="${index}" aria-pressed="${practiceSession.flagged.includes(index)}">${practiceSession.flagged.includes(index) ? "🚩 Desmarcar revisão" : "🚩 Marcar para revisar"}</button>` : ""}
@@ -383,12 +571,12 @@ function renderPracticeSession() {
     ? `<div class="exam-booklet">
         <header class="exam-booklet-header"><h2>Caderno de questões · simulado</h2><p>Questões originais elaboradas a partir do conteúdo do seu plano de estudos.</p></header>
         ${session.sections.map(section => `<section class="exam-area">
-          <h2 class="exam-area-heading">${escapeHtml(section.name)} · questões 01 a ${String(section.questions.length).padStart(2, "0")}</h2>
+          <h2 class="exam-area-heading">${escapeHtml(section.name)} · questões ${String(section.questions[0]?.examNumber ?? 0).padStart(2, "0")} a ${String(section.questions.at(-1)?.examNumber ?? 0).padStart(2, "0")}</h2>
           ${section.questions.map(question => renderPracticeQuestion(question, question.sessionIndex, true, checked)).join("")}
         </section>`).join("")}
       </div>`
     : `<div class="practice-questions">${session.questions.map((question, index) =>
-        renderPracticeQuestion(question, index, isReview, checked)
+        renderPracticeQuestion(question, index, false, checked)
       ).join("")}</div>`;
   const questionNavigation = isExam && !checked
     ? `<nav class="exam-toolbar" aria-label="Painel de questões">
@@ -414,7 +602,7 @@ function renderPracticeSession() {
         : `<button class="win-button primary" type="button" data-action="submit-practice">Conferir resultado</button>`}
       <button class="win-button" type="button" data-action="practice-home">Voltar</button>
     </div>`;
-  document.body.classList.toggle("focus-mode", isExam && session.focusMode === true);
+  document.body.classList.toggle("focus-mode", isExam && session.focusMode === true && !checked);
   if (isExam && !checked) startExamTimer();
 }
 
@@ -429,6 +617,7 @@ function startPractice() {
   let questions;
   let sections = [];
   if (isExam) {
+    const areaOffsets = { languages: 0, humanities: 45, nature: 90, math: 135 };
     sections = getSelectedExamAreas().flatMap(area => {
       const areaPool = pool.filter(question => area.subjectIds.includes(question.subjectId));
       if (!areaPool.length) return [];
@@ -438,7 +627,7 @@ function startPractice() {
           ...shuffleChoices(question),
           examAreaId: area.id,
           examAreaName: area.name,
-          examNumber: index + 1
+          examNumber: (areaOffsets[area.id] ?? 0) + index + 1
         }));
       return [{ id: area.id, name: area.name, questions: selectedQuestions }];
     });
@@ -448,7 +637,7 @@ function startPractice() {
     }
     questions = sections.flatMap(section => section.questions);
   } else {
-    questions = shuffleList(pool).slice(0, 10);
+    questions = shuffleList(pool).slice(0, 10).map(shuffleChoices);
   }
   if (!questions.length) {
     updatePracticeAvailability();
@@ -461,8 +650,7 @@ function startPractice() {
     : isExam ? examDays[selectedArea]?.name ?? areaName : "Todas as matérias";
   const difficulty = mainContent.querySelector("#practiceDifficulty").value;
   const difficultyName = difficulty === "all" ? "todas as dificuldades" : difficultyNames[difficulty].toLowerCase();
-  const durationMinutes = examDays[selectedArea]?.minutes ??
-    (getSelectedExamAreas().some(area => area.id === "math" || area.id === "nature") ? 150 : 165);
+  const durationMinutes = getExamDurationMinutes(questions.length);
   const startedAt = Date.now();
   practiceSession = {
     view: activeView,
@@ -481,9 +669,10 @@ function startPractice() {
 }
 
 function startErrorReview() {
-  const wrongQuestions = getAttempts().flatMap(attempt => attempt.wrongQuestions ?? [])
-    .map(item => item.question)
-    .filter(question => question && Array.isArray(question.choices) && Number.isInteger(question.answer));
+  const notebook = getErrorNotebook();
+  const wrongQuestions = Object.values(notebook)
+    .map(item => restorePracticeQuestion(item.ref))
+    .filter(Boolean);
   const pool = shuffleList(wrongQuestions).slice(0, 10);
   if (!pool.length) {
     statusText.textContent = "Seu caderno de erros está vazio. Conclua uma prática e revise as questões erradas.";
@@ -536,15 +725,16 @@ function submitPractice(force = false) {
 
 function renderReviewDashboard() {
   const attempts = getAttempts().slice().reverse();
+  const errorNotebook = getErrorNotebook();
   const objectiveAttempts = attempts.filter(attempt => Number.isFinite(attempt.score) && attempt.total > 0);
-  const wrongCount = attempts.reduce((sum, attempt) => sum + (attempt.wrongQuestions?.length ?? 0), 0);
+  const wrongCount = Object.keys(errorNotebook).length;
   const totalAnswers = objectiveAttempts.reduce((sum, attempt) => sum + attempt.total, 0);
   const totalCorrect = objectiveAttempts.reduce((sum, attempt) => sum + attempt.score, 0);
   const rows = attempts.slice(0, 20).map(attempt => {
     const date = new Date(attempt.date).toLocaleString("pt-BR");
     const result = Number.isFinite(attempt.score)
       ? `${attempt.score}/${attempt.total} (${Math.round(attempt.score * 100 / attempt.total)}%)`
-      : `Redação · ${attempt.lines ?? 0} linhas / ${attempt.total ?? 0} palavras · sem nota automática`;
+      : `Redação · ${attempt.lines ?? 0} linhas estimadas / ${attempt.total ?? 0} palavras · sem nota automática`;
     return `<tr><td>${escapeHtml(date)}</td><td>${escapeHtml(attempt.label ?? "Prática")}</td><td>${result}</td></tr>`;
   }).join("");
   const weeklyTotals = new Map();
@@ -561,6 +751,7 @@ function renderReviewDashboard() {
   const weeklyRows = [...weeklyTotals.entries()].slice(0, 8).map(([week, stats]) =>
     `<tr><th scope="row">Semana de ${escapeHtml(week)}</th><td>${stats.correct}/${stats.total}</td><td>${Math.round(stats.correct * 100 / stats.total)}%</td></tr>`
   ).join("");
+  const essayHistory = attempts.filter(attempt => attempt.view === "essay" && attempt.essayText);
   mainContent.innerHTML = `
     <div class="crumb"><span>Plano de Estudos 95</span><span>›</span><span class="crumb-current">Revisão</span></div>
     <div class="lesson-heading"><div><h1>Revisão e evolução</h1><p>Use seus resultados para escolher o próximo assunto. O desempenho mostra acertos, não uma estimativa de nota TRI.</p></div></div>
@@ -573,14 +764,21 @@ function renderReviewDashboard() {
     ${weeklyRows ? `<h2>Evolução semanal</h2><div class="table-scroll"><table class="exam-result-table"><thead><tr><th>Período</th><th>Acertos</th><th>Percentual</th></tr></thead><tbody>${weeklyRows}</tbody></table></div>` : ""}
     <h2>Histórico recente</h2>
     ${attempts.length ? `<div class="table-scroll"><table class="exam-result-table"><thead><tr><th>Data</th><th>Prática</th><th>Resultado</th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p>Ainda não há práticas concluídas. Faça um quiz ou prova para começar seu histórico.</p>`}
+    ${essayHistory.length ? `<h2>Redações anteriores</h2>${essayHistory.map(attempt => `<details class="essay-history">
+      <summary>${escapeHtml(new Date(attempt.date).toLocaleDateString("pt-BR"))} · ${escapeHtml(attempt.label)} · ${attempt.total} palavras</summary>
+      <p>${escapeHtml(attempt.essayText)}</p>
+      <p>Linhas estimadas: ${attempt.lines ?? 0} · Autoavaliação salva: ${Object.keys(attempt.competencies ?? {}).length ? "sim" : "não"}</p>
+    </details>`).join("")}` : ""}
     <h2>Erros recentes</h2>
-    ${wrongCount ? attempts.flatMap(attempt => attempt.wrongQuestions ?? []).slice(-10).reverse().map(({ question, selectedAnswer }) =>
-      `<article class="practice-error"><p><strong>${escapeHtml(question.subjectName ?? question.subjectId)} · ${escapeHtml(question.topic ?? question.partTitle)}</strong></p>
+    ${wrongCount ? Object.values(errorNotebook).sort((a, b) => b.lastWrongAt - a.lastWrongAt).slice(0, 10).map(item => {
+      const question = restorePracticeQuestion(item.ref);
+      if (!question) return "";
+      return `<article class="practice-error"><p><strong>${escapeHtml(question.subjectName ?? question.subjectId)} · ${escapeHtml(question.topic ?? question.partTitle)}</strong></p>
         <p>${escapeHtml(question.statement ?? question.text)}</p>
-        <p>Sua resposta: ${selectedAnswer === null ? "em branco" : escapeHtml(question.choices[selectedAnswer])} · Gabarito: ${escapeHtml(question.choices[question.answer])}</p>
+        <p>Errada ${item.times} ${item.times === 1 ? "vez" : "vezes"} · sequência correta: ${item.streak ?? 0}</p>
         <button class="win-button" type="button" data-action="open-review-lesson" data-subject-id="${escapeHtml(question.lessonRef?.subjectId ?? question.subjectId)}" data-part-title="${escapeHtml(question.lessonRef?.partTitle ?? question.partTitle)}">Revisar esta aula</button>
-      </article>`
-    ).join("") : `<p>Quando você errar ou deixar uma questão em branco, ela aparecerá aqui.</p>`}`;
+      </article>`;
+    }).join("") : `<p>Quando você errar ou deixar uma questão em branco, ela aparecerá aqui.</p>`}`;
 }
 
 function openLessonFromPractice(index) {
@@ -619,9 +817,11 @@ function startEssayTimer() {
 function saveEssayDraft(draft) {
   const editor = mainContent.querySelector("#essayText");
   if (editor) draft.text = editor.value;
-  const checklist = [...mainContent.querySelectorAll('[data-essay-competency]:checked')]
-    .map(input => input.dataset.essayCompetency);
-  draft.competencies = checklist;
+  const competencyInputs = [...mainContent.querySelectorAll("[data-essay-competency]")];
+  const ratings = competencyInputs
+    .map(input => [input.dataset.essayCompetency, input.value])
+    .filter(([, value]) => value !== "");
+  if (competencyInputs.length) draft.competencies = Object.fromEntries(ratings);
   try {
     localStorage.setItem(essayDraftStorageKey, JSON.stringify(draft));
     return true;
@@ -647,38 +847,80 @@ function renderEssayPractice() {
   const draft = readStoredJson(essayDraftStorageKey, {});
   const finished = Boolean(draft.finishedAt);
   const remaining = Math.max(0, (draft.endsAt ?? 0) - Date.now());
-  const prompt = {
-    theme: "Desafios para democratizar o acesso à leitura no Brasil",
-    texts: [
-      "A leitura amplia o acesso à informação, à participação cultural e à circulação de diferentes perspectivas. Bibliotecas públicas, escolas e iniciativas comunitárias podem aproximar livros e leitores.",
-      "A disponibilidade de acervos, a acessibilidade para pessoas com deficiência e a diversidade de autores influenciam quem pode escolher o que ler e como participar da vida cultural.",
-      "A formação de leitores envolve tanto o contato com obras quanto condições para frequentar espaços de leitura, desenvolver autonomia e compartilhar interpretações."
-    ]
-  };
-  const competencies = [
-    "Domínio da modalidade escrita formal da língua portuguesa.",
-    "Compreensão do tema e desenvolvimento dentro do gênero dissertativo-argumentativo.",
-    "Seleção, organização e interpretação de informações e argumentos.",
-    "Uso de mecanismos linguísticos para construir a argumentação.",
-    "Proposta de intervenção detalhada e respeitosa aos direitos humanos."
+  const prompts = [
+    {
+      id: "reading",
+      theme: "Desafios para democratizar o acesso à leitura no Brasil",
+      texts: [
+        "A leitura amplia o acesso à informação, à participação cultural e à circulação de diferentes perspectivas. Bibliotecas públicas, escolas e iniciativas comunitárias podem aproximar livros e leitores.",
+        "A disponibilidade de acervos, a acessibilidade para pessoas com deficiência e a diversidade de autores influenciam quem pode escolher o que ler e como participar da vida cultural.",
+        "A formação de leitores envolve tanto o contato com obras quanto condições para frequentar espaços de leitura, desenvolver autonomia e compartilhar interpretações."
+      ]
+    },
+    {
+      id: "climate",
+      theme: "Caminhos para ampliar a segurança hídrica nas cidades brasileiras",
+      texts: [
+        "A segurança hídrica depende da disponibilidade de água em quantidade e qualidade adequadas, além de infraestrutura para captação, tratamento e distribuição.",
+        "Perdas nas redes, ocupação de áreas de mananciais e períodos de estiagem podem afetar o abastecimento. A prevenção envolve planejamento, monitoramento e participação social.",
+        "Medidas de uso eficiente, proteção de nascentes e reúso adequado podem complementar investimentos em infraestrutura, respeitando as características de cada território."
+      ]
+    },
+    {
+      id: "accessibility",
+      theme: "Desafios para garantir acessibilidade nos espaços públicos brasileiros",
+      texts: [
+        "A acessibilidade permite que pessoas com diferentes características e necessidades utilizem espaços, serviços e informações com autonomia e segurança.",
+        "Calçadas contínuas, transporte acessível, sinalização compreensível e recursos de comunicação podem reduzir barreiras no cotidiano.",
+        "A participação das pessoas com deficiência no planejamento e na avaliação de políticas públicas contribui para identificar obstáculos que projetos genéricos podem não perceber."
+      ]
+    }
   ];
+  const prompt = prompts.find(item => item.id === draft.themeId) ?? prompts[0];
+  if (!draft.themeId) draft.themeId = prompt.id;
+  draft.themeTitle = prompt.theme;
+  const competencies = [
+    ["Domínio da escrita formal", "Ortografia, gramática, registro e convenções da escrita."],
+    ["Compreensão do tema e do gênero", "Atendimento ao recorte temático e à estrutura dissertativo-argumentativa."],
+    ["Argumentação", "Seleção, organização e interpretação de informações e argumentos."],
+    ["Coesão", "Articulação das ideias e uso de recursos linguísticos para construir a argumentação."],
+    ["Intervenção", "Proposta de ação detalhada, relacionada ao tema e respeitosa aos direitos humanos."]
+  ];
+  const rubric = [
+    "0 · Não demonstrado no texto.",
+    "1 · Muito incipiente; há desvios ou lacunas que comprometem a competência.",
+    "2 · Parcial; demonstra alguns elementos, mas com problemas recorrentes.",
+    "3 · Adequado; atende ao essencial, embora ainda haja pontos a desenvolver.",
+    "4 · Consistente; bom domínio, com poucas fragilidades.",
+    "5 · Muito consistente; domínio claro, articulado e bem desenvolvido."
+  ];
+  const savedRatings = Array.isArray(draft.competencies)
+    ? Object.fromEntries(draft.competencies.map(id => [id, "3"]))
+    : draft.competencies ?? {};
   mainContent.innerHTML = `
     <div class="crumb"><span>Plano de Estudos 95</span><span>›</span><span class="crumb-current">Redação</span></div>
     <div class="lesson-heading"><div><h1>Prática de redação</h1><p>Proposta original para treino. Organize suas ideias, escreva e revise com as competências do ENEM. Não há correção ou nota automática.</p></div></div>
     <div class="essay-practice">
       <section class="essay-prompt"><h2>Proposta de redação</h2><p><strong>Tema:</strong> ${escapeHtml(prompt.theme)}</p>
+        ${!finished ? `<div class="form-row"><label for="essayTheme">Escolher outro tema</label><select id="essayTheme">${prompts.map(item => `<option value="${item.id}"${item.id === prompt.id ? " selected" : ""}>${escapeHtml(item.theme)}</option>`).join("")}</select></div>` : ""}
         <h3>Textos motivadores</h3>${prompt.texts.map((text, index) => `<p><strong>Texto ${index + 1}.</strong> ${escapeHtml(text)}</p>`).join("")}
         <p>Com base na leitura dos textos motivadores e em seus conhecimentos, redija um texto dissertativo-argumentativo em modalidade escrita formal sobre o tema. Apresente proposta de intervenção que respeite os direitos humanos.</p>
       </section>
       <div class="essay-stats"><strong>Tempo: <span id="essayTimer">${draft.endsAt ? formatTime(remaining) : "60:00"}</span></strong>
-        <span>Linhas: <strong id="essayLines">0</strong> (referência: 7 a 30)</span>
+        <span>Linhas estimadas: <strong id="essayLines">0</strong> (7 a 30)</span>
         <span>Palavras: <strong id="essayWords">0</strong></span>
       </div>
-      <p class="essay-line-guidance" id="essayLineGuidance" aria-live="polite">A contagem considera as quebras de linha do rascunho; confira também a extensão na folha de redação.</p>
+      <p class="essay-line-guidance" id="essayLineGuidance" aria-live="polite">Estimativa aproximada de 10 palavras por linha manuscrita; a contagem real depende da letra e da folha oficial.</p>
       <textarea class="essay-editor" id="essayText" aria-label="Rascunho da redação" placeholder="Escreva sua redação aqui..."${finished ? " disabled" : ""}>${escapeHtml(draft.text ?? "")}</textarea>
       ${finished ? `<p class="practice-summary">Treino finalizado e salvo. A autoavaliação não gera pontuação automática.</p>` : ""}
       <fieldset class="essay-checklist"${finished ? " disabled" : ""}><legend>Autoavaliação · sem nota automática</legend>
-        ${competencies.map((text, index) => `<label><input type="checkbox" data-essay-competency="${index + 1}"${draft.competencies?.includes(String(index + 1)) ? " checked" : ""}> Competência ${index + 1}: ${escapeHtml(text)}</label>`).join("")}
+        ${competencies.map(([title, description], index) => `<div class="essay-competency">
+          <label for="essayCompetency${index + 1}"><strong>Competência ${index + 1}: ${escapeHtml(title)}.</strong> ${escapeHtml(description)}</label>
+          <select id="essayCompetency${index + 1}" data-essay-competency="${index + 1}">
+            <option value="">Não avaliada</option>
+            ${rubric.map((level, levelIndex) => `<option value="${levelIndex}"${String(savedRatings[index + 1] ?? "") === String(levelIndex) ? " selected" : ""}>${escapeHtml(level)}</option>`).join("")}
+          </select>
+        </div>`).join("")}
       </fieldset>
       <div class="quiz-actions">
         ${!draft.startedAt && !finished ? `<button class="win-button" type="button" data-action="start-essay-timer">Iniciar cronômetro de 60 minutos</button>` : ""}
@@ -686,6 +928,7 @@ function renderEssayPractice() {
         <button class="win-button" type="button" data-action="clear-essay">Novo rascunho</button>
       </div>
     </div>`;
+  saveEssayDraft(draft);
   updateEssayCounts();
   if (draft.startedAt && !finished) {
     if (essayTimer !== null) clearInterval(essayTimer);
@@ -696,8 +939,8 @@ function renderEssayPractice() {
 function updateEssayCounts() {
   const editor = mainContent.querySelector("#essayText");
   if (!editor) return;
-  const lines = editor.value ? editor.value.split(/\r\n|\r|\n/).length : 0;
   const words = editor.value.trim() ? editor.value.trim().split(/\s+/).length : 0;
+  const lines = words ? Math.ceil(words / 10) : 0;
   const lineCount = mainContent.querySelector("#essayLines");
   const wordCount = mainContent.querySelector("#essayWords");
   const guidance = mainContent.querySelector("#essayLineGuidance");
@@ -705,12 +948,40 @@ function updateEssayCounts() {
   if (wordCount) wordCount.textContent = String(words);
   if (guidance) {
     guidance.textContent = lines === 0
-      ? "A proposta oficial considera de 7 a 30 linhas; cada quebra no rascunho conta como uma linha."
+      ? "Estimativa aproximada de 10 palavras por linha manuscrita; a contagem real depende da letra e da folha oficial."
       : lines < 7
-        ? `Rascunho com ${lines} linha(s); o mínimo de referência é 7.`
+        ? `Estimativa de ${lines} linha(s) manuscrita(s); a referência mínima é 7.`
         : lines > 30
-          ? `Rascunho com ${lines} linhas; o limite de referência é 30.`
-          : `Rascunho com ${lines} linhas, dentro da referência de 7 a 30.`;
+          ? `Estimativa de ${lines} linhas manuscritas; a referência máxima é 30.`
+          : `Estimativa de ${lines} linhas manuscritas, dentro da referência de 7 a 30.`;
+  }
+}
+
+function archiveEssayDraft() {
+  const draft = readStoredJson(essayDraftStorageKey, {});
+  const editor = mainContent.querySelector("#essayText");
+  if (editor) draft.text = editor.value;
+  if (draft.finishedAt || !draft.text?.trim()) return true;
+  const words = draft.text.trim().split(/\s+/).length;
+  const attempts = getAttempts();
+  attempts.push({
+    date: Date.now(),
+    view: "essay",
+    label: `Rascunho · ${draft.themeTitle ?? draft.themeId ?? "redação"}`,
+    total: words,
+    lines: Math.ceil(words / 10),
+    score: null,
+    essayText: draft.text,
+    themeId: draft.themeId,
+    competencies: draft.competencies ?? {},
+    isDraft: true
+  });
+  try {
+    localStorage.setItem(attemptsStorageKey, JSON.stringify(attempts.slice(-50)));
+    return true;
+  } catch (error) {
+    reportStorageFailure("Não foi possível arquivar o rascunho da redação.", error);
+    return false;
   }
 }
 
@@ -727,16 +998,19 @@ function finishEssayPractice(expired = false) {
   let saved = saveEssayDraft(draft);
   const attempts = getAttempts();
   if (draft.text?.trim()) {
-    const lines = draft.text.split(/\r\n|\r|\n/).length;
     const words = draft.text.trim().split(/\s+/).length;
     attempts.push({
       date: draft.finishedAt,
       view: "essay",
-      label: "Redação · Democratização do acesso à leitura",
+      label: `Redação · ${draft.themeTitle ?? draft.themeId ?? "tema"}`,
       total: words,
-      lines,
+      lines: Math.ceil(words / 10),
       score: null,
-      wrongQuestions: []
+      wrongQuestions: [],
+      essayText: draft.text,
+      themeId: draft.themeId,
+      competencies: draft.competencies ?? {},
+      expired
     });
     try {
       localStorage.setItem(attemptsStorageKey, JSON.stringify(attempts.slice(-50)));
