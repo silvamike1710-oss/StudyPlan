@@ -6,13 +6,15 @@ Site de estudos sem dependências nem etapa de build. Abra `index.html` no naveg
 
 - `index.html` — estrutura da página, navegação, área de conteúdo e formulários.
 - `css/styles.css` — estilos visuais e impressão, incluindo o tema inspirado no Windows 95.
-- `js/data/curriculum.js` — currículo padrão: matérias, partes, teoria e questões das aulas.
-- `js/data/theory-examples.js` — exemplos concretos e cálculos aplicados a cada conceito da teoria.
+- `js/data/curriculum.js` — inicialização dos dados e helper compartilhado para criar partes do currículo e quizzes.
+- `js/data/curriculum/` — um arquivo por matéria, com conceitos, explicações, exemplos e questões das aulas.
+- `js/data/curriculum-finalize.js` — completa explicações de quizzes depois que todas as matérias são carregadas.
+- `js/data/theory-examples.js` — exemplos de reserva para conceitos personalizados sem exemplo explícito.
 - `js/data/exam-questions.js` — banco autoral de questões de prova; cada item inclui suportes, alternativas, gabarito, explicação e referência de aula.
 - `js/practice.js` — quizzes, simulados por dia/área, cronômetros, revisão de erros, histórico e prática de redação.
 - `js/app.js` — inicialização, armazenamento local, navegação, busca e renderização das telas.
 
-Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicada no fim de `index.html`, para compartilhar os dados e as funções da aplicação. Os exemplos da teoria podem ser ajustados na terceira posição de cada item `points` (`[conceito, explicação, exemplo]`); quando ela não é informada, a aplicação usa um exemplo relacionado à matéria e ao conceito. Na aula, cada exemplo fica recolhido e pode ser aberto pelo botão abaixo do conceito.
+Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicada no fim de `index.html`, para compartilhar os dados e as funções da aplicação. Cada matéria fica em `js/data/curriculum/<id-da-matéria>.js`; mantenha a chamada de seu arquivo após `curriculum.js` e antes de `curriculum-finalize.js`. Em cada conceito, o terceiro item de `points` (`[conceito, explicação, exemplo]`) guarda o exemplo junto ao texto; conceitos personalizados sem esse item recebem um exemplo de reserva. Na aula, cada exemplo fica recolhido e pode ser aberto pelo botão abaixo do conceito.
 
 ## Provas e dados salvos
 
