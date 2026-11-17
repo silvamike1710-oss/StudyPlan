@@ -7,11 +7,12 @@ Site de estudos sem dependências nem etapa de build. Abra `index.html` no naveg
 - `index.html` — estrutura da página, navegação, área de conteúdo e formulários.
 - `css/styles.css` — estilos visuais e impressão, incluindo o tema inspirado no Windows 95.
 - `js/data/curriculum.js` — currículo padrão: matérias, partes, teoria e questões das aulas.
+- `js/data/theory-examples.js` — exemplos concretos e cálculos aplicados a cada conceito da teoria.
 - `js/data/exam-questions.js` — banco autoral de questões de prova; cada item inclui suportes, alternativas, gabarito, explicação e referência de aula.
 - `js/practice.js` — quizzes, simulados por dia/área, cronômetros, revisão de erros, histórico e prática de redação.
 - `js/app.js` — inicialização, armazenamento local, navegação, busca e renderização das telas.
 
-Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicada no fim de `index.html`, para compartilhar os dados e as funções da aplicação.
+Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicada no fim de `index.html`, para compartilhar os dados e as funções da aplicação. Os exemplos da teoria podem ser ajustados na terceira posição de cada item `points` (`[conceito, explicação, exemplo]`); quando ela não é informada, a aplicação usa um exemplo relacionado à matéria e ao conceito.
 
 ## Provas e dados salvos
 
