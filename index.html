@@ -1,115 +1,185 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#008080">
-  <link rel="stylesheet" href="css/styles.css">
-  <title>Plano de Estudos 95</title>
-</head>
-<body>
-
-  <main class="desktop">
-    <section class="window" aria-label="Plano de Estudos 95">
-      <header class="titlebar">
-        <span class="app-icon" aria-hidden="true">✎</span>
-        <span>Plano de Estudos 95</span>
-        <div class="titlebar-controls" aria-hidden="true">
-          <button class="title-control" tabindex="-1">_</button>
-          <button class="title-control" tabindex="-1">□</button>
-          <button class="title-control" tabindex="-1">×</button>
-        </div>
-      </header>
-      <nav class="menu-bar" aria-label="Navegação principal">
-        <button class="menu-button active" type="button" data-view="home">Home</button>
-        <button class="menu-button active" type="button" data-view="study">Estudar</button>
-        <button class="menu-button" type="button" data-view="quizzes">Quizzes</button>
-        <button class="menu-button" type="button" data-view="exams">Provas</button>
-        <button class="menu-button" type="button" data-view="essay">Redação</button>
-        <button class="menu-button" type="button" data-view="review">Revisão</button>
-      </nav>
-      <div class="toolbar">
-        <span class="toolbar-note">Seu cantinho para aprender um pouquinho de cada vez.</span>
-        <button class="win-button primary" id="addSubjectTop">＋ Adicionar matéria</button>
-      </div>
-
-      <div class="workspace">
-        <aside class="sidebar">
-          <details class="subject-picker" open>
-            <summary>
-              <span>Matérias e pesquisa</span>
-              <strong id="selectedSubjectLabel"></strong>
-            </summary>
-            <h2 class="section-label">Meu plano de estudos</h2>
-            <div class="search-box">
-              <label for="studySearch">Pesquisar matéria, assunto ou parte</label>
-              <input id="studySearch" type="search" autocomplete="off" placeholder="Ex.: porcentagem, Física..." aria-controls="searchResults">
-            </div>
-            <div class="search-results" id="searchResults" role="listbox" aria-label="Resultados da pesquisa"></div>
-            <div class="subject-list" id="subjectList" aria-label="Matérias"></div>
-            <button class="win-button sidebar-add" id="addSubjectSide">＋ Nova matéria</button>
-          </details>
-          <hr class="side-rule">
-          <div class="study-tip">
-            <strong>✦ Dica de estudo</strong>
-            Estude uma parte e depois responda às questões sem consultar as anotações. Assim, o conteúdo fica na memória!
-            <br><br>
-            <strong>✦ Vai prestar vestibular?</strong>
-            Os programas variam por instituição e edição. Confira o edital, a lista de leituras obrigatórias e os conteúdos específicos da prova.
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#008080" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Plano de Estudos 95</title>
+  </head>
+  <body>
+    <main class="desktop">
+      <section class="window" aria-label="Plano de Estudos 95">
+        <header class="titlebar">
+          <span class="app-icon" aria-hidden="true">✎</span>
+          <span>Plano de Estudos 95</span>
+          <div class="titlebar-controls" aria-hidden="true">
+            <button class="title-control" tabindex="-1">_</button>
+            <button class="title-control" tabindex="-1">□</button>
+            <button class="title-control" tabindex="-1">×</button>
           </div>
-        </aside>
+        </header>
+        <nav class="menu-bar" aria-label="Navegação principal">
+          <button class="menu-button active" type="button" data-view="home">
+            Home
+          </button>
+          <button class="menu-button active" type="button" data-view="study">
+            Estudar
+          </button>
+          <button class="menu-button" type="button" data-view="quizzes">
+            Quizzes
+          </button>
+          <button class="menu-button" type="button" data-view="exams">
+            Provas
+          </button>
+          <button class="menu-button" type="button" data-view="essay">
+            Redação
+          </button>
+          <button class="menu-button" type="button" data-view="review">
+            Revisão
+          </button>
+        </nav>
+        <div class="toolbar">
+          <span class="toolbar-note"
+            >Seu cantinho para aprender um pouquinho de cada vez.</span
+          >
+          <button class="win-button primary" id="addSubjectTop">
+            ＋ Adicionar matéria
+          </button>
+        </div>
 
-        <section class="main" id="mainContent" aria-live="polite"></section>
-      </div>
-      <footer class="statusbar">
-        <span id="statusText">Tudo pronto para começar.</span>
-        <span>Modo de estudo: ATIVO&nbsp; ●</span>
-      </footer>
-    </section>
-  </main>
+        <div class="workspace">
+          <aside class="sidebar">
+            <details class="subject-picker" open>
+              <summary>
+                <span>Matérias e pesquisa</span>
+                <strong id="selectedSubjectLabel"></strong>
+              </summary>
+              <h2 class="section-label">Meu plano de estudos</h2>
+              <div class="search-box">
+                <label for="studySearch"
+                  >Pesquisar matéria, assunto ou parte</label
+                >
+                <input
+                  id="studySearch"
+                  type="search"
+                  autocomplete="off"
+                  placeholder="Ex.: porcentagem, Física..."
+                  aria-controls="searchResults"
+                />
+              </div>
+              <div
+                class="search-results"
+                id="searchResults"
+                role="listbox"
+                aria-label="Resultados da pesquisa"
+              ></div>
+              <div
+                class="subject-list"
+                id="subjectList"
+                aria-label="Matérias"
+              ></div>
+              <button class="win-button sidebar-add" id="addSubjectSide">
+                ＋ Nova matéria
+              </button>
+            </details>
+            <hr class="side-rule" />
+            <div class="study-tip">
+              <strong>✦ Dica de estudo</strong>
+              Estude uma parte e depois responda às questões sem consultar as
+              anotações. Assim, o conteúdo fica na memória!
+              <br /><br />
+              <strong>✦ Vai prestar vestibular?</strong>
+              Os programas variam por instituição e edição. Confira o edital, a
+              lista de leituras obrigatórias e os conteúdos específicos da
+              prova.
+            </div>
+          </aside>
 
-  <dialog id="subjectDialog">
-    <form id="subjectForm">
-      <div class="dialog-title">Adicionar matéria</div>
-      <div class="dialog-body">
-        <div class="form-row">
-          <label for="subjectName">Qual matéria você vai estudar?</label>
-          <input id="subjectName" name="subjectName" maxlength="40" placeholder="Ex.: Biologia" required>
+          <section class="main" id="mainContent" aria-live="polite"></section>
         </div>
-        <p class="dialog-help">Experimente uma matéria do plano do ENEM para abrir aulas e quizzes prontos. Você também pode criar suas próprias matérias e partes de estudo.</p>
-        <div class="dialog-actions">
-          <button class="win-button" type="button" data-close>Cancelar</button>
-          <button class="win-button primary" type="submit">Adicionar matéria</button>
-        </div>
-      </div>
-    </form>
-  </dialog>
+        <footer class="statusbar">
+          <span id="statusText">Tudo pronto para começar.</span>
+          <span>Modo de estudo: ATIVO&nbsp; ●</span>
+        </footer>
+      </section>
+    </main>
 
-  <dialog id="partDialog">
-    <form id="partForm">
-      <div class="dialog-title">Criar uma parte de estudo</div>
-      <div class="dialog-body">
-        <div class="form-row">
-          <label for="partTitle">Nome da parte ou do tema</label>
-          <input id="partTitle" name="partTitle" maxlength="60" placeholder="Ex.: Fotossíntese" required>
+    <dialog id="subjectDialog">
+      <form id="subjectForm">
+        <div class="dialog-title">Adicionar matéria</div>
+        <div class="dialog-body">
+          <div class="form-row">
+            <label for="subjectName">Qual matéria você vai estudar?</label>
+            <input
+              id="subjectName"
+              name="subjectName"
+              maxlength="40"
+              placeholder="Ex.: Biologia"
+              required
+            />
+          </div>
+          <p class="dialog-help">
+            Experimente uma matéria do plano do ENEM para abrir aulas e quizzes
+            prontos. Você também pode criar suas próprias matérias e partes de
+            estudo.
+          </p>
+          <div class="dialog-actions">
+            <button class="win-button" type="button" data-close>
+              Cancelar
+            </button>
+            <button class="win-button primary" type="submit">
+              Adicionar matéria
+            </button>
+          </div>
         </div>
-        <div class="form-row">
-          <label for="partTheory">Teoria e anotações</label>
-          <textarea id="partTheory" name="partTheory" placeholder="Conceito: explicação, uma ideia por linha (mínimo de três ideias)." required></textarea>
-        </div>
-        <p class="dialog-help">Escreva ao menos três ideias, uma por linha; separe o conceito da explicação com dois-pontos. O quiz relacionará cada descrição aos conceitos da própria aula.</p>
-        <div class="dialog-actions">
-          <button class="win-button" type="button" data-close>Cancelar</button>
-          <button class="win-button primary" type="submit">Criar parte</button>
-        </div>
-      </div>
-    </form>
-  </dialog>
+      </form>
+    </dialog>
 
-  <script src="js/data/curriculum.js"></script>
-  <script src="js/data/theory-examples.js"></script>
-  <script src="js/data/exam-questions.js"></script>
-  <script src="js/practice.js"></script>
-  <script src="js/app.js"></script>
-</body>
+    <dialog id="partDialog">
+      <form id="partForm">
+        <div class="dialog-title">Criar uma parte de estudo</div>
+        <div class="dialog-body">
+          <div class="form-row">
+            <label for="partTitle">Nome da parte ou do tema</label>
+            <input
+              id="partTitle"
+              name="partTitle"
+              maxlength="60"
+              placeholder="Ex.: Fotossíntese"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="partTheory">Teoria e anotações</label>
+            <textarea
+              id="partTheory"
+              name="partTheory"
+              placeholder="Conceito: explicação, uma ideia por linha (mínimo de três ideias)."
+              required
+            ></textarea>
+          </div>
+          <p class="dialog-help">
+            Escreva ao menos três ideias, uma por linha; separe o conceito da
+            explicação com dois-pontos. O quiz relacionará cada descrição aos
+            conceitos da própria aula.
+          </p>
+          <div class="dialog-actions">
+            <button class="win-button" type="button" data-close>
+              Cancelar
+            </button>
+            <button class="win-button primary" type="submit">
+              Criar parte
+            </button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="js/data/curriculum.js"></script>
+    <script src="js/data/theory-examples.js"></script>
+    <script src="js/data/exam-questions.js"></script>
+    <script src="js/practice.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>
