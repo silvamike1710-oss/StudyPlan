@@ -846,7 +846,7 @@ function renderLesson() {
         <div class="theory-content">
           <p>${escapeHtml(part.intro)}</p>
           <h3>${escapeHtml(part.heading || "Ideias principais")}</h3>
-          <ul class="theory-points">${part.points.map(point => `<li><strong>${escapeHtml(point[0])}:</strong> ${escapeHtml(point[1])}<div class="concept-example"><strong>Exemplo:</strong> ${escapeHtml(theoryExampleFor(activeSubjectId, part, point))}</div></li>`).join("")}</ul>
+          <ul class="theory-points">${part.points.map(point => `<li><strong>${escapeHtml(point[0])}:</strong> ${escapeHtml(point[1])}<details class="concept-example"><summary>Ver exemplo</summary><p>${escapeHtml(theoryExampleFor(activeSubjectId, part, point))}</p></details></li>`).join("")}</ul>
           <div class="study-challenge"><strong>Desafio para aprofundar:</strong> ${escapeHtml(studyChallenge(part))}</div>
           ${part.workedExample ? `<div class="worked-example"><h3>Exemplo resolvido: ${escapeHtml(part.workedExample.problem)}</h3><ol>${part.workedExample.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol><p><strong>${escapeHtml(part.workedExample.result)}</strong></p></div>` : ""}
           ${part.note ? `<div class="key-idea"><strong>Para lembrar:</strong> ${escapeHtml(part.note)}</div>` : ""}

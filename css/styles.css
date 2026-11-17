@@ -253,8 +253,10 @@ body.focus-mode .exam-booklet { max-width: 1100px; }
 .theory-content ul { margin: 5px 0 13px; padding-left: 20px; }
 .theory-content li { padding: 2px 0; }
 .theory-points > li { padding: 7px 0 9px; }
-.concept-example { margin: 5px 0 1px; padding: 6px 8px; background: #f2f5e9; border-left: 3px solid #6c8c58; font-size: 12px; line-height: 1.5; }
-.concept-example strong { color: #35502a; }
+.concept-example { margin: 6px 0 1px; background: #f2f5e9; border-left: 3px solid #6c8c58; font-size: 12px; line-height: 1.5; }
+.concept-example summary { padding: 6px 8px; color: #35502a; cursor: pointer; font-weight: bold; }
+.concept-example[open] { padding-bottom: 6px; }
+.concept-example[open] > p { margin: 0; padding: 0 8px; color: #353535; }
 .source-note { margin: 13px 0 0; padding-top: 9px; border-top: 1px solid #aaa; color: #555; font-size: 11px; }
 .source-note a { color: #000080; }
 .key-idea { margin-top: 13px; padding: 9px 10px; background: #ffffdf; border: 1px solid #aaa98b; line-height: 1.5; }

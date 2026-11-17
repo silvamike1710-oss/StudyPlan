@@ -13,7 +13,7 @@ const starterLibrary = {
           ["Grandezas físicas", "São propriedades que podem ser medidas, como comprimento, tempo, massa, temperatura e corrente elétrica."],
           ["Sistema Internacional", "O SI padroniza unidades. Exemplos de unidades básicas incluem metro (m), quilograma (kg), segundo (s), kelvin (K) e ampere (A)."],
           ["Conversões", "Use fatores de conversão equivalentes a 1 e verifique se as unidades finais correspondem à grandeza desejada."],
-          ["Escalares e vetores", "Escalares têm módulo; vetores têm módulo, direção e sentido. Deslocamento e força são vetoriais."],
+          ["Escalares e vetores", "Escalares são descritos por um valor e unidade; vetores também têm direção e sentido. Massa é escalar, enquanto deslocamento e força são vetoriais."],
           ["Notação, algarismos e dimensões", "Notação científica representa valores muito grandes ou pequenos. Algarismos significativos comunicam precisão; análise dimensional verifica compatibilidade de fórmulas."]
         ],
         note: "Uma equação física correta precisa ser dimensionalmente consistente nos dois lados.",
@@ -31,8 +31,8 @@ const starterLibrary = {
         points: [
           ["Movimento e repouso", "Um corpo está em movimento quando sua posição muda com o tempo em relação a um referencial; em outro referencial, a descrição pode mudar."],
           ["Trajetória e deslocamento", "Trajetória é o caminho percorrido. Deslocamento é a diferença vetorial entre posição final e inicial; distância percorrida considera o caminho."],
-          ["Velocidade média", "É o deslocamento dividido pelo intervalo de tempo; rapidez média usa a distância total percorrida."],
-          ["Movimento uniforme", "No MU, a velocidade é constante e a posição varia linearmente: x = x₀ + vt."],
+          ["Velocidade média", "Velocidade média é o deslocamento dividido pelo intervalo de tempo; rapidez média usa a distância total percorrida. Um retorno ao ponto inicial pode dar deslocamento nulo, mesmo após caminhar bastante."],
+          ["Movimento uniforme", "No movimento uniforme, a velocidade mantém módulo e sentido constantes, então posições mudam por intervalos iguais em tempos iguais. A função x = x₀ + vt permite prever a posição a partir da posição inicial e do tempo."],
           ["Gráficos", "Em gráfico posição-tempo, a inclinação representa velocidade; em gráfico velocidade-tempo, a área algébrica representa deslocamento."]
         ],
         note: "Não confunda distância percorrida, que depende da trajetória, com deslocamento entre as posições inicial e final.",
@@ -48,7 +48,7 @@ const starterLibrary = {
         intro: "A aceleração mede a mudança da velocidade ao longo do tempo. No movimento uniformemente variado, a aceleração é constante.",
         heading: "Movimentos acelerados",
         points: [
-          ["Aceleração média", "É a variação da velocidade dividida pelo intervalo de tempo: aₘ = Δv/Δt."],
+          ["Aceleração média", "A aceleração média mede quanto a velocidade muda por unidade de tempo: aₘ = Δv/Δt. Considere o sinal das velocidades; uma aceleração negativa pode indicar redução da velocidade ou mudança de sentido, conforme o referencial."],
           ["MUV", "Com aceleração constante, v = v₀ + at e x = x₀ + v₀t + at²/2. A equação v² = v₀² + 2aΔx não depende explicitamente do tempo."],
           ["Queda livre", "Quando a resistência do ar é desprezada, corpos próximos à superfície terrestre aceleram aproximadamente com a aceleração gravitacional g."],
           ["Lançamento vertical", "É um movimento sob aceleração da gravidade; no ponto mais alto, a velocidade instantânea é zero, mas a aceleração continua atuando."],
@@ -67,10 +67,10 @@ const starterLibrary = {
         intro: "Lançamentos podem ser analisados decompondo o movimento em componentes horizontal e vertical. Sem resistência do ar, essas componentes evoluem independentemente.",
         heading: "Movimento em duas dimensões",
         points: [
-          ["Lançamento horizontal", "A velocidade horizontal inicial é mantida; verticalmente, o objeto cai com aceleração da gravidade."],
+          ["Lançamento horizontal", "Sem resistência do ar, a velocidade horizontal permanece constante, enquanto a componente vertical muda pela gravidade. Analise os dois movimentos separadamente para prever posição e tempo de queda."],
           ["Lançamento oblíquo", "A velocidade inicial é decomposta em componentes horizontal e vertical. A gravidade altera a componente vertical."],
           ["Trajetória e alcance", "Sem resistência do ar e em condições ideais, a trajetória é parabólica; tempo de voo e alcance dependem da velocidade e da altura inicial."],
-          ["Gráficos", "Estude separadamente x(t) e y(t), ou as componentes vx e vy, preservando unidades e sinais."]
+          ["Gráficos", "Em lançamentos, estude x(t) e y(t), ou as componentes vx e vy, separadamente. Inclinação e área têm interpretações distintas conforme a grandeza nos eixos; preserve unidades e sinais."]
         ],
         note: "Em modelos ideais, a componente horizontal da velocidade não muda; a componente vertical muda por causa da gravidade.",
         questions: [
@@ -85,8 +85,8 @@ const starterLibrary = {
         intro: "A Dinâmica relaciona forças ao movimento. Força resultante nula implica velocidade constante; força resultante não nula produz aceleração.",
         heading: "Interações e diagramas de forças",
         points: [
-          ["Primeira lei e inércia", "Um corpo mantém repouso ou movimento retilíneo uniforme se a força resultante sobre ele for nula."],
-          ["Segunda lei", "A força resultante é relacionada à massa e à aceleração por Fᵣ = ma."],
+          ["Primeira lei e inércia", "Se a força resultante é nula, um corpo mantém repouso ou movimento retilíneo uniforme. Inércia é essa resistência a mudar o estado, não uma força que o empurra para continuar."],
+          ["Segunda lei", "A força resultante sobre um corpo produz aceleração segundo Fᵣ = ma: para a mesma massa, uma força resultante maior gera maior aceleração. Use a soma vetorial das forças, não apenas uma força isolada."],
           ["Terceira lei", "Forças de ação e reação têm mesma intensidade e direção, sentidos opostos e atuam em corpos diferentes."],
           ["Peso e normal", "Peso é a força gravitacional sobre um corpo. A força normal é a força de contato perpendicular à superfície."],
           ["Atrito e força elástica", "Atrito se opõe ao deslizamento ou à tendência de deslizamento entre superfícies. Uma mola ideal exerce força restauradora proporcional à deformação: F = −kx."]
@@ -122,10 +122,10 @@ const starterLibrary = {
         intro: "Trabalho mede a transferência de energia por uma força ao longo de um deslocamento. Energia pode ser armazenada em diferentes formas e transformada.",
         heading: "Trabalho e energia mecânica",
         points: [
-          ["Trabalho de uma força", "Para força constante, W = Fd cos θ, em que θ é o ângulo entre a força e o deslocamento."],
-          ["Energia cinética", "Energia associada ao movimento: Eᶜ = mv²/2."],
-          ["Energia potencial gravitacional", "Perto da superfície terrestre, Eᵖᵍ = mgh em relação a um nível de referência escolhido."],
-          ["Energia potencial elástica", "Para uma mola ideal, Eᵖᵉ = kx²/2, em que x é a deformação."],
+          ["Trabalho de uma força", "Para uma força constante, W = Fd cos θ, em que θ é o ângulo entre força e deslocamento. Uma força no mesmo sentido realiza trabalho positivo; uma perpendicular realiza trabalho nulo."],
+          ["Energia cinética", "Energia cinética é a energia associada ao movimento: Eᶜ = mv²/2. Ela cresce com a massa e com o quadrado da velocidade, por isso dobrar a velocidade quadruplica essa energia."],
+          ["Energia potencial gravitacional", "Perto da superfície terrestre, Eᵖᵍ = mgh em relação a um nível de referência escolhido: elevar um objeto aumenta sua energia potencial. O valor depende da altura medida a partir desse nível."],
+          ["Energia potencial elástica", "Uma mola ideal deformada armazena energia potencial elástica: Eᵖᵉ = kx²/2, em que k é a constante da mola e x é o alongamento ou compressão em relação ao equilíbrio."],
           ["Energia mecânica e conservação", "É a soma das energias cinética e potencial. Se apenas forças conservativas realizam trabalho, a energia mecânica total se conserva."]
         ],
         note: "O trabalho pode ser positivo, negativo ou nulo, dependendo do ângulo entre força e deslocamento.",
@@ -141,10 +141,10 @@ const starterLibrary = {
         intro: "Potência mede a rapidez de transferência ou transformação de energia. Máquinas simples mudam a intensidade ou a direção de forças, mas não eliminam o trabalho necessário.",
         heading: "Desempenho e vantagem mecânica",
         points: [
-          ["Potência", "P = W/Δt; em situações de movimento com força paralela à velocidade, P = Fv."],
+          ["Potência", "Potência mede a rapidez com que o trabalho é realizado ou a energia é transferida: P = W/Δt. Em movimento com força paralela à velocidade, P = Fv; a unidade SI é o watt."],
           ["Rendimento", "É a razão entre energia ou potência útil e energia ou potência fornecida, normalmente expressa como percentual."],
           ["Máquinas simples", "Alavancas, roldanas, planos inclinados e rodas e eixos podem facilitar tarefas ao trocar força por distância ou mudar sua direção."],
-          ["Conservação", "Em sistemas reais, atrito e outras perdas transformam parte da energia útil em calor e som."]
+          ["Conservação", "Em sistemas reais, atrito e outras interações transformam parte da energia mecânica útil em calor e som. A energia total se conserva quando se incluem o sistema e o ambiente."]
         ],
         note: "Uma máquina pode reduzir a força necessária aumentando a distância ao longo da qual ela é aplicada.",
         questions: [
@@ -159,8 +159,8 @@ const starterLibrary = {
         intro: "A Hidrostática estuda fluidos em repouso. Densidade e pressão ajudam a explicar forças em líquidos e gases e a flutuação de corpos.",
         heading: "Pressão em fluidos",
         points: [
-          ["Densidade", "ρ = m/V relaciona a massa ao volume."],
-          ["Pressão", "É força perpendicular dividida pela área: p = F/A. A unidade SI é o pascal (Pa)."],
+          ["Densidade", "Densidade é massa por unidade de volume: ρ = m/V. Ela permite comparar materiais, desde que massa e volume usem unidades compatíveis; a unidade SI é kg/m³."],
+          ["Pressão", "Pressão é a força perpendicular distribuída por uma área: p = F/A, medida em pascals (Pa). Mantendo a força, reduzir a área aumenta a pressão, como ocorre ao usar uma ponta mais fina."],
           ["Pressão atmosférica e hidrostática", "A atmosfera exerce pressão. Em um líquido de densidade constante, a pressão varia com profundidade: p = p₀ + ρgh."],
           ["Princípio de Pascal", "Uma variação de pressão aplicada a um fluido confinado é transmitida ao fluido, princípio usado em sistemas hidráulicos."],
           ["Arquimedes e empuxo", "Um corpo imerso recebe empuxo para cima igual ao peso do fluido deslocado; a relação entre peso, empuxo e densidades ajuda a prever flutuação."]
@@ -179,9 +179,9 @@ const starterLibrary = {
         heading: "Escalas e mudanças térmicas",
         points: [
           ["Temperatura e escalas", "Celsius, Fahrenheit e kelvin usam escalas diferentes. Conversões preservam o estado térmico: °F = 9·°C/5 + 32 e K = °C + 273,15."],
-          ["Calor sensível e específico", "Sem mudança de fase, Q = mcΔT, em que c é o calor específico."],
-          ["Calor latente", "Durante uma mudança de fase ideal, Q = mL, com temperatura constante enquanto coexistem as fases."],
-          ["Capacidade térmica", "C = Q/ΔT descreve a energia necessária para variar a temperatura de um corpo."],
+          ["Calor sensível e específico", "Quando há mudança de temperatura sem mudança de fase, o calor trocado é Q = mcΔT. O calor específico c indica quanta energia é necessária para variar em 1 °C a temperatura de uma unidade de massa."],
+          ["Calor latente", "Durante uma mudança de fase ideal, Q = mL e a temperatura permanece constante enquanto as fases coexistem. L é a energia por unidade de massa necessária para completar a transformação."],
+          ["Capacidade térmica", "A capacidade térmica C = Q/ΔT indica a energia necessária para elevar em um grau a temperatura de um corpo inteiro. Diferentemente do calor específico, ela depende também da quantidade de matéria."],
           ["Dilatação e mudanças de estado", "Aquecimento pode aumentar dimensões e provocar fusão, vaporização ou outras transições; resfriamento pode levar a condensação ou solidificação."]
         ],
         note: "Calor e temperatura não são sinônimos: calor é energia em trânsito entre sistemas a temperaturas diferentes.",
@@ -198,8 +198,8 @@ const starterLibrary = {
         heading: "Transferência, máquinas e leis",
         points: [
           ["Condução", "Transferência de energia por interações microscópicas, comum em sólidos, sem transporte global do material."],
-          ["Convecção", "Transferência associada ao movimento de porções de fluidos, como ar aquecido que sobe."],
-          ["Irradiação", "Transferência por ondas eletromagnéticas; não requer meio material."],
+          ["Convecção", "Na convecção, energia térmica é transportada pelo movimento de porções de um fluido. Em água aquecida, regiões mais quentes tendem a subir e regiões mais frias a descer, formando correntes."],
+          ["Irradiação", "Na irradiação, energia se propaga por ondas eletromagnéticas e não precisa de meio material. É assim que a energia do Sol atravessa o espaço até a Terra."],
           ["Leis da Termodinâmica", "A primeira lei expressa conservação de energia, relacionando calor, trabalho e energia interna. A segunda estabelece limites e direção espontânea de processos."],
           ["Máquinas térmicas e rendimento", "Máquinas térmicas transformam parte do calor em trabalho. Nenhuma máquina cíclica converte todo o calor recebido em trabalho; o rendimento é inferior a 100%."]
         ],
@@ -217,7 +217,7 @@ const starterLibrary = {
         heading: "Tipos e grandezas de onda",
         points: [
           ["Tipos de onda", "Ondas transversais oscilam perpendicularmente à propagação; longitudinais oscilam paralelamente. Ondas podem ser mecânicas ou eletromagnéticas."],
-          ["Frequência e período", "Frequência f é o número de oscilações por segundo; período T é o tempo de uma oscilação e T = 1/f."],
+          ["Frequência e período", "Frequência f conta oscilações por segundo, em hertz; período T mede a duração de uma oscilação, em segundos. São inversos: T = 1/f, então maior frequência significa menor período."],
           ["Comprimento e velocidade", "Comprimento de onda λ é a distância entre pontos em mesma fase. A velocidade de propagação é v = λf."],
           ["Reflexão e refração", "Reflexão devolve a onda ao meio de origem; refração altera sua velocidade ao passar para outro meio, podendo mudar direção."],
           ["Difração, interferência e ressonância", "Difração contorna aberturas e obstáculos; interferência combina ondas; ressonância ocorre quando uma excitação favorece oscilações de um sistema."]
@@ -236,7 +236,7 @@ const starterLibrary = {
         heading: "Frequência, intensidade e timbre",
         points: [
           ["Propagação sonora", "Som precisa de um meio material e não se propaga no vácuo. Sua velocidade depende das propriedades do meio."],
-          ["Altura e frequência", "A frequência está relacionada à altura percebida: frequências maiores tendem a soar mais agudas."],
+          ["Altura e frequência", "A frequência está relacionada à altura percebida: frequências maiores tendem a soar mais agudas e menores, mais graves. Altura não é o mesmo que intensidade ou volume."],
           ["Intensidade e timbre", "Intensidade está relacionada à amplitude e à energia transportada. Timbre ajuda a distinguir fontes mesmo quando tocam a mesma nota."],
           ["Eco e reverberação", "Eco é uma reflexão percebida separadamente; reverberação é a persistência de reflexões sonoras próximas no tempo."],
           ["Doppler, ruído e música", "O efeito Doppler altera a frequência percebida quando há movimento relativo. Poluição sonora pode afetar saúde; instrumentos produzem sons por vibração de cordas, colunas de ar ou membranas."]
@@ -314,7 +314,7 @@ const starterLibrary = {
         points: [
           ["Ímãs e campo magnético", "Ímãs produzem campos magnéticos; polos opostos se atraem e polos iguais se repelem. A Terra também tem campo magnético."],
           ["Força magnética", "Cargas em movimento e correntes podem sofrer força em campos magnéticos; a direção depende do movimento, da corrente e do campo."],
-          ["Indução eletromagnética", "Uma variação do fluxo magnético através de um circuito pode induzir tensão elétrica."],
+          ["Indução eletromagnética", "Quando o fluxo magnético através de um circuito varia, pode surgir uma tensão induzida; mover um ímã em relação a uma bobina é uma forma de produzir essa variação. Um campo constante, sem mudança do fluxo, não basta."],
           ["Faraday e Lenz", "A lei de Faraday relaciona tensão induzida à variação do fluxo; a lei de Lenz determina sentido que se opõe à mudança que a produz."],
           ["Transformadores, motores e geradores", "Transformadores alteram tensão em corrente alternada; motores convertem energia elétrica em movimento e geradores convertem movimento em energia elétrica."]
         ],
@@ -378,7 +378,7 @@ const starterLibrary = {
           ["Características da vida", "Organização celular, uso de energia, resposta ao ambiente, manutenção do equilíbrio interno, crescimento, reprodução e evolução são características associadas aos seres vivos."],
           ["Níveis de organização", "Átomos e moléculas formam estruturas celulares; células formam tecidos, órgãos e sistemas. Organismos interagem em populações, comunidades e ecossistemas."],
           ["Origem da vida", "Hipóteses científicas investigam como moléculas e sistemas capazes de reprodução podem ter surgido na Terra primitiva; novas evidências podem refinar explicações."],
-          ["Abiogênese e biogênese", "A antiga ideia de geração espontânea (abiogênese) foi refutada por experimentos. A biogênese sustenta que, nas condições observadas, seres vivos vêm de outros seres vivos."],
+          ["Abiogênese e biogênese", "A geração espontânea — a ideia de que seres vivos surgem rotineiramente de matéria sem vida nas condições atuais — foi refutada por experimentos. Biogênese descreve que seres vivos observados vêm de outros seres vivos; já abiogênese também é usada hoje para investigar, em outra escala e contexto, a origem da primeira vida na Terra."],
           ["Método científico", "Uma investigação formula perguntas, propõe hipóteses testáveis, coleta dados, analisa resultados e comunica conclusões que podem ser verificadas."]
         ],
         note: "Uma hipótese científica precisa ser testável e pode ser revista diante de novas evidências.",
@@ -397,7 +397,7 @@ const starterLibrary = {
           ["Teoria celular", "Seres vivos são constituídos por células; a célula realiza funções vitais e novas células se originam de células preexistentes."],
           ["Procariontes e eucariontes", "Procariontes, como bactérias, não possuem núcleo delimitado por membrana. Eucariontes têm núcleo organizado e compartimentos especializados."],
           ["Células animais e vegetais", "Ambas são eucariontes. Vegetais geralmente possuem parede celular, cloroplastos e grande vacúolo; animais não possuem parede celular nem cloroplastos."],
-          ["Membrana e citoplasma", "A membrana plasmática controla trocas com o meio. O citoplasma abriga organelas e várias reações."],
+          ["Membrana e citoplasma", "A membrana plasmática delimita a célula e regula seletivamente trocas com o meio; o citoplasma contém citosol, organelas e reações celulares. Controle de entrada não significa bloquear toda substância."],
           ["Núcleo e organelas", "O núcleo abriga o DNA. Mitocôndrias participam da respiração; ribossomos produzem proteínas; retículo endoplasmático e complexo golgiense processam e transportam moléculas; lisossomos participam da digestão celular."],
           ["Cloroplastos e vacúolos", "Cloroplastos realizam fotossíntese em plantas e algas; vacúolos armazenam substâncias e ajudam no equilíbrio de água."],
           ["Transporte pela membrana", "Difusão e osmose são transportes passivos; a osmose envolve água. Alguns transportes usam energia e movem substâncias contra o gradiente."]
@@ -418,7 +418,7 @@ const starterLibrary = {
           ["Fotossíntese", "Organismos fotossintetizantes usam energia luminosa para formar moléculas orgânicas a partir de dióxido de carbono e água, liberando oxigênio em muitas formas de fotossíntese."],
           ["Respiração celular", "Células extraem energia química de moléculas orgânicas; na respiração aeróbia, o oxigênio participa do processo e há produção de ATP."],
           ["Fermentação", "É uma via de obtenção de energia sem uso de oxigênio como receptor final de elétrons; pode produzir compostos como ácido lático ou etanol."],
-          ["ATP", "O ATP funciona como intermediário energético, transferindo energia para processos celulares."],
+          ["ATP", "O ATP é um intermediário que transfere energia para processos celulares, como transporte ativo e contração. Sua hidrólise libera energia utilizável; a célula precisa regenerá-lo continuamente."],
           ["Quimiossíntese", "Alguns microrganismos usam energia de reações químicas inorgânicas para produzir matéria orgânica, sem depender diretamente da luz."]
         ],
         note: "Fotossíntese armazena parte da energia em moléculas orgânicas; respiração e fermentação disponibilizam energia delas.",
@@ -437,8 +437,8 @@ const starterLibrary = {
           ["Ciclo celular", "Inclui crescimento, duplicação do DNA e divisão celular. A regulação do ciclo ajuda a manter os tecidos."],
           ["Mitose", "Em geral, origina duas células-filhas com o mesmo número de cromossomos da célula original; é importante para crescimento e renovação."],
           ["Meiose", "Envolve duas divisões e forma células com metade do número de cromossomos, além de contribuir para a variabilidade genética."],
-          ["Haploide e diploide", "Células haploides têm um conjunto de cromossomos (n); diploides têm dois conjuntos (2n)."],
-          ["Gametas", "Em animais, gametas são haploides; na fecundação, sua união restabelece o número diploide."]
+          ["Haploide e diploide", "Células haploides têm um conjunto de cromossomos (n), como os gametas humanos; células diploides têm dois conjuntos (2n), como a maioria das células do corpo. A fecundação reúne os conjuntos dos gametas."],
+          ["Gametas", "Em animais, gametas são haploides e carregam um conjunto cromossômico; na fecundação, óvulo e espermatozoide se unem e restabelecem o número diploide do zigoto."]
         ],
         note: "A meiose reduz à metade o número de cromossomos; a mitose normalmente conserva esse número.",
         questions: [
@@ -534,7 +534,7 @@ const starterLibrary = {
           ["Desmatamento e queimadas", "Podem fragmentar habitats, liberar poluentes, alterar ciclos de água e carbono e reduzir populações."],
           ["Biodiversidade e espécies invasoras", "A perda de biodiversidade diminui a variedade de formas de vida. Espécies invasoras podem competir com espécies nativas e alterar relações ecológicas."],
           ["Conservação", "Áreas protegidas, restauração, uso sustentável e proteção de espécies ajudam a conservar ecossistemas."],
-          ["Sustentabilidade", "Busca conciliar necessidades sociais, atividades econômicas e conservação ambiental a longo prazo."]
+          ["Sustentabilidade", "Sustentabilidade busca conciliar necessidades sociais, atividades econômicas e conservação ambiental a longo prazo. Avalie efeitos entre grupos e gerações, em vez de tratar crescimento como benefício automático."]
         ],
         note: "Conservar biodiversidade também ajuda a manter serviços ecossistêmicos, como polinização e proteção de mananciais.",
         questions: [
@@ -551,7 +551,7 @@ const starterLibrary = {
         points: [
           ["Digestório e respiratório", "O digestório transforma alimentos e absorve nutrientes; o respiratório realiza trocas de gases entre o organismo e o ambiente."],
           ["Cardiovascular e circulatório", "O coração impulsiona o sangue, que transporta gases, nutrientes, resíduos e sinais químicos pelo corpo."],
-          ["Urinário", "Rins filtram o sangue, regulam água e sais e participam da eliminação de resíduos pela urina."],
+          ["Urinário", "Os rins filtram o sangue e ajustam reabsorção de água e sais; a urina elimina certos resíduos. Esse sistema também contribui para o equilíbrio interno, não apenas para remover líquidos."],
           ["Nervoso e endócrino", "O sistema nervoso coordena respostas rápidas por sinais elétricos e químicos; o endócrino libera hormônios que regulam funções."],
           ["Imunológico e locomotor", "O sistema imune reconhece e combate ameaças. Sistemas esquelético e muscular sustentam o corpo e possibilitam movimentos."],
           ["Reprodutor e homeostase", "Sistemas reprodutores produzem gametas e hormônios. Homeostase mantém condições internas dentro de limites funcionais."]
@@ -610,7 +610,7 @@ const starterLibrary = {
         points: [
           ["Invertebrados", "Poríferos têm corpo poroso; cnidários possuem células urticantes; platelmintos são vermes achatados; nematódeos são cilíndricos; anelídeos apresentam segmentos."],
           ["Moluscos e artrópodes", "Moluscos têm corpo mole e muitos apresentam concha. Artrópodes possuem exoesqueleto e apêndices articulados; incluem insetos, aracnídeos e crustáceos."],
-          ["Equinodermos", "São animais marinhos, como estrelas-do-mar e ouriços, com sistema ambulacrário característico."],
+          ["Equinodermos", "Equinodermos são animais marinhos, como estrelas-do-mar e ouriços, com sistema ambulacrário hidráulico usado na locomoção e alimentação. Muitos adultos têm simetria radial, mas as larvas são bilaterais."],
           ["Peixes e anfíbios", "Peixes são vertebrados aquáticos; anfíbios geralmente apresentam fases de vida ligadas à água e à terra."],
           ["Répteis, aves e mamíferos", "Répteis têm pele queratinizada; aves possuem penas; mamíferos têm pelos e glândulas mamárias. Há diversidade e exceções dentro dos grupos."],
           ["Adaptações", "Estruturas e comportamentos podem favorecer sobrevivência e reprodução em certos ambientes; adaptações se estabelecem em populações ao longo de gerações."]
@@ -634,7 +634,7 @@ const starterLibrary = {
         intro: "Os conjuntos numéricos organizam os números conforme suas propriedades. Conhecer as operações, os sinais e a ordem de cálculo ajuda a resolver expressões e problemas.",
         heading: "Conjuntos, sinais e cálculos",
         points: [
-          ["Naturais e inteiros", "Naturais (ℕ) incluem 0, 1, 2…; inteiros (ℤ) incluem também os negativos: …−2, −1, 0, 1, 2…"],
+          ["Naturais e inteiros", "Os naturais (ℕ; neste material, incluindo 0) são 0, 1, 2…; os inteiros (ℤ) incluem também os negativos: …−2, −1, 0, 1, 2…. Inteiros não incluem frações como 1/2."],
           ["Racionais e irracionais", "Racionais (ℚ) podem ser escritos como fração de inteiros, como −3/4 ou 0,5. Irracionais não têm representação decimal finita ou periódica, como √2 e π."],
           ["Positivos, negativos e módulo", "Na reta numérica, números positivos ficam à direita do zero e negativos à esquerda. O módulo |x| é a distância até zero; por exemplo, |−5| = 5."],
           ["Operações e decimais", "Adição, subtração, multiplicação e divisão seguem regras de sinais. Números decimais podem ser alinhados pela vírgula para somar e subtrair; para multiplicar, conte as casas decimais."],
@@ -656,7 +656,7 @@ const starterLibrary = {
           ["Frações", "O numerador indica as partes consideradas e o denominador, em quantas partes iguais o todo foi dividido. Frações equivalentes representam o mesmo valor."],
           ["Comparação e operações", "Simplifique dividindo numerador e denominador por um divisor comum. Para comparar ou somar frações com denominadores diferentes, use um denominador comum; na multiplicação, multiplique numeradores e denominadores."],
           ["Divisibilidade", "Um número é divisível por outro quando a divisão é exata. Por exemplo, números pares são divisíveis por 2; números cuja soma dos algarismos é divisível por 3 também são divisíveis por 3."],
-          ["Múltiplos e divisores", "Múltiplos de 4 incluem 4, 8, 12…; divisores de 12 incluem 1, 2, 3, 4, 6 e 12."],
+          ["Múltiplos e divisores", "Múltiplos de um número são resultados de multiplicá-lo por inteiros; divisores o dividem sem resto. Assim, 12 é múltiplo de 4 e 4 é divisor de 12."],
           ["MMC e MDC", "O MMC é o menor múltiplo comum positivo e ajuda a somar frações. O MDC é o maior divisor comum e ajuda a simplificá-las. Para 6 e 8: MMC = 24 e MDC = 2."]
         ],
         note: "Para somar 1/6 + 1/4, use o MMC 12: 2/12 + 3/12 = 5/12.",
@@ -675,7 +675,7 @@ const starterLibrary = {
           ["Razão e proporção", "A razão entre 2 e 5 é 2/5. Em uma proporção, como 2/5 = 4/10, o produto dos extremos é igual ao dos meios."],
           ["Regra de três simples", "Relacione duas grandezas. Em proporcionalidade direta, ambas aumentam ou diminuem juntas; na inversa, quando uma aumenta, a outra diminui."],
           ["Regra de três composta", "Relacione três ou mais grandezas e determine se cada uma é direta ou inversamente proporcional à incógnita antes de montar o cálculo."],
-          ["Exemplo", "Se 3 cadernos custam R$ 18, então 5 cadernos custam R$ 30, supondo preço unitário constante."]
+          ["Exemplo", "Se 3 cadernos custam R$ 18, cada um custa R$ 6; mantendo o preço unitário, 5 custam 5×6=R$ 30. A proporcionalidade depende dessa constância."]
         ],
         note: "Antes de multiplicar cruzado, confira se as grandezas são diretamente ou inversamente proporcionais.",
         questions: [
@@ -690,10 +690,10 @@ const starterLibrary = {
         intro: "Potenciação representa multiplicações repetidas. A radiciação desfaz uma potência, enquanto a notação científica facilita a escrita de números muito grandes ou muito pequenos.",
         heading: "Regras e representações",
         points: [
-          ["Potenciação", "Em aⁿ, a é a base e n é o expoente. Por exemplo, 2³ = 2 × 2 × 2 = 8. Para a ≠ 0, a⁰ = 1."],
+          ["Potenciação", "Em aⁿ, a é a base e n indica quantas vezes a base aparece como fator: 2³ = 2 × 2 × 2 = 8. Para a ≠ 0, a⁰ = 1; não confunda elevar à potência com multiplicar a base pelo expoente."],
           ["Propriedades das potências", "Na mesma base, aᵐ × aⁿ = aᵐ⁺ⁿ e aᵐ ÷ aⁿ = aᵐ⁻ⁿ. Uma potência elevada a outra potência tem expoentes multiplicados."],
           ["Radiciação", "√a é o número não negativo que, ao quadrado, resulta em a. Assim, √49 = 7. A raiz quadrada é a operação inversa de elevar ao quadrado."],
-          ["Notação científica", "Escreva um número como a × 10ⁿ, com 1 ≤ |a| < 10. Por exemplo, 3.500.000 = 3,5 × 10⁶."]
+          ["Notação científica", "A notação científica escreve um número como a × 10ⁿ, com 1 ≤ |a| < 10, facilitando comparar valores muito grandes ou pequenos. Por exemplo, 3.500.000 = 3,5 × 10⁶."]
         ],
         note: "Ao elevar um número negativo ao quadrado, use parênteses: (−3)² = 9, enquanto −3² = −9.",
         questions: [
@@ -708,10 +708,10 @@ const starterLibrary = {
         intro: "A álgebra usa letras para representar números desconhecidos ou variáveis. A ordem das operações também vale para expressões com letras.",
         heading: "Letras, termos e substituição",
         points: [
-          ["Variáveis e expressões", "Em 3x + 2, x é uma variável; a expressão representa um valor que depende de x."],
+          ["Variáveis e expressões", "Em 3x + 2, x é uma variável e a expressão representa um valor que depende dela. Se x = 4, seu valor numérico é 3 × 4 + 2 = 14."],
           ["Termos semelhantes", "Só podem ser somados ou subtraídos quando têm a mesma parte literal: 3x + 2x = 5x, mas 3x + 2y não pode ser reduzido."],
           ["Valor numérico", "Substitua cada variável pelo valor indicado e siga a ordem das operações. Se x = 4, então 2x + 3 = 11."],
-          ["Distributiva", "Multiplique o fator por cada termo dentro dos parênteses: 2(x + 3) = 2x + 6."]
+          ["Distributiva", "A propriedade distributiva multiplica o fator por cada termo dentro dos parênteses: 2(x + 3) = 2x + 6. Ela permite retirar parênteses sem alterar o valor da expressão."]
         ],
         note: "Use parênteses ao substituir uma variável por um número negativo: se x = −2, então x² = (−2)² = 4.",
         questions: [
@@ -726,9 +726,9 @@ const starterLibrary = {
         intro: "A matemática financeira ajuda a comparar valores em datas diferentes e a entender como juros, taxas e prazos alteram o valor do dinheiro. Ela aparece em investimentos, empréstimos, dívidas e compras parceladas.",
         heading: "Elementos de uma operação financeira",
         points: [
-          ["Capital (C)", "Valor inicial aplicado, emprestado ou devido."],
-          ["Juros (J)", "Valor cobrado ou recebido pelo uso do capital durante certo período."],
-          ["Montante (M)", "Total ao fim da operação: capital mais juros. A relação básica é M = C + J."],
+          ["Capital (C)", "Capital é o valor inicial aplicado, emprestado ou devido, antes de acrescentar juros. Em uma aplicação de R$ 1.000, por exemplo, C = R$ 1.000."],
+          ["Juros (J)", "Juros são o valor cobrado ou recebido pelo uso do capital durante certo período. Dependem do capital, da taxa e do tempo, conforme o regime de cálculo."],
+          ["Montante (M)", "Montante é o total ao fim da operação: capital mais juros. A relação básica é M = C + J; se R$ 1.000 renderem R$ 60, M será R$ 1.060."],
           ["Taxa de juros (i)", "Percentual usado para calcular os juros. Sempre considere o período da taxa, como mês ou ano, junto com o prazo."]
         ],
         note: "Antes de calcular, confira se a taxa e o prazo estão na mesma unidade de tempo.",
@@ -746,8 +746,8 @@ const starterLibrary = {
         heading: "Descontos, aumentos e variações",
         points: [
           ["Desconto", "Uma camiseta de R$ 120 com 50% de desconto tem abatimento de 0,50 × 120 = R$ 60. O preço final é R$ 120 − R$ 60 = R$ 60."],
-          ["Outro exemplo de desconto", "Com 23% de desconto em R$ 120, o abatimento é 0,23 × 120 = R$ 27,60; o valor a pagar fica R$ 92,40."],
-          ["Aumento", "Se o feijão custa R$ 8 e sobe 30%, o acréscimo é 0,30 × 8 = R$ 2,40. O novo preço é R$ 10,40."],
+          ["Outro exemplo de desconto", "Com 23% de desconto em R$ 120, o abatimento é 0,23 × 120 = R$ 27,60; subtraia esse valor do preço inicial para obter R$ 92,40. A porcentagem é calculada sobre o valor inicial."],
+          ["Aumento", "Se o feijão custa R$ 8 e sobe 30%, o acréscimo é 0,30 × 8 = R$ 2,40 e o novo preço é R$ 10,40. O percentual de aumento usa o preço inicial como base."],
           ["Variação percentual", "Compare a diferença com o valor inicial: (variação ÷ valor inicial) × 100%. De R$ 25 para R$ 28, a variação é 3/25 = 12%."]
         ],
         note: "Para um aumento, some o acréscimo ao preço inicial; para um desconto, subtraia o abatimento.",
@@ -765,9 +765,9 @@ const starterLibrary = {
         heading: "Fórmulas e interpretação",
         points: [
           ["Juros simples", "J = C × i × n. C é o capital, i é a taxa por período e n é o número de períodos. O montante é M = C + J, ou M = C × (1 + i × n)."],
-          ["Exemplo de juros simples", "R$ 1.000 a 2% ao mês por 3 meses: J = 1.000 × 0,02 × 3 = R$ 60. Portanto, M = R$ 1.060."],
-          ["Juros compostos", "O saldo cresce a cada período. Para n períodos, M = C × (1 + i)^n."],
-          ["Exemplo de juros compostos", "R$ 1.000 a 2% ao mês por 3 meses: M = 1.000 × (1,02)^3 = R$ 1.061,21, aproximadamente."]
+          ["Exemplo de juros simples", "Em juros simples, a taxa incide sempre sobre o capital inicial: R$ 1.000 a 2% ao mês por 3 meses geram J = 1.000 × 0,02 × 3 = R$ 60 e M = R$ 1.060."],
+          ["Juros compostos", "Nos juros compostos, cada período incide sobre o saldo acumulado, incluindo juros anteriores. Para taxa i por período e n períodos, M = C × (1 + i)^n."],
+          ["Exemplo de juros compostos", "Com capital de R$ 1.000, taxa de 2% ao mês e 3 meses, M = 1.000 × (1,02)^3 ≈ R$ 1.061,21. A diferença para juros simples vem dos juros sobre juros."]
         ],
         note: "Use a taxa em forma decimal (2% = 0,02) e mantenha taxa e período na mesma unidade. Nos compostos, o expoente n indica o número de períodos.",
         questions: [
@@ -805,7 +805,7 @@ const starterLibrary = {
           ["Monômios e polinômios", "Monômio tem um único termo, como 3x². Polinômio é uma soma ou subtração de monômios, como x² + 2x − 1."],
           ["Operações", "Some termos semelhantes. Para multiplicar monômios, multiplique coeficientes e some expoentes de bases iguais; para dividir, divida coeficientes e subtraia expoentes."],
           ["Distributiva", "Para multiplicar polinômios, cada termo de um fator multiplica cada termo do outro e, no fim, reduza termos semelhantes."],
-          ["Produtos notáveis", "(a + b)² = a² + 2ab + b²; (a − b)² = a² − 2ab + b²; (a + b)(a − b) = a² − b²."]
+          ["Produtos notáveis", "Produtos notáveis são identidades que agilizam expansões: (a + b)² = a² + 2ab + b² e (a + b)(a − b) = a² − b². O termo do meio surge dos produtos cruzados."]
         ],
         note: "O quadrado da soma não é a soma dos quadrados: (a + b)² inclui o termo 2ab.",
         questions: [
@@ -820,10 +820,10 @@ const starterLibrary = {
         intro: "Fatorar é reescrever uma soma ou diferença como um produto. Essa transformação pode simplificar expressões e ajudar a resolver equações.",
         heading: "Casos frequentes",
         points: [
-          ["Fator comum", "Coloque em evidência o maior fator compartilhado: 6x + 9 = 3(2x + 3)."],
-          ["Agrupamento", "Agrupe termos para encontrar fatores comuns. Por exemplo, ax + ay + bx + by = (a + b)(x + y)."],
-          ["Diferença de quadrados", "a² − b² = (a − b)(a + b)."],
-          ["Trinômio quadrado perfeito", "a² + 2ab + b² = (a + b)²; a² − 2ab + b² = (a − b)²."]
+          ["Fator comum", "Na fatoração por fator comum, coloque em evidência o maior fator compartilhado: 6x + 9 = 3(2x + 3). Distribuir de volta permite conferir o resultado."],
+          ["Agrupamento", "Na fatoração por agrupamento, separe termos em grupos que revelem um fator comum: ax + ay + bx + by = a(x + y) + b(x + y) = (a + b)(x + y). Multiplicar a resposta confere o resultado."],
+          ["Diferença de quadrados", "A diferença entre dois quadrados fatoriza como a² − b² = (a − b)(a + b), pois os termos cruzados se cancelam ao multiplicar os binômios."],
+          ["Trinômio quadrado perfeito", "Um trinômio é quadrado perfeito quando o primeiro e o último termos são quadrados e o central é o dobro do produto das raízes: a² + 2ab + b² = (a + b)²."]
         ],
         note: "Confira uma fatoração multiplicando os fatores e verificando se o polinômio original reaparece.",
         questions: [
@@ -838,8 +838,8 @@ const starterLibrary = {
         intro: "Uma equação afirma que duas expressões têm o mesmo valor. Resolver é encontrar os valores que tornam a igualdade verdadeira; sistemas combinam equações e inequações usam sinais de comparação.",
         heading: "Do primeiro grau aos sistemas",
         points: [
-          ["Equação do primeiro grau", "Isole a incógnita fazendo a mesma operação nos dois lados. Exemplo: 2x + 3 = 11 resulta em x = 4."],
-          ["Equação do segundo grau", "Na forma ax² + bx + c = 0, com a ≠ 0, use Bhaskara: Δ = b² − 4ac e x = (−b ± √Δ)/(2a)."],
+          ["Equação do primeiro grau", "Isole a incógnita fazendo a mesma operação nos dois lados, preservando a igualdade. Em 2x + 3 = 11, subtraia 3 e divida por 2 para obter x = 4; substitua para conferir."],
+          ["Equação do segundo grau", "Para ax² + bx + c = 0, com a ≠ 0, calcule Δ = b² − 4ac e use x = (−b ± √Δ)/(2a). O sinal de Δ indica se há duas raízes reais, uma raiz real ou nenhuma raiz real."],
           ["Sistemas de equações", "Encontre valores que satisfaçam todas as equações. Use substituição ou eliminação; a solução é o ponto de encontro das condições."],
           ["Inequações", "Resolva como uma equação, mas inverta o sinal da desigualdade ao multiplicar ou dividir por número negativo."],
           ["Problemas e sequências", "Defina a incógnita, traduza as informações em equações e confira o resultado no enunciado. Em sequências, identifique o padrão que relaciona os termos."]
@@ -860,7 +860,7 @@ const starterLibrary = {
           ["Domínio, contradomínio e imagem", "Domínio: entradas permitidas. Contradomínio: conjunto de possíveis saídas definido para a função. Imagem: saídas que a função realmente assume."],
           ["Plano cartesiano", "Cada ponto tem coordenadas (x, y): x é a abscissa e y é a ordenada. O gráfico mostra como a saída varia com a entrada."],
           ["Interpretação de gráficos", "Observe eixos, escala, unidades, intervalos, interceptos e tendência. O zero ou raiz é o valor de x para o qual f(x) = 0."],
-          ["Teste da reta vertical", "Um gráfico representa uma função de x se toda reta vertical o intercepta no máximo uma vez."]
+          ["Teste da reta vertical", "Um gráfico representa y como função de x se toda reta vertical o intercepta no máximo uma vez; assim, cada x tem uma única saída. Um círculo falha nesse teste."]
         ],
         note: "Nem todo número do contradomínio precisa pertencer à imagem da função.",
         questions: [
@@ -876,7 +876,7 @@ const starterLibrary = {
         heading: "Retas e parábolas",
         points: [
           ["Função afim", "f(x) = ax + b. Seu gráfico é uma reta; a é o coeficiente angular e b é o intercepto no eixo y. Se a > 0, cresce; se a < 0, decresce."],
-          ["Raiz da função afim", "Resolva ax + b = 0. A raiz é x = −b/a, quando a ≠ 0."],
+          ["Raiz da função afim", "A raiz da função afim é o valor de x que torna f(x) = 0, isto é, onde o gráfico cruza o eixo x. Em ax + b = 0, x = −b/a, quando a ≠ 0."],
           ["Função quadrática", "f(x) = ax² + bx + c, com a ≠ 0. Seu gráfico é uma parábola; o sinal de a indica se ela abre para cima ou para baixo."],
           ["Raízes, vértice e extremos", "As raízes podem ser encontradas pelo discriminante. O vértice ocorre em xᵥ = −b/(2a); para a > 0 há mínimo e para a < 0 há máximo."]
         ],
@@ -893,9 +893,9 @@ const starterLibrary = {
         intro: "Funções exponenciais descrevem variações multiplicativas, como crescimento percentual repetido. Logaritmos ajudam a descobrir o expoente necessário para atingir determinado valor.",
         heading: "Crescimento e decrescimento",
         points: [
-          ["Função exponencial", "f(x) = aˣ, com a > 0 e a ≠ 1. Se a > 1, a função cresce; se 0 < a < 1, decresce."],
-          ["Função logarítmica", "logₐ(x) = y significa aʸ = x. Seu domínio exige x > 0, a > 0 e a ≠ 1."],
-          ["Relação entre exponencial e logaritmo", "São funções inversas: aˣ = y equivale a logₐ(y) = x."],
+          ["Função exponencial", "Na função exponencial f(x) = aˣ, a > 0 e a ≠ 1; a > 1 produz crescimento e 0 < a < 1, decrescimento. A variável aparece no expoente, o que distingue o modelo de uma função polinomial."],
+          ["Função logarítmica", "logₐ(x) = y pergunta a que expoente elevar a base a para obter x, ou seja, aʸ = x. Exige x > 0, a > 0 e a ≠ 1; o domínio não inclui zero nem números negativos."],
+          ["Relação entre exponencial e logaritmo", "Exponencial e logaritmo de mesma base são funções inversas: aˣ = y equivale a logₐ(y) = x. Uma desfaz a operação da outra dentro dos domínios permitidos."],
           ["Aplicações", "Modelos exponenciais aparecem em juros compostos, populações e decaimento; a escala logarítmica ajuda a representar grandezas com ampla variação."]
         ],
         note: "Em y = 2ˣ, cada aumento de 1 em x dobra y; já log₂(8) = 3 porque 2³ = 8.",
@@ -912,7 +912,7 @@ const starterLibrary = {
         heading: "Fundamentos e triângulos",
         points: [
           ["Ponto, reta e plano", "Pontos indicam posições; retas se estendem indefinidamente; planos são superfícies planas ilimitadas."],
-          ["Ângulos e retas", "Ângulos medem abertura. Retas paralelas não se cruzam; perpendiculares se cruzam formando 90°."],
+          ["Ângulos e retas", "Ângulos medem a abertura entre semirretas; um ângulo reto mede 90°. Retas paralelas não se cruzam, enquanto retas perpendiculares se encontram formando esse ângulo."],
           ["Triângulos", "A soma dos ângulos internos é 180°. Classifique pelos lados (equilátero, isósceles, escaleno) ou pelos ângulos (acutângulo, retângulo, obtusângulo)."],
           ["Pitágoras", "Em triângulo retângulo, a² + b² = c², em que c é a hipotenusa. Exemplo: lados 3 e 4 dão hipotenusa 5."],
           ["Semelhança e congruência", "Figuras semelhantes têm ângulos iguais e lados proporcionais; congruentes têm mesma forma e mesmas medidas."]
@@ -933,7 +933,7 @@ const starterLibrary = {
           ["Quadriláteros", "Quadrado tem quatro lados iguais e ângulos retos; retângulo tem lados opostos iguais e ângulos retos; losango tem quatro lados iguais; paralelogramo tem lados opostos paralelos; trapézio tem um par de lados paralelos."],
           ["Polígonos", "São nomeados pelo número de lados. A soma dos ângulos internos de um polígono convexo de n lados é (n − 2) × 180°."],
           ["Perímetro e áreas", "Some os lados para obter o perímetro. Retângulo: A = base × altura; triângulo: A = base × altura ÷ 2; paralelogramo: A = base × altura; trapézio: A = (base maior + base menor) × altura ÷ 2."],
-          ["Circunferência e círculo", "Circunferência é o contorno; círculo é a região interna. Comprimento: C = 2πr. Área: A = πr²."],
+          ["Circunferência e círculo", "Circunferência é o contorno; círculo é a região interna. Para raio r, o comprimento é C=2πr e a área é A=πr²; note que comprimento usa unidade linear e área, unidade quadrada."],
           ["Arcos e setores", "Um arco é parte da circunferência; um setor é a região limitada por dois raios e um arco. Para ângulo central θ em graus, área do setor = (θ/360°) × πr²."]
         ],
         note: "Use unidades quadradas para área (cm²) e unidades lineares para perímetro (cm).",
@@ -950,10 +950,10 @@ const starterLibrary = {
         heading: "Prismas, pirâmides e corpos redondos",
         points: [
           ["Prismas e cubos", "Prismas têm duas bases paralelas e congruentes. Cubo é um prisma de faces quadradas iguais; paralelepípedo tem faces em forma de paralelogramo."],
-          ["Pirâmides", "Têm uma base poligonal e faces laterais triangulares que se encontram em um vértice."],
-          ["Cilindros e cones", "Cilindro tem duas bases circulares paralelas; cone tem uma base circular e um vértice."],
-          ["Esferas", "Todos os pontos da superfície estão à mesma distância do centro. Volume: V = 4πr³/3."],
-          ["Planificações", "São representações planas das faces que podem ser dobradas para formar um sólido, sem sobreposição."]
+          ["Pirâmides", "Uma pirâmide tem uma base poligonal e faces laterais triangulares que se encontram num vértice. Seu volume é um terço do produto entre a área da base e a altura."],
+          ["Cilindros e cones", "O cilindro tem duas bases circulares paralelas e volume πr²h; o cone tem uma base circular, um vértice e volume πr²h/3. Em ambos, h é a altura perpendicular à base."],
+          ["Esferas", "Na esfera, todos os pontos da superfície ficam à mesma distância r do centro. Seu volume é V = 4πr³/3, e o raio aparece elevado ao cubo."],
+          ["Planificações", "Uma planificação mostra as faces de um sólido abertas no plano; dobradas pelas arestas, elas devem se encontrar sem lacunas ou sobreposição. Nem toda disposição de faces forma um sólido válido."]
         ],
         note: "Identifique as bases e as faces antes de escolher uma fórmula de área ou volume.",
         questions: [
@@ -971,7 +971,7 @@ const starterLibrary = {
           ["Prisma e paralelepípedo", "Volume do prisma: área da base × altura. Para um paralelepípedo retângulo, V = comprimento × largura × altura."],
           ["Áreas lateral e total", "A área total soma a área lateral e as bases. Em um prisma reto, a área lateral é o perímetro da base × altura e Aₜ = Aₗ + 2Aᵦ. No cubo, Aₜ = 6a²."],
           ["Cilindro, cone e esfera", "Cilindro: V = πr²h, Aₗ = 2πrh e Aₜ = 2πrh + 2πr². Cone: V = πr²h/3 e Aₗ = πrg, em que g é a geratriz. Esfera: V = 4πr³/3 e área = 4πr²."],
-          ["Pirâmide", "V = Aᵦh/3. Em pirâmides regulares, a área lateral é a soma das faces triangulares; Aₜ = Aₗ + Aᵦ."],
+          ["Pirâmide", "O volume de uma pirâmide é V=Aᵦh/3, um terço do volume de um prisma com mesma base e altura. A área total soma a base e as áreas das faces laterais."],
           ["Unidades de volume e capacidade", "1 dm³ = 1 L; 1 cm³ = 1 mL; 1 m³ = 1.000 L. Ao converter unidades cúbicas, cada mudança de unidade corresponde a um fator 1.000."]
         ],
         note: "Área usa unidades quadradas e volume, unidades cúbicas. Capacidade costuma ser expressa em litros ou mililitros.",
@@ -987,9 +987,9 @@ const starterLibrary = {
         intro: "A geometria analítica combina álgebra e geometria usando coordenadas. Cada ponto do plano é localizado por um par ordenado (x, y).",
         heading: "Medidas no plano cartesiano",
         points: [
-          ["Coordenadas cartesianas", "O primeiro número indica a posição horizontal x; o segundo indica a posição vertical y."],
-          ["Distância entre pontos", "Entre A(x₁, y₁) e B(x₂, y₂), d = √[(x₂ − x₁)² + (y₂ − y₁)²]."],
-          ["Ponto médio", "O ponto médio do segmento AB é ((x₁ + x₂)/2, (y₁ + y₂)/2)."],
+          ["Coordenadas cartesianas", "No par ordenado (x, y), o primeiro número indica o deslocamento horizontal e o segundo, o vertical. Parta da origem e localize x antes de subir ou descer por y."],
+          ["Distância entre pontos", "A distância entre A(x₁, y₁) e B(x₂, y₂) é d = √[(x₂ − x₁)² + (y₂ − y₁)²], obtida pelo teorema de Pitágoras aplicado às diferenças horizontal e vertical."],
+          ["Ponto médio", "O ponto médio fica exatamente entre as extremidades do segmento: M = ((x₁ + x₂)/2, (y₁ + y₂)/2). Calcule a média das coordenadas x e a média das coordenadas y separadamente."],
           ["Inclinação e coeficiente angular", "Para uma reta não vertical, m = (y₂ − y₁)/(x₂ − x₁). Ele mede a variação vertical por unidade horizontal."]
         ],
         note: "A inclinação de uma reta vertical não é definida pelo coeficiente angular, pois x₂ − x₁ = 0.",
@@ -1005,9 +1005,9 @@ const starterLibrary = {
         intro: "Uma reta no plano pode ser descrita por uma equação. Seus coeficientes informam a inclinação e onde ela cruza os eixos.",
         heading: "Formas da equação da reta",
         points: [
-          ["Forma reduzida", "y = mx + b, em que m é o coeficiente angular e b é o ponto em que a reta cruza o eixo y."],
-          ["Forma geral", "Ax + By + C = 0. Se B ≠ 0, isolando y é possível identificar a inclinação m = −A/B."],
-          ["Inclinação pela equação", "Em y = 2x + 1, o coeficiente angular é 2: quando x aumenta 1, y aumenta 2."],
+          ["Forma reduzida", "Na forma reduzida y = mx + b, m é o coeficiente angular e b indica onde a reta cruza o eixo y, no ponto (0, b). O sinal de m mostra se a reta cresce ou decresce."],
+          ["Forma geral", "A forma geral da reta é Ax + By + C = 0. Se B ≠ 0, isole y para obter y = −(A/B)x − C/B e identificar a inclinação e a interseção com o eixo y."],
+          ["Inclinação pela equação", "Em y = 2x + 1, o coeficiente angular m = 2 significa que, quando x aumenta uma unidade, y aumenta duas. Use o coeficiente para interpretar a variação e a direção da reta."],
           ["Interseções", "Para encontrar a interseção com o eixo y, faça x = 0. Para encontrar a raiz ou interseção com o eixo x, faça y = 0."]
         ],
         note: "Uma reta com coeficiente angular positivo sobe da esquerda para a direita; com coeficiente negativo, desce.",
@@ -1023,9 +1023,9 @@ const starterLibrary = {
         intro: "A trigonometria relaciona os ângulos e os lados dos triângulos. Em um triângulo retângulo, seno, cosseno e tangente dependem do ângulo escolhido.",
         heading: "Seno, cosseno e tangente",
         points: [
-          ["Triângulo retângulo", "Tem um ângulo de 90°. A hipotenusa fica oposta ao ângulo reto; os outros dois lados são catetos."],
-          ["Seno", "sen(θ) = cateto oposto ÷ hipotenusa."],
-          ["Cosseno e tangente", "cos(θ) = cateto adjacente ÷ hipotenusa; tg(θ) = cateto oposto ÷ cateto adjacente."],
+          ["Triângulo retângulo", "Um triângulo retângulo tem um ângulo de 90°; a hipotenusa, sempre o maior lado, fica oposta a esse ângulo. Os outros lados são catetos e formam o ângulo reto."],
+          ["Seno", "Num triângulo retângulo, sen(θ) = cateto oposto/hipotenusa. Identifique o ângulo θ primeiro, pois o cateto oposto muda quando se escolhe outro ângulo agudo."],
+          ["Cosseno e tangente", "Num triângulo retângulo, cos(θ) = cateto adjacente/hipotenusa e tg(θ) = cateto oposto/cateto adjacente. Os catetos são definidos em relação ao ângulo escolhido."],
           ["Ângulos notáveis", "30°: sen = 1/2, cos = √3/2. 45°: sen = cos = √2/2. 60°: sen = √3/2, cos = 1/2. Use também tg = sen/cos."]
         ],
         note: "Identifique primeiro o ângulo de referência; os catetos oposto e adjacente mudam quando o ângulo escolhido muda.",
@@ -1042,7 +1042,7 @@ const starterLibrary = {
         heading: "Relações e aplicações",
         points: [
           ["Ciclo trigonométrico", "É uma circunferência de raio 1 centrada na origem. O ângulo é medido a partir do eixo x positivo; as coordenadas do ponto são (cos θ, sen θ)."],
-          ["Identidade fundamental", "Para qualquer ângulo, sen²(θ) + cos²(θ) = 1. A tangente é tg(θ) = sen(θ)/cos(θ), quando cos(θ) ≠ 0."],
+          ["Identidade fundamental", "Para qualquer ângulo, sen²(θ)+cos²(θ)=1, relação derivada do raio unitário do ciclo. A tangente é sen(θ)/cos(θ) e não está definida quando cos(θ)=0."],
           ["Lei dos senos", "Em qualquer triângulo, a/sen(A) = b/sen(B) = c/sen(C), relacionando cada lado ao seno do ângulo oposto."],
           ["Lei dos cossenos", "c² = a² + b² − 2ab cos(C). É útil quando se conhecem dois lados e o ângulo entre eles, ou os três lados."]
         ],
@@ -1060,10 +1060,10 @@ const starterLibrary = {
         heading: "Resumindo e interpretando dados",
         points: [
           ["Tabelas e gráficos", "Leia título, legenda, unidades, escala e período. Gráficos de barras comparam categorias; linhas mostram mudanças ao longo do tempo; setores representam partes de um total."],
-          ["Média simples", "Some os valores e divida pela quantidade. Para 4, 6 e 8, a média é 6."],
-          ["Média ponderada", "Multiplique cada valor por seu peso, some os produtos e divida pela soma dos pesos."],
+          ["Média simples", "A média simples soma os valores e divide pela quantidade, atribuindo o mesmo peso a cada observação. Para 4, 6 e 8, a média é (4 + 6 + 8)/3 = 6."],
+          ["Média ponderada", "Na média ponderada, multiplique cada valor por seu peso, some os produtos e divida pela soma dos pesos. Valores com peso maior influenciam mais o resultado."],
           ["Moda e mediana", "Moda é o valor mais frequente. Mediana é o valor central após ordenar os dados; com quantidade par, tire a média dos dois centrais."],
-          ["Amplitude", "É a diferença entre o maior e o menor valor; indica a extensão dos dados."]
+          ["Amplitude", "Amplitude é a diferença entre o maior e o menor valor e indica a extensão total dos dados. Ela não mostra como os valores se distribuem entre esses extremos."]
         ],
         note: "A média pode ser afetada por valores extremos; a mediana costuma ser mais resistente a eles.",
         questions: [
@@ -1079,9 +1079,9 @@ const starterLibrary = {
         heading: "Dispersão dos dados",
         points: [
           ["Variância", "Calcule a diferença entre cada dado e a média, eleve cada diferença ao quadrado e faça a média desses quadrados. Em amostras, uma convenção comum divide por n − 1."],
-          ["Desvio padrão", "É a raiz quadrada da variância e fica na mesma unidade dos dados."],
-          ["Interpretação", "Desvio padrão pequeno indica dados mais próximos da média; maior indica maior dispersão."],
-          ["Comparação", "Compare a dispersão junto com a média e considere a escala e o contexto dos conjuntos."]
+          ["Desvio padrão", "O desvio padrão é a raiz quadrada da variância e fica na mesma unidade dos dados. Ele resume o afastamento típico em relação à média, mas não descreve sozinho todos os valores."],
+          ["Interpretação", "Desvio padrão pequeno indica dados mais agrupados em torno da média; um valor maior indica maior dispersão. Considere também a unidade, a escala e possíveis valores extremos."],
+          ["Comparação", "Ao comparar conjuntos, observe média e dispersão: médias iguais podem ocultar distribuições diferentes. Verifique escala, unidades e contexto antes de concluir qual conjunto é mais variável."]
         ],
         note: "A fórmula da variância muda se os dados representam uma população inteira ou uma amostra dela.",
         questions: [
@@ -1114,10 +1114,10 @@ const starterLibrary = {
         intro: "Uma sequência é uma lista ordenada de termos que pode seguir um padrão. Na progressão aritmética, a diferença entre termos consecutivos é constante.",
         heading: "Razão, termo geral e soma da PA",
         points: [
-          ["Padrões e razão", "Na PA, a razão r = aₙ − aₙ₋₁. Em 3, 7, 11, …, a razão é 4."],
-          ["Termo geral", "aₙ = a₁ + (n − 1)r, em que a₁ é o primeiro termo."],
-          ["Soma dos termos", "Sₙ = n(a₁ + aₙ)/2."],
-          ["Aplicações", "PA modela aumentos ou reduções por uma quantidade fixa em cada etapa."]
+          ["Padrões e razão", "Numa progressão aritmética (PA), a diferença entre termos consecutivos é constante: r = aₙ − aₙ₋₁. Em 3, 7, 11, …, soma-se 4 a cada passo."],
+          ["Termo geral", "O termo de posição n numa PA é aₙ = a₁ + (n − 1)r, em que a₁ é o primeiro termo e r é a diferença constante. O fator n − 1 conta quantos passos se avançou."],
+          ["Soma dos termos", "A soma dos n primeiros termos de uma PA é Sₙ = n(a₁ + aₙ)/2: emparelhe primeiro e último, segundo e penúltimo, que têm a mesma soma."],
+          ["Aplicações", "Uma PA modela situações em que a quantidade muda sempre pelo mesmo valor, como uma poupança que aumenta R$ 20 a cada semana. Se o acréscimo variar, o modelo pode não servir."]
         ],
         note: "Uma PA tem diferença constante; não confunda essa diferença com a razão multiplicativa de uma PG.",
         questions: [
@@ -1132,11 +1132,11 @@ const starterLibrary = {
         intro: "Na progressão geométrica, cada termo é obtido multiplicando o anterior por uma razão constante. Esse padrão modela crescimento ou redução multiplicativa.",
         heading: "Razão, termo geral e soma da PG",
         points: [
-          ["Razão", "Para termos consecutivos não nulos, q = aₙ/aₙ₋₁. Na sequência 2, 6, 18, …, q = 3."],
-          ["Termo geral", "aₙ = a₁ × qⁿ⁻¹."],
-          ["Soma finita", "Para q ≠ 1, Sₙ = a₁(qⁿ − 1)/(q − 1). Se q = 1, Sₙ = n × a₁."],
-          ["Soma infinita", "Quando |q| < 1, a soma infinita converge: S = a₁/(1 − q)."],
-          ["Aplicações", "PG aparece em juros compostos, duplicações sucessivas, escalas e processos de decaimento."]
+          ["Razão", "Numa progressão geométrica (PG), a razão q é o quociente entre termos consecutivos não nulos: q = aₙ/aₙ₋₁. Em 2, 6, 18, …, multiplica-se por 3 a cada passo."],
+          ["Termo geral", "O termo de posição n numa PG é aₙ = a₁ × qⁿ⁻¹, em que a₁ é o primeiro termo e q é o fator multiplicativo constante. Use n − 1 porque do primeiro ao enésimo há n − 1 passos."],
+          ["Soma finita", "Para q ≠ 1, a soma dos n primeiros termos é Sₙ = a₁(qⁿ − 1)/(q − 1); se q = 1, todos os termos são iguais e Sₙ = n × a₁."],
+          ["Soma infinita", "Uma PG infinita converge apenas quando |q| < 1; nesse caso, S = a₁/(1 − q). Se a razão não estiver nesse intervalo, os termos não diminuem o suficiente para uma soma finita."],
+          ["Aplicações", "Uma PG modela crescimento por fator constante, como uma população idealizada que dobra em cada período ou um saldo com juros compostos. Na realidade, limites de recursos podem interromper esse padrão."]
         ],
         note: "PA soma uma diferença fixa a cada etapa; PG multiplica por uma razão fixa.",
         questions: [
@@ -1197,7 +1197,7 @@ const starterLibrary = {
         heading: "Famílias, períodos e tendências",
         points: [
           ["Períodos e famílias", "Linhas horizontais são períodos; colunas são famílias ou grupos, que frequentemente reúnem elementos com propriedades semelhantes."],
-          ["Tipos de elementos", "A tabela inclui metais, ametais e gases nobres, além de elementos representativos e de transição."],
+          ["Tipos de elementos", "A tabela periódica reúne metais, ametais e gases nobres e organiza elementos representativos e de transição. Localização ajuda a antecipar propriedades, embora exceções exijam consulta a dados específicos."],
           ["Raio atômico", "Em tendências gerais, o raio diminui ao longo de um período e aumenta ao descer um grupo, com ressalvas ligadas à estrutura eletrônica."],
           ["Eletronegatividade e ionização", "Eletronegatividade descreve atração por elétrons em ligações. Energia de ionização é a energia necessária para remover um elétron; afinidade eletrônica descreve a variação energética associada ao ganho de elétron."]
         ],
@@ -1216,7 +1216,7 @@ const starterLibrary = {
         points: [
           ["Ligação iônica", "Atração entre íons de cargas opostas, frequentemente formada após transferência de elétrons entre átomos."],
           ["Ligação covalente", "Átomos compartilham pares de elétrons; estruturas de Lewis representam os elétrons de valência e ligações."],
-          ["Ligação metálica", "Em metais, elétrons deslocalizados ajudam a explicar condução elétrica, brilho e maleabilidade."],
+          ["Ligação metálica", "Na ligação metálica, elétrons deslocalizados se distribuem pelo retículo de cátions; sua mobilidade ajuda a explicar condução elétrica, brilho e maleabilidade dos metais."],
           ["Geometria e polaridade", "A disposição de regiões eletrônicas influencia a geometria molecular. Polaridade depende das ligações e da geometria total da molécula."],
           ["Forças intermoleculares", "Interações entre moléculas incluem forças de dispersão, dipolo-dipolo e ligações de hidrogênio, que afetam propriedades como ebulição."]
         ],
@@ -1309,7 +1309,7 @@ const starterLibrary = {
         intro: "A termoquímica analisa transferências de energia em reações. A variação de entalpia ajuda a descrever o calor absorvido ou liberado a pressão constante.",
         heading: "Energia das reações",
         points: [
-          ["Endotérmica e exotérmica", "Reação endotérmica absorve energia do entorno; exotérmica libera energia para o entorno."],
+          ["Endotérmica e exotérmica", "Uma reação endotérmica absorve energia do entorno; uma exotérmica libera energia para ele. Na equação termoquímica, ΔH positivo indica absorção e ΔH negativo, liberação, para a reação escrita."],
           ["Entalpia", "A variação ΔH compara entalpias de produtos e reagentes. Em convenção usual, ΔH < 0 indica processo exotérmico e ΔH > 0, endotérmico."],
           ["Lei de Hess", "A variação total de entalpia depende dos estados inicial e final; some equações termoquímicas ajustadas para obter a reação desejada."],
           ["Ligações e energia", "Romper ligações requer energia; formar ligações libera energia. O balanço desses processos contribui para a variação energética."]
@@ -1384,7 +1384,7 @@ const starterLibrary = {
         heading: "Compostos e transformações orgânicas",
         points: [
           ["Álcoois e fenóis", "Álcoois têm grupo hidroxila ligado a carbono saturado; fenóis têm hidroxila ligada diretamente a anel aromático."],
-          ["Aldeídos, cetonas e ácidos", "Aldeídos e cetonas contêm carbonila em posições distintas; ácidos carboxílicos têm grupo carboxila."],
+          ["Aldeídos, cetonas e ácidos", "Aldeídos e cetonas contêm carbonila, mas sua posição na cadeia difere; ácidos carboxílicos têm o grupo –COOH. Identifique o grupo funcional antes de nomear o composto."],
           ["Ésteres e éteres", "Ésteres contêm grupo derivado de ácido carboxílico e álcool; éteres têm oxigênio entre dois grupos carbônicos."],
           ["Aminas e amidas", "Aminas são derivadas da amônia com substituintes orgânicos; amidas possuem grupo carbonila ligado a nitrogênio."],
           ["Reações e polímeros", "Reações orgânicas podem adicionar, substituir, eliminar ou reorganizar grupos. Polímeros são formados por repetição de unidades menores."]
@@ -1426,10 +1426,10 @@ const starterLibrary = {
       intro: "O Renascimento foi um período de renovação das artes e dos estudos, inspirado também por ideias da Antiguidade greco-romana. Começou na Itália por volta do século XIV e se espalhou pela Europa.",
       heading: "Ideias e transformações",
       points: [
-        ["Humanismo", "Valorizava o estudo, a capacidade humana e a leitura de textos clássicos."],
-        ["Arte e ciência", "Artistas estudaram anatomia e perspectiva; a observação ganhou importância."],
-        ["Imprensa", "A impressão de livros ajudou a difundir textos e novas ideias."],
-        ["Mecenas", "Pessoas e instituições com recursos financiaram artistas, arquitetos e estudiosos."]
+        ["Humanismo", "O Humanismo valorizou o estudo de textos clássicos e a investigação das capacidades humanas. Muitos humanistas também eram religiosos; o movimento não significou simplesmente abandonar a fé."],
+        ["Arte e ciência", "Artistas como Leonardo da Vinci estudaram anatomia, proporção e perspectiva por meio da observação. Essas práticas aproximaram investigações artísticas e científicas sem torná-las idênticas."],
+        ["Imprensa", "A imprensa de tipos móveis ampliou a produção de livros na Europa e facilitou a circulação de textos e ideias. A difusão dependia também de alfabetização, custos e redes de leitores."],
+        ["Mecenas", "Mecenas eram pessoas ou instituições que financiavam artistas e estudiosos; a família Médici, em Florença, apoiou obras e oficinas. O patrocínio também expressava prestígio e interesses políticos."]
       ],
       note: "As mudanças renascentistas se espalharam gradualmente e ocorreram de maneiras diferentes em cada região.",
       questions: [
@@ -1546,7 +1546,7 @@ const starterLibrary = {
       points: [
         ["Mineração e sociedade", "A extração de ouro e diamantes deslocou atividades econômicas, estimulou urbanização e aumentou a fiscalização portuguesa."],
         ["Revoltas coloniais", "Inconfidência Mineira e Conjuração Baiana expressaram críticas ao domínio colonial, com participantes, projetos e bases sociais diferentes."],
-        ["Família real no Brasil", "A transferência da corte portuguesa em 1808 alterou instituições e relações comerciais na colônia."],
+        ["Família real no Brasil", "A transferência da corte portuguesa para o Rio de Janeiro em 1808 abriu os portos e criou novas instituições. Essas mudanças elevaram o status político da colônia, embora mantivessem a monarquia."],
         ["Independência e Primeiro Reinado", "A independência de 1822 criou o Império do Brasil, mas manteve a escravidão e concentrou conflitos políticos."]
       ],
       note: "A Independência rompeu vínculos políticos com Portugal, mas não eliminou desigualdades estruturais."
@@ -1584,7 +1584,7 @@ const starterLibrary = {
       intro: "A história do Rio Grande do Sul foi moldada por povos originários, missões religiosas, disputas entre impérios e diferentes formas de ocupação do território.",
       heading: "Formação histórica do estado",
       points: [
-        ["Povos indígenas e ocupação", "Povos indígenas ocupavam e organizavam o território muito antes da formação das fronteiras atuais."],
+        ["Povos indígenas e ocupação", "Povos indígenas ocupavam e organizavam o território muito antes das fronteiras atuais, com sociedades e conhecimentos diversos. Compare fontes indígenas e coloniais para não tomar mapas europeus como retrato neutro da região."],
         ["Missões Jesuíticas", "Missões reuniram comunidades indígenas e religiosos, envolvendo evangelização, trabalho e disputas coloniais."],
         ["Portugal, Espanha e Tratado de Madrid", "As coroas disputaram fronteiras na região; o Tratado de Madrid, em 1750, redesenhou limites e provocou conflitos e deslocamentos."],
         ["Formação econômica e social", "Pecuária, estâncias, agricultura, imigração e atividades comerciais contribuíram para a formação regional em contextos diversos."]
@@ -1620,11 +1620,17 @@ function curriculumPart(category, title, intro, points, note) {
       [choices[index], choices[randomIndex]] = [choices[randomIndex], choices[index]];
     }
     const answer = choices.indexOf(point[0]);
+    const alternatives = choices
+      .filter((_, index) => index !== answer)
+      .map(label => {
+        const alternative = points.find(item => item[0] === label);
+        return alternative ? `${label}: ${alternative[1]}` : label;
+      });
     return {
       text: `Qual conceito corresponde a esta descrição? ${point[1]}`,
       choices,
       answer,
-      explanation: `${point[0]}: ${point[1]}`
+      explanation: `${point[0]} corresponde à descrição porque ${point[1].charAt(0).toLowerCase()}${point[1].slice(1)} As outras opções tratam de conceitos diferentes: ${alternatives.join("; ")}.`
     };
   });
   return {
@@ -1663,7 +1669,7 @@ Object.assign(starterLibrary, {
       curriculumPart("Geografia física", "Estrutura da Terra e dinâmica do relevo",
         "A superfície terrestre resulta da interação entre processos internos do planeta e agentes externos que desgastam, transportam e depositam materiais.",
         [
-          ["Estrutura interna da Terra", "Crosta, manto e núcleo têm propriedades distintas; calor interno participa da dinâmica geológica."],
+          ["Estrutura interna da Terra", "A Terra possui crosta, manto e núcleo, com propriedades distintas; o calor interno participa da dinâmica geológica. Ondas sísmicas ajudam a inferir camadas que não podem ser observadas diretamente."],
           ["Placas tectônicas", "A litosfera está fragmentada em placas que se movem. Seus limites podem produzir terremotos, vulcanismo, montanhas e fossas."],
           ["Vulcanismo e terremotos", "Vulcões liberam magma, gases e cinzas; terremotos resultam da liberação de energia, frequentemente associada a falhas e limites de placas."],
           ["Relevo e agentes internos", "Tectonismo e vulcanismo formam e deformam estruturas; montanhas, planaltos e planícies são classificados por formas e processos."],
@@ -1682,8 +1688,8 @@ Object.assign(starterLibrary, {
         "Tempo descreve condições atmosféricas em curto prazo; clima sintetiza padrões observados por períodos longos. Elementos e fatores ajudam a explicar diferenças regionais.",
         [
           ["Tempo e clima", "Tempo inclui condições momentâneas como chuva e temperatura; clima representa padrões e variações de longo prazo."],
-          ["Elementos climáticos", "Temperatura, umidade, pressão, ventos e precipitação são medidos para caracterizar a atmosfera."],
-          ["Fatores climáticos", "Latitude, altitude, relevo, distância do mar, vegetação e circulação oceânica influenciam o clima."],
+          ["Elementos climáticos", "Temperatura, umidade, pressão, ventos e precipitação são medidas usadas para caracterizar a atmosfera. Uma observação diária descreve o tempo; séries longas ajudam a descrever o clima."],
+          ["Fatores climáticos", "Latitude, altitude, relevo, distância do mar, vegetação e circulação oceânica influenciam o clima. Seus efeitos atuam em conjunto, por isso lugares na mesma latitude podem ter climas diferentes."],
           ["Massas de ar", "Grandes porções de ar com propriedades de temperatura e umidade deslocam-se e interagem, alterando o tempo."],
           ["Tipos de clima e Brasil", "Classificações climáticas agrupam padrões de temperatura e chuva; no Brasil há climas equatoriais, tropicais, semiáridos e subtropicais, entre outros recortes."]
         ], "Um episódio de frio ou calor não basta para comprovar uma mudança climática de longo prazo."),
@@ -1709,7 +1715,7 @@ Object.assign(starterLibrary, {
         [
           ["Crescimento populacional", "Depende do balanço entre nascimentos, mortes e migrações; taxas de natalidade e mortalidade permitem comparar contextos."],
           ["Expectativa de vida e densidade", "Expectativa de vida é uma estimativa estatística; densidade demográfica relaciona população e área, sem indicar por si só a distribuição real."],
-          ["Pirâmides etárias", "Representam a população por idade e sexo e ajudam a observar mudanças na estrutura etária."],
+          ["Pirâmides etárias", "Pirâmides etárias mostram a população por faixas de idade e sexo. Base larga pode indicar alta proporção de jovens; topo mais amplo pode refletir maior longevidade, sempre em relação ao contexto."],
           ["Transição demográfica", "Descreve mudanças históricas nas taxas de mortalidade e natalidade, frequentemente associadas a transformações sociais e econômicas."],
           ["Migrações e distribuição", "Migrações internas e internacionais, êxodo rural, deslocamentos de refugiados e urbanização alteram a distribuição populacional."]
         ], "Densidade média pode esconder concentrações e vazios dentro de uma mesma região."),
@@ -1725,7 +1731,7 @@ Object.assign(starterLibrary, {
       curriculumPart("Geografia agrária", "Agricultura, estrutura fundiária e campo",
         "O espaço rural reúne atividades produtivas e modos de vida diversos. A distribuição da terra e as tecnologias agrícolas influenciam relações sociais e impactos ambientais.",
         [
-          ["Agricultura e pecuária", "Produção vegetal e criação animal variam em escala, tecnologia, finalidade e relação com mercados."],
+          ["Agricultura e pecuária", "Agricultura produz cultivos e pecuária cria animais; ambas variam em escala, tecnologia e finalidade. Compare produção para consumo local e para mercados sem presumir que toda propriedade funcione da mesma forma."],
           ["Agronegócio e agricultura familiar", "Cadeias do agronegócio integram produção e comércio; agricultura familiar tem grande diversidade e papel na produção de alimentos e economias locais."],
           ["Subsistência e Revolução Verde", "A agricultura de subsistência atende principalmente às necessidades da família. A Revolução Verde ampliou insumos e produtividade, mas seus benefícios e custos foram desiguais."],
           ["Modernização e estrutura fundiária", "Mecanização e concentração de terras coexistem; reforma agrária discute redistribuição e acesso à terra."],
@@ -1762,24 +1768,24 @@ Object.assign(starterLibrary, {
           ["Origem da Filosofia; mito e razão", "Mitos transmitem narrativas e sentidos culturais; a investigação filosófica busca explicar problemas por argumentos debatidos e examinados."],
           ["Pré-socráticos", "Pensadores como Tales, Heráclito e Parmênides investigaram princípios da natureza, mudança e permanência."],
           ["Sofistas", "Ensinavam retórica e argumentação em cidades gregas; seus debates abordaram linguagem, convenções e política."],
-          ["Sócrates", "Usava diálogo e perguntas para examinar conceitos e crenças, estimulando reflexão crítica."]
+          ["Sócrates", "Sócrates usava diálogo e perguntas para expor pressupostos e examinar conceitos. O método não entrega respostas prontas: leva interlocutores a revisar crenças e justificar o que afirmam."]
         ], "Mito e razão não são simplesmente etapas que se apagam: podem coexistir como formas diferentes de interpretar o mundo."),
       curriculumPart("Filosofia Antiga", "Platão, Aristóteles e escolas helenísticas",
         "A filosofia antiga investigou ética, política, conhecimento e natureza. Diferentes escolas propuseram caminhos distintos para uma vida boa.",
         [
           ["Platão", "Relacionou conhecimento, justiça e formas inteligíveis; seus diálogos exploram debates filosóficos e políticos."],
           ["Aristóteles", "Estudou lógica, natureza, ética e política; a virtude é desenvolvida por hábitos orientados pela razão."],
-          ["Ética antiga", "Pergunta como viver bem e agir com virtude em relação a si e à comunidade."],
-          ["Estoicismo", "Enfatiza virtude, razão e discernimento entre aquilo que depende de nós e o que não depende."],
+          ["Ética antiga", "A ética antiga pergunta como viver bem e agir com virtude na comunidade. Para Aristóteles, por exemplo, a prática de hábitos equilibrados contribui para a vida boa; não se trata apenas de obedecer regras."],
+          ["Estoicismo", "O estoicismo enfatiza virtude, razão e distinção entre o que depende de nossas escolhas e o que não controlamos. Isso orienta a ação responsável, não a indiferença diante de injustiças."],
           ["Epicurismo", "Associa felicidade à busca prudente de prazer, amizade e tranquilidade, evitando desejos que gerem sofrimento."]
         ], "Escolas antigas diferem sobre prazer, virtude e controle das paixões; compare seus argumentos."),
       curriculumPart("Filosofia Medieval", "Fé, razão e filosofia cristã",
         "A filosofia medieval articulou tradições greco-romanas, debates religiosos e novas instituições de ensino. A relação entre fé e razão assumiu diferentes formas.",
         [
           ["Patrística", "Produção dos primeiros pensadores cristãos, que dialogaram com filosofias antigas para interpretar e defender doutrinas."],
-          ["Santo Agostinho", "Relacionou interioridade, tempo, memória e conhecimento a uma reflexão filosófica cristã."],
+          ["Santo Agostinho", "Agostinho refletiu sobre interioridade, memória e tempo em uma filosofia cristã influenciada por ideias platônicas. Em Confissões, examina a experiência do tempo para discutir memória e eternidade."],
           ["Escolástica", "Método de debate e investigação que organizou questões, argumentos e respostas em instituições medievais."],
-          ["São Tomás de Aquino", "Articulou filosofia aristotélica e teologia cristã, discutindo diferentes vias de conhecimento."],
+          ["São Tomás de Aquino", "Tomás de Aquino articulou filosofia aristotélica e teologia cristã, argumentando que razão e fé podem tratar de questões relacionadas por vias distintas. Examine como ele constrói suas demonstrações."],
           ["Fé e razão", "Debates medievais investigaram como crença religiosa e argumentação racional podem se relacionar, sem uma única resposta."]
         ], "A filosofia medieval incluiu debates variados e não se reduz a uma oposição simples entre fé e razão."),
       curriculumPart("Filosofia Moderna", "Racionalismo, empirismo e conhecimento",
@@ -1794,18 +1800,18 @@ Object.assign(starterLibrary, {
       curriculumPart("Filosofia Moderna", "Contratualismo e pensamento político",
         "O contratualismo usa a ideia de contrato para investigar a origem e a legitimidade da autoridade política, propondo respostas diferentes.",
         [
-          ["Hobbes", "Argumenta que a autoridade soberana pode ser necessária para reduzir insegurança e conflito."],
+          ["Hobbes", "Hobbes argumenta que uma autoridade soberana pode reduzir insegurança e conflito; o pacto transfere poderes ao Estado para garantir paz. Compare essa justificativa com limites à autoridade e direitos individuais."],
           ["Locke", "Defende direitos naturais e governo limitado, cujo poder depende de consentimento e pode ser contestado."],
-          ["Rousseau", "Relaciona legitimidade política à vontade geral e à participação dos cidadãos."],
+          ["Rousseau", "Rousseau relaciona a legitimidade política à vontade geral, orientada ao interesse comum, e à participação dos cidadãos. Ela não é simplesmente a soma de desejos privados da maioria."],
           ["Montesquieu", "Analisa leis e formas de governo e defende a separação de poderes como limite à concentração de autoridade."]
         ], "Compare como cada autor entende liberdade, conflito, consentimento e limites do governo."),
       curriculumPart("Filosofia Contemporânea", "Crítica social e existencialismo",
         "A filosofia contemporânea questiona estruturas sociais, valores, liberdade e formas de poder em sociedades modernas.",
         [
-          ["Karl Marx", "Analisa capitalismo, classes sociais, trabalho e conflitos materiais na transformação histórica."],
-          ["Friedrich Nietzsche", "Questiona valores herdados e investiga como moral, cultura e relações de força moldam a vida."],
-          ["Existencialismo e Sartre", "Enfatiza existência, liberdade, escolhas e responsabilidade em situações concretas."],
-          ["Hannah Arendt", "Reflete sobre ação política, totalitarismo, responsabilidade e espaço público."],
+          ["Karl Marx", "Marx analisa como propriedade dos meios de produção, trabalho assalariado e conflito entre classes estruturam o capitalismo. Relacione essas condições materiais às mudanças históricas sem reduzir tudo à economia."],
+          ["Friedrich Nietzsche", "Nietzsche questiona a origem dos valores herdados e investiga como moral, cultura e relações de força moldam a vida. Sua crítica não equivale a afirmar que qualquer escolha é igualmente válida."],
+          ["Existencialismo e Sartre", "Sartre enfatiza que as pessoas constroem projetos por escolhas e respondem por elas, sempre em situações concretas e limitadas. Liberdade não significa poder fazer qualquer coisa sem condições."],
+          ["Hannah Arendt", "Arendt analisa como ação e fala entre pessoas plurais constituem a vida política e o espaço público. Seus estudos sobre totalitarismo também levam a pensar responsabilidade e julgamento."],
           ["Michel Foucault", "Investiga relações entre poder, conhecimento, instituições e modos de disciplinar corpos e condutas."]
         ], "Teorias críticas oferecem ferramentas de interpretação; aplique conceitos com atenção ao contexto e às evidências."),
       curriculumPart("Filosofia Contemporânea", "Escola de Frankfurt, ciência e pós-modernidade",
@@ -1813,16 +1819,16 @@ Object.assign(starterLibrary, {
         [
           ["Escola de Frankfurt", "Pensadores como Adorno e Horkheimer analisaram capitalismo, cultura de massa e racionalidade instrumental."],
           ["Indústria cultural", "O conceito examina como produção cultural em massa pode padronizar conteúdos e transformá-los em mercadorias."],
-          ["Filosofia da ciência", "Investiga métodos, evidências, explicação, limites e mudanças das teorias científicas."],
+          ["Filosofia da ciência", "A filosofia da ciência pergunta como evidências sustentam teorias, como modelos são testados e por que explicações mudam. Uma teoria deve ser avaliada por seus métodos e alcance, não apenas por parecer convincente."],
           ["Pós-modernidade", "Debates sobre pós-modernidade analisam pluralidade, críticas a narrativas totalizantes e transformações culturais; o conceito é controverso."]
         ], "Indústria cultural é uma ferramenta crítica, não uma afirmação de que todo público recebe mensagens de modo idêntico."),
       curriculumPart("Temas filosóficos", "Ética, direitos e vida pública",
         "A reflexão ética e política ajuda a discutir escolhas, instituições e direitos. Argumentar filosoficamente exige definir conceitos e examinar razões e consequências.",
         [
           ["Ética e moral", "Moral reúne normas e costumes; ética investiga criticamente princípios, responsabilidades e justificativas para agir."],
-          ["Política, poder e democracia", "Estudam-se autoridade, participação, representação, limites do poder e formas de decisão coletiva."],
+          ["Política, poder e democracia", "A filosofia política examina autoridade, participação, representação e limites do poder. Compare como instituições permitem decisão coletiva e protegem direitos, inclusive de grupos minoritários."],
           ["Justiça, liberdade e igualdade", "Teorias distintas discutem distribuição de recursos, direitos, oportunidades, autonomia e tratamento equitativo."],
-          ["Cidadania e direitos humanos", "Abrangem direitos, deveres, participação e dignidade de todas as pessoas."],
+          ["Cidadania e direitos humanos", "Cidadania envolve direitos, deveres e participação na vida coletiva; direitos humanos afirmam a dignidade de todas as pessoas. Compare a garantia formal com as condições reais de exercício."],
           ["Conhecimento, ciência e tecnologia", "Filosofia pergunta como justificamos crenças e como avaliar benefícios, riscos e responsabilidades de tecnologias."],
           ["Bioética e filosofia da arte", "Bioética examina dilemas de saúde e vida; filosofia da arte investiga criação, interpretação, experiência e valor estético."]
         ], "Uma boa análise ética identifica envolvidos, direitos, alternativas, consequências e princípios em conflito.")
@@ -1844,15 +1850,15 @@ Object.assign(starterLibrary, {
       curriculumPart("Principais pensadores", "Durkheim, Marx e Weber",
         "Autores clássicos formularam perspectivas distintas sobre ordem social, conflito, trabalho e sentido da ação.",
         [
-          ["Émile Durkheim", "Estudou fatos sociais, solidariedade, divisão do trabalho e formas de integração social."],
-          ["Karl Marx", "Analisou classes, propriedade, trabalho e conflitos ligados à organização capitalista da produção."],
+          ["Émile Durkheim", "Durkheim estudou fatos sociais — maneiras coletivas de agir que existem além de cada indivíduo e exercem influência — e investigou como solidariedade e divisão do trabalho integram sociedades."],
+          ["Karl Marx", "Na Sociologia, Marx analisou como propriedade, trabalho assalariado e relações de produção organizam classes e conflitos. Compare quem controla recursos e quem vende sua força de trabalho."],
           ["Max Weber", "Investigou ação social, dominação, burocracia e os sentidos atribuídos pelos indivíduos às suas ações."],
-          ["Auguste Comte", "Defendeu uma ciência da sociedade e teve influência na formação do positivismo."]
+          ["Auguste Comte", "Comte defendeu o estudo sistemático da sociedade e influenciou o positivismo, que buscava identificar regularidades sociais. Considere o contexto histórico e os limites de tratar a sociedade como objeto neutro."]
         ], "Compare objeto de estudo e método: cada autor explica a sociedade por conceitos diferentes."),
       curriculumPart("Principais pensadores", "Bourdieu, Bauman e Gramsci",
         "Pensadores posteriores ampliaram análises sobre cultura, desigualdade, modernidade e poder.",
         [
-          ["Pierre Bourdieu", "Conceitos como habitus, campo e capital ajudam a analisar práticas e reprodução de desigualdades."],
+          ["Pierre Bourdieu", "Habitus, campo e capitais econômico, social e cultural ajudam Bourdieu a explicar como práticas e instituições podem reproduzir desigualdades. Observe quais recursos são valorizados em cada contexto."],
           ["Zygmunt Bauman", "A ideia de modernidade líquida descreve relações e instituições percebidas como mais instáveis e mutáveis."],
           ["Antonio Gramsci", "Hegemonia explica como liderança política e cultural pode ser construída por consentimento e disputa de ideias."],
           ["Comparação de perspectivas", "Bourdieu analisa disposições, campos e capitais; Bauman enfatiza transformações da modernidade; Gramsci examina hegemonia e disputa cultural."]
@@ -1904,17 +1910,17 @@ Object.assign(starterLibrary, {
         "Interpretar textos envolve relacionar informações, linguagem, contexto e propósito. A resposta precisa ser sustentada por elementos do texto.",
         [
           ["Ideia principal e informações", "Identifique tema, tese e informações explícitas; conecte pistas para inferir conteúdos implícitos sem inventar dados."],
-          ["Linguagem verbal, não verbal e mista", "Palavras, imagens, gráficos e gestos podem construir sentido em conjunto."],
-          ["Contexto e intenção comunicativa", "Considere autor, público, suporte, contexto de circulação e objetivo do texto."],
+          ["Linguagem verbal, não verbal e mista", "Palavras, imagens, gráficos e gestos podem construir sentido em conjunto. Num cartaz, por exemplo, a frase e a imagem podem reforçar-se ou produzir ironia quando entram em contraste."],
+          ["Contexto e intenção comunicativa", "Para interpretar um texto, considere quem o produziu, para quem, em qual suporte e situação e com que objetivo. Um aviso escolar e um anúncio podem falar do mesmo tema para públicos diferentes."],
           ["Ironia, humor e ambiguidade", "Ironia pode indicar sentido oposto ao literal; humor depende de pistas e expectativas; ambiguidade admite mais de uma leitura."],
           ["Intertextualidade e figuras", "Textos podem retomar outros textos; metáfora, comparação, hipérbole e outras figuras criam efeitos de sentido."],
-          ["Ponto de vista e persuasão", "Distinga fato e opinião, reconheça argumentos e avalie estratégias de persuasão."]
+          ["Ponto de vista e persuasão", "Distinga afirmações verificáveis de opiniões, localize as razões que as sustentam e avalie apelos emocionais ou evidências. Uma linguagem convincente, por si só, não prova uma afirmação."]
         ], "Fundamente inferências em pistas linguísticas ou visuais presentes no texto."),
       curriculumPart("Gêneros textuais", "Gêneros jornalísticos, literários e visuais",
         "Gêneros textuais atendem a propósitos e situações de comunicação. Reconhecê-los ajuda a compreender forma, público e escolhas de linguagem.",
         [
           ["Notícia e reportagem", "Notícia informa um acontecimento de modo conciso; reportagem contextualiza e aprofunda dados, fontes e perspectivas."],
-          ["Artigo de opinião e editorial", "Artigo apresenta a posição de seu autor; editorial expressa a perspectiva institucional do veículo."],
+          ["Artigo de opinião e editorial", "Artigo de opinião apresenta a posição de um autor identificado; editorial expressa a perspectiva institucional do veículo. Em ambos, separe tese, argumentos e evidências."],
           ["Crônica, conto e poema", "Crônica parte de situações cotidianas; conto constrói narrativa breve; poema explora ritmo, imagens e organização verbal."],
           ["Charge, tirinha e cartum", "Combinam texto e imagem para produzir humor, crítica ou comentário, frequentemente ligados ao contexto."],
           ["Publicidade e circulação", "Propagandas, anúncios e cartazes buscam informar ou persuadir. Textos científicos, digitais e jornalísticos variam em estrutura e público."]
@@ -1934,8 +1940,8 @@ Object.assign(starterLibrary, {
           ["Concordância", "Concordância verbal relaciona verbo e sujeito; concordância nominal relaciona nomes e seus determinantes."],
           ["Regência e crase", "Regência estuda relações entre termos e preposições exigidas; crase marca a fusão da preposição a com artigo ou pronome em contextos específicos."],
           ["Colocação pronominal", "Próclise, ênclise e mesóclise descrevem posições de pronomes átonos segundo contextos sintáticos e convenções."],
-          ["Pontuação, ortografia e acentuação", "Pontuação organiza relações e ritmo; ortografia e acentuação seguem convenções da escrita."],
-          ["Formação de palavras", "Derivação, composição e outros processos criam vocábulos a partir de elementos existentes."]
+          ["Pontuação, ortografia e acentuação", "Pontuação organiza relações e ritmo; ortografia e acentuação seguem convenções da escrita. Revise como esses recursos afetam clareza e sentido, não apenas a aparência do texto."],
+          ["Formação de palavras", "Derivação, composição e outros processos criam vocábulos a partir de elementos existentes. Em “infelizmente”, prefixo, base e sufixo contribuem para o sentido e a classe da palavra."]
         ], "Revise pontuação e concordância considerando a estrutura e o sentido da frase."),
       curriculumPart("Semântica e linguística", "Sentidos, variação e coesão",
         "A língua varia com região, situação, grupo e época. Analisar sentidos e conexões textuais exige observar usos reais e contexto.",
@@ -1949,11 +1955,11 @@ Object.assign(starterLibrary, {
       curriculumPart("Funções da linguagem", "Intenções e funções da comunicação",
         "As funções da linguagem destacam componentes diferentes da comunicação. Um texto pode combinar funções, embora uma delas possa predominar.",
         [
-          ["Referencial", "Destaca informação e contexto, buscando apresentar dados ou explicar um assunto."],
+          ["Referencial", "A função referencial prioriza informação sobre o contexto, como num boletim que informa a temperatura e o horário. Mesmo textos informativos fazem escolhas de foco e linguagem."],
           ["Emotiva e conativa", "Emotiva evidencia a perspectiva do emissor; conativa ou apelativa dirige-se ao interlocutor para influenciar sua ação."],
-          ["Fática", "Enfatiza o canal e verifica ou mantém o contato entre interlocutores."],
-          ["Metalinguística", "Usa a linguagem para explicar ou discutir a própria linguagem."],
-          ["Poética", "Destaca a organização da mensagem, seus sons, imagens, ritmos ou jogos de linguagem."]
+          ["Fática", "A função fática verifica ou mantém o contato entre interlocutores, como em “Alô, está me ouvindo?”. Ela enfatiza o canal, não necessariamente transmite uma informação nova."],
+          ["Metalinguística", "A função metalinguística usa a própria linguagem para explicar seus códigos; um dicionário, por exemplo, define palavras usando palavras."],
+          ["Poética", "A função poética chama atenção para a forma da mensagem, como sons, imagens, ritmo ou jogos de linguagem. Ela pode aparecer em poemas, slogans e canções, não apenas em versos."]
         ], "Identifique a função predominante pelo efeito e pelo foco do texto, não por uma palavra isolada.")
     ]
   },
@@ -1972,18 +1978,18 @@ Object.assign(starterLibrary, {
       curriculumPart("Escolas literárias", "Movimentos literários: Romantismo à contemporaneidade",
         "A literatura acompanha transformações estéticas e sociais. Uma leitura histórica observa tanto os movimentos quanto as escolhas particulares de cada autor.",
         [
-          ["Romantismo", "Valoriza subjetividade, imaginação e sentimentos; suas expressões variam conforme país e contexto."],
+          ["Romantismo", "O Romantismo valorizou subjetividade, imaginação e sentimentos, mas suas expressões variam por país, período e autor. Identifique marcas no texto em vez de tratar o movimento como uma fórmula única."],
           ["Realismo e Naturalismo", "Realismo observa criticamente relações sociais e personagens; Naturalismo enfatiza determinismos e condições materiais, segundo concepções históricas."],
-          ["Parnasianismo e Simbolismo", "Parnasianismo valoriza elaboração formal; Simbolismo explora musicalidade, sugestão e imagens."],
+          ["Parnasianismo e Simbolismo", "O Parnasianismo valoriza elaboração formal e imagens trabalhadas; o Simbolismo explora musicalidade, sugestão e imagens subjetivas. Compare recursos do poema para distinguir tendências."],
           ["Pré-Modernismo e Modernismo", "Pré-Modernismo reúne obras diversas que expõem tensões brasileiras; o Modernismo rompe convenções e se transforma em diferentes fases."],
-          ["Literatura contemporânea", "Produção atual é plural em gêneros, vozes, suportes e relações com questões sociais."]
+          ["Literatura contemporânea", "A literatura contemporânea reúne gêneros, vozes e suportes variados e dialoga com questões atuais. Compare escolhas de linguagem e perspectivas sem tratar toda produção recente como um único movimento."]
         ], "Movimentos literários são ferramentas de leitura, não caixas rígidas que definem todas as obras."),
       curriculumPart("Literatura brasileira", "Literatura brasileira e vozes plurais",
         "A literatura no Brasil se desenvolveu em contextos coloniais, pós-coloniais e contemporâneos, com disputas sobre identidade, memória e representação.",
         [
           ["Literatura colonial e de informação", "Textos coloniais incluem relatos de viagem, descrição e catequese; devem ser lidos considerando perspectivas e relações coloniais."],
           ["Romantismo, Realismo e Naturalismo", "Movimentos brasileiros reelaboraram modelos internacionais e trataram de identidade nacional, relações sociais e contradições escravistas."],
-          ["Parnasianismo e Simbolismo brasileiros", "A poesia explorou tanto rigor formal quanto musicalidade e subjetividade."],
+          ["Parnasianismo e Simbolismo brasileiros", "Na poesia brasileira, o Parnasianismo valorizou elaboração formal e imagens precisas; o Simbolismo explorou musicalidade, sugestão e subjetividade. Leia os recursos do poema antes de classificá-lo."],
           ["Modernismo e 1922", "A Semana de Arte Moderna tornou-se marco de debates sobre renovação estética; fases posteriores ampliaram temas e formas."],
           ["Literatura contemporânea, indígena, afro-brasileira e regionalista", "Obras de múltiplas origens e regiões questionam apagamentos e representam experiências, línguas e memórias diversas."]
         ], "Inclua autoria e contexto ao interpretar quem fala e quais experiências ganham visibilidade."),
@@ -2008,7 +2014,7 @@ Object.assign(starterLibrary, {
         [
           ["Interpretação e intenção do autor", "Identifique tema, público, opinião e propósito; charges, tirinhas e anúncios usam texto e imagem para criar efeitos."],
           ["Vocabulário e cognatos", "Use contexto para inferir palavras. Cognatos se parecem com palavras em português; falsos cognatos parecem familiares, mas têm outro sentido."],
-          ["Pronomes e referências", "Pronomes substituem ou retomam nomes; localize seus referentes para acompanhar a coesão."],
+          ["Pronomes e referências", "Pronomes podem substituir ou retomar nomes; identifique o referente para acompanhar o texto. Em “Maya found the keys. She put them away”, “she” retoma Maya e “them”, as chaves."],
           ["Adjetivos, advérbios e comparação", "Adjetivos qualificam nomes; advérbios modificam verbos ou qualificadores; comparativos e superlativos expressam relações de grau."],
           ["Formalidade e expressões", "Phrasal verbs e expressões idiomáticas nem sempre têm tradução literal. Registros formal e informal variam com público e situação."]
         ], "Procure evidências no texto antes de escolher uma interpretação."),
@@ -2033,7 +2039,7 @@ Object.assign(starterLibrary, {
         [
           ["Interpretação e intenção", "Identifique tema, público e propósito; charges e tirinhas articulam elementos visuais e verbais."],
           ["Vocabulário e falsos cognatos", "Cognatos ajudam na compreensão; falsos cognatos como embarazada (grávida) exigem atenção ao contexto."],
-          ["Variações regionais", "Vocabulário, pronúncia e usos variam entre países e comunidades hispanofalantes."],
+          ["Variações regionais", "O vocabulário, a pronúncia e alguns usos variam entre países e comunidades hispanofalantes. Identifique a região e a situação antes de concluir que uma forma é incorreta."],
           ["Expressões idiomáticas", "Expressões fixas podem ter sentido diferente da soma literal das palavras; interprete-as na situação."],
           ["Conjunções e advérbios", "Conjunções conectam ideias; advérbios acrescentam informações de tempo, modo, lugar ou intensidade."]
         ], "Não trate o espanhol como uniforme: considere país, comunidade e situação comunicativa."),
@@ -2041,7 +2047,7 @@ Object.assign(starterLibrary, {
         "Reconhecer classes de palavras e formas verbais ajuda a acompanhar o sentido do texto sem transformar a leitura em tradução palavra por palavra.",
         [
           ["Pronomes, artigos e preposições", "Pronomes retomam referentes; artigos acompanham nomes; preposições relacionam termos e variam em expressões."],
-          ["Substantivos e adjetivos", "Nomes e adjetivos podem variar em gênero e número; a concordância dá pistas de referência."],
+          ["Substantivos e adjetivos", "Substantivos nomeiam pessoas, objetos ou ideias; adjetivos os caracterizam. Em “casas blancas”, gênero e número concordam e ajudam a identificar a relação entre as palavras."],
           ["Verbos e conjugação", "As terminações verbais indicam pessoa, número, tempo e modo; verbos irregulares alteram formas de maneira própria."],
           ["Presente, passado e futuro", "Tempos verbais situam ações; use marcadores temporais e o gênero textual para compreender a referência."],
           ["Comunicação e registro", "Formalidade, expressões e escolha linguística dependem de interlocutores e da intenção comunicativa."]
@@ -2059,7 +2065,7 @@ Object.assign(starterLibrary, {
           ["Arte medieval", "Manifestações medievais incluíram mosaicos, ícones, manuscritos, arquitetura religiosa e tradições de diferentes culturas."],
           ["Renascimento", "Artistas retomaram referências clássicas, exploraram perspectiva e anatomia e trabalharam com diferentes formas de patrocínio."],
           ["Barroco e Neoclassicismo", "Barroco usa contrastes e movimento; Neoclassicismo retoma ideais de equilíbrio clássico em outro contexto histórico."],
-          ["Romantismo e Realismo", "Romantismo enfatiza subjetividade e imaginação; Realismo observa relações sociais e cotidiano."]
+          ["Romantismo e Realismo", "O Romantismo frequentemente enfatiza subjetividade e imaginação; o Realismo observa relações sociais e cotidiano. Compare narrador, temas e linguagem, pois autores de um mesmo período não escrevem de modo idêntico."]
         ], "Obras de arte podem ser interpretadas por forma, contexto, autoria e circulação."),
       curriculumPart("História da arte", "Arte moderna e contemporânea",
         "Movimentos modernos e contemporâneos questionaram convenções de representação, materiais, autoria e relação entre arte e sociedade.",
@@ -2076,7 +2082,7 @@ Object.assign(starterLibrary, {
           ["Arte indígena e africana", "Povos indígenas e africanos produzem tradições artísticas diversas, ligadas a histórias, territórios, cosmologias e práticas vivas."],
           ["Arte popular e patrimônio", "Arte popular comunica conhecimentos e experiências comunitárias; patrimônio cultural pode ser material ou imaterial."],
           ["Música e história da música", "Ritmo, timbre, melodia e contexto social ajudam a compreender tradições musicais e suas transformações."],
-          ["Teatro e dança", "Artes cênicas articulam corpo, espaço, tempo, movimento, texto e relação com o público."],
+          ["Teatro e dança", "Teatro e dança articulam corpo, espaço, tempo, movimento e, às vezes, texto e música. Numa cena, a distância entre intérpretes pode expressar conflito; o público e o espaço também afetam a experiência."],
           ["Fotografia, cinema, grafite e arte urbana", "Imagem e audiovisual organizam enquadramento, montagem e narrativa; grafite e arte urbana dialogam com o espaço público."]
         ], "Valorize autoria e contexto e evite generalizações sobre povos ou tradições.")
     ]
@@ -2088,9 +2094,9 @@ Object.assign(starterLibrary, {
       curriculumPart("Cultura corporal", "Esportes, jogos e práticas corporais",
         "A Educação Física estuda práticas corporais como manifestações culturais e formas de participação, expressão e convivência.",
         [
-          ["Cultura corporal", "Inclui práticas e saberes sobre movimento construídos em contextos históricos e culturais."],
-          ["Esportes coletivos e individuais", "Modalidades variam em regras, estratégias, habilidades e formas de cooperação ou competição."],
-          ["Jogos e brincadeiras", "Práticas lúdicas têm regras flexíveis e significados que podem variar entre comunidades e gerações."],
+          ["Cultura corporal", "Cultura corporal reúne práticas e saberes sobre movimento construídos em contextos históricos e culturais. Danças, jogos e esportes expressam modos diversos de viver e se relacionar."],
+          ["Esportes coletivos e individuais", "Modalidades têm regras, estratégias e habilidades específicas; as coletivas também exigem coordenação entre participantes. Compare as demandas da prática, não apenas o número de jogadores."],
+          ["Jogos e brincadeiras", "Jogos e brincadeiras são práticas lúdicas cujas regras e significados variam entre comunidades e gerações. Observe como os participantes combinam, negociam ou modificam as regras."],
           ["Danças e lutas", "Expressam tradições, identidades e técnicas corporais; seu ensino deve respeitar origens e diversidade."],
           ["Ginástica e inclusão", "Práticas ginásticas desenvolvem diferentes habilidades; adaptação de regras e ambientes amplia a participação."]
         ], "Atividades corporais não são universais: considere contexto cultural, acesso e inclusão."),
@@ -2135,7 +2141,7 @@ Object.assign(starterLibrary, {
       curriculumPart("Estrutura do texto", "Dissertação-argumentativa e planejamento",
         "A redação do ENEM é um texto dissertativo-argumentativo que apresenta uma tese, desenvolve argumentos e propõe uma intervenção relacionada ao tema.",
         [
-          ["Introdução e tese", "Apresente o tema, delimite o problema e indique com clareza a posição que será defendida."],
+          ["Introdução e tese", "Na introdução, apresente o tema, delimite o problema e indique a posição que será defendida. A tese deve responder ao recorte e antecipar uma linha de raciocínio que o desenvolvimento consiga sustentar."],
           ["Desenvolvimento 1 e 2", "Cada parágrafo deve sustentar uma parte do raciocínio com explicação, evidências ou repertório pertinente."],
           ["Argumentação e repertório", "Use repertório sociocultural relevante, explicado e conectado ao tema; uma citação isolada não substitui análise."],
           ["Conclusão e intervenção", "Retome o encaminhamento do texto e apresente uma proposta de intervenção viável, detalhada e ligada ao problema."],
@@ -2144,7 +2150,7 @@ Object.assign(starterLibrary, {
       curriculumPart("Competências do ENEM", "As cinco competências da redação",
         "A avaliação da redação considera domínio da escrita formal, compreensão do tema, organização argumentativa, coesão e proposta de intervenção.",
         [
-          ["Competência 1", "Demonstrar domínio da modalidade escrita formal da Língua Portuguesa."],
+          ["Competência 1", "A Competência 1 avalia o domínio da modalidade escrita formal: ortografia, concordância, regência e construção dos períodos. Revise sem sacrificar a clareza nem o sentido pretendido."],
           ["Competência 2", "Compreender a proposta e desenvolver o tema dentro dos limites estruturais do texto dissertativo-argumentativo."],
           ["Competência 3", "Selecionar, relacionar, organizar e interpretar informações, fatos, opiniões e argumentos em defesa de um ponto de vista."],
           ["Competência 4", "Demonstrar conhecimento dos mecanismos linguísticos necessários para construir a argumentação e a coesão."],
@@ -2166,7 +2172,7 @@ Object.assign(starterLibrary, {
           ["Ambiente e tecnologia", "Discuta meio ambiente, mudanças climáticas, tecnologia e inteligência artificial, redes sociais e desinformação."],
           ["Direitos e grupos sociais", "Estude saúde mental, inclusão de pessoas com deficiência, direitos de idosos, crianças e adolescentes e desafios das populações indígenas."],
           ["Trabalho e cidade", "Explore desigualdade de gênero, trabalho e desemprego e mobilidade urbana com dados e contexto."],
-          ["Cultura e história", "Analise cultura e preservação histórica, memória e acesso a bens culturais."]
+          ["Cultura e história", "Ao discutir cultura, relacione práticas e memórias ao contexto histórico e às condições de preservação e acesso. Use referências pertinentes e explique como sustentam a tese, sem generalizações."]
         ], "Construa repertório com fontes verificáveis e use-o para explicar o tema, não apenas para ornamentar o texto.")
     ]
   }
@@ -2279,7 +2285,7 @@ Object.assign(starterLibrary, {
           ["Barroco", "Associado a tensões religiosas e culturais, explora contrastes, antíteses, paradoxos e linguagem elaborada."],
           ["Cultismo e conceptismo", "Cultismo enfatiza jogos de linguagem e imagens; conceptismo organiza raciocínios e argumentos persuasivos."],
           ["Arcadismo", "Valoriza equilíbrio, simplicidade idealizada e referências clássicas, em diálogo com o Iluminismo e a vida urbana."],
-          ["Poesia árcade no Brasil", "Autores coloniais trataram de natureza, convenções pastorais e tensões políticas do período."],
+          ["Poesia árcade no Brasil", "Autores árcades brasileiros usaram convenções pastorais e imagens de natureza, às vezes junto a tensões políticas do período colonial. Leia essas paisagens como escolhas literárias, não como retrato direto da vida rural."],
           ["Leitura comparativa", "Compare forma, tema e contexto em vez de identificar uma escola apenas por uma palavra ou característica."]
         ], "Movimentos não são caixas rígidas: autores podem combinar convenções e responder a seus contextos de modo singular."),
       curriculumPart("Escolas literárias", "Realismo, Naturalismo e Parnasianismo",
@@ -2313,8 +2319,8 @@ Object.assign(starterLibrary, {
         "A leitura literária considera como a forma constrói sentidos. Gênero, voz, tempo, espaço e figuras de linguagem orientam a interpretação.",
         [
           ["Narrativa", "Enredo, personagens, narrador, tempo e espaço organizam uma história; narrador não é automaticamente o autor."],
-          ["Poesia e eu lírico", "O eu lírico é a voz do poema e pode ser distinto da pessoa biográfica do autor."],
-          ["Figuras de linguagem", "Metáfora, metonímia, antítese, hipérbole e ironia produzem efeitos que dependem do contexto."],
+          ["Poesia e eu lírico", "O eu lírico é a voz construída no poema e pode ser diferente da pessoa biográfica do autor. Interprete sentimentos e posições com base nos versos, sem presumir que sejam confissão direta."],
+          ["Figuras de linguagem", "Metáfora, metonímia, antítese, hipérbole e ironia produzem efeitos que dependem do contexto. Nomeie o recurso e explique como a escolha de palavras orienta a interpretação do trecho."],
           ["Interpretação de forma", "Ritmo, repetição, escolha lexical, ponto de vista e estrutura podem reforçar, complicar ou contradizer o tema."],
           ["Leitura comparada", "Compare textos observando época, gênero, voz e recursos, sustentando conclusões com elementos da própria obra."]
         ], "Nomear uma figura de linguagem é apenas o primeiro passo: explique o efeito que ela produz no trecho.")
@@ -2335,17 +2341,17 @@ Object.assign(starterLibrary, {
         "Pronomes e artigos ajudam a acompanhar quem ou o que está sendo mencionado. Resolver referências evita perder a continuidade de um texto.",
         [
           ["Pronomes pessoais", "I, you, he, she, it, we e they indicam participantes; a forma de objeto inclui me, him, her, us e them."],
-          ["Possessivos e demonstrativos", "My, their, this e those conectam objetos ou pessoas a participantes e à distância discursiva."],
+          ["Possessivos e demonstrativos", "Possessivos como my e their indicam relação de posse; demonstrativos como this e those apontam referentes próximos ou distantes. Use o contexto para saber a que objeto ou pessoa cada forma se refere."],
           ["Artigos", "A/an introduzem um substantivo contável singular de modo não específico; the costuma indicar referência identificável ou já conhecida."],
           ["Referência pronominal", "Procure o antecedente compatível em número e sentido; ele pode estar na frase anterior ou ser recuperado pelo contexto."],
-          ["Leitura de parágrafo", "Substitua mentalmente o pronome pelo possível referente e confira se a frase continua coerente."]
+          ["Leitura de parágrafo", "Ao encontrar um pronome, substitua-o mentalmente pelo possível referente e confira se a frase continua coerente. Depois conecte cada frase à ideia principal, sem confundir detalhe com argumento central."]
         ], "Não escolha o antecedente apenas por proximidade: confira concordância e sentido."),
       curriculumPart("Gramática em contexto", "Tempos verbais, passado e present perfect",
         "O tempo verbal situa ações e experiências e contribui para a organização do texto. A interpretação deve considerar marcadores temporais e o contexto.",
         [
           ["Simple present", "Expressa hábitos, fatos gerais e situações atuais; na terceira pessoa singular, o verbo frequentemente recebe -s."],
           ["Simple past", "Descreve ações concluídas no passado; verbos regulares usam -ed, enquanto verbos irregulares têm formas próprias."],
-          ["Present continuous", "Be + verbo com -ing costuma apresentar uma ação em andamento ou uma situação temporária."],
+          ["Present continuous", "O Present Continuous usa am/is/are + verbo terminado em -ing para uma ação em andamento ou situação temporária: “They are studying now”. Compare-o ao Simple Present, usado para rotinas."],
           ["Present perfect", "Have/has + particípio relaciona uma experiência ou ação passada ao presente; não costuma especificar um passado encerrado com data."],
           ["Marcadores temporais", "Yesterday e last year frequentemente acompanham passado simples; since e for podem acompanhar present perfect."]
         ], "Compare a forma verbal com expressões de tempo e com a relação entre passado e presente."),
@@ -2353,26 +2359,26 @@ Object.assign(starterLibrary, {
         "Estruturas gramaticais ajudam a destacar participantes e relações. Em textos informativos, a voz passiva e os verbos modais aparecem com frequência.",
         [
           ["Voz passiva", "Be + particípio destaca quem ou o que recebe uma ação; o agente pode ser omitido quando não é relevante ou conhecido."],
-          ["Comparativos e superlativos", "Adjetivos curtos frequentemente usam -er/-est; formas longas usam more/most, com algumas exceções."],
-          ["Can e could", "Podem expressar habilidade, possibilidade ou pedido, dependendo da situação."],
-          ["Must, should e might", "Must indica obrigação ou forte dedução; should sugere recomendação; might indica possibilidade."],
+          ["Comparativos e superlativos", "Adjetivos curtos frequentemente formam comparativo e superlativo com -er/-est; adjetivos longos usam more/most, com exceções. “Taller than” compara dois itens; “the tallest” destaca um entre vários."],
+          ["Can e could", "Can e could podem expressar habilidade, possibilidade ou pedido; o contexto define o sentido. “She can swim” indica habilidade, enquanto “Could you help?” é um pedido cortês."],
+          ["Must, should e might", "Must pode expressar obrigação ou dedução forte; should costuma dar conselho; might indica possibilidade. Leia a frase e a situação para decidir o sentido, não traduza cada modal sempre da mesma forma."],
           ["Interpretação", "Identifique quem pratica e quem recebe a ação e avalie a força de certeza ou obrigação expressa pelo modal."]
         ], "A tradução de um modal muda com o contexto; interprete o enunciado inteiro."),
       curriculumPart("Leitura em Inglês", "Conectores, causa e argumentação",
         "Conectores mostram como ideias se relacionam e ajudam a identificar a organização argumentativa de artigos, campanhas e textos de opinião.",
         [
-          ["Adição e contraste", "And e moreover adicionam ideias; but, however e although indicam oposição ou concessão."],
-          ["Causa e consequência", "Because e since podem introduzir causa; so e therefore podem indicar consequência ou conclusão."],
+          ["Adição e contraste", "And e moreover adicionam informação; but, however e although sinalizam contraste ou concessão. Em “It was late, but we continued”, o conectivo contrapõe as duas ideias."],
+          ["Causa e consequência", "Because e since podem introduzir uma causa; so e therefore podem apresentar consequência ou conclusão. Em “It rained, so the match stopped”, a segunda oração decorre da primeira."],
           ["Exemplificação e conclusão", "For example apresenta exemplo; in conclusion sinaliza fechamento, mas confira o argumento que o texto realmente conclui."],
-          ["Marcadores de opinião", "May, likely e apparently expressam graus de possibilidade, não a mesma certeza de must ou always."],
+          ["Marcadores de opinião", "May, likely e apparently expressam graus de possibilidade ou avaliação, não a mesma certeza de must ou always. Identifique se o autor apresenta fato, previsão ou opinião."],
           ["Mapa do texto", "Marque tese, evidências, contraponto e conclusão; conectores orientam essa leitura sem substituí-la."]
         ], "Não confunda um conectivo com a relação efetivamente construída: confira a lógica das duas ideias ligadas."),
       curriculumPart("Leitura em Inglês", "Textos multimodais, campanhas e gráficos",
         "Textos de prova podem combinar escrita, imagem, dados, manchetes e recursos gráficos. A resposta depende de integrar essas linguagens.",
         [
-          ["Fonte e público", "Observe autor, veículo, data e público-alvo para entender propósito e contexto da mensagem."],
-          ["Imagem e legenda", "Cores, enquadramento e legenda podem complementar ou contradizer o texto verbal."],
-          ["Gráficos e infográficos", "Leia título, eixos, unidades, legenda e período; depois compare tendências sem extrapolar os dados."],
+          ["Fonte e público", "Observe autoria, veículo, data e público-alvo para entender propósito e contexto. Um folheto de clínica e um artigo científico podem tratar de saúde com vocabulário e objetivos diferentes."],
+          ["Imagem e legenda", "Imagem e legenda podem acrescentar informações, orientar a leitura ou contradizer-se. Verifique quem as produziu e se a legenda é sustentada pelo que a imagem realmente mostra."],
+          ["Gráficos e infográficos", "Leia título, eixos, unidades, legenda e período antes de interpretar; depois compare tendências sem extrapolar os dados. Confira a escala, pois ela pode alterar a impressão visual."],
           ["Campanhas", "Identifique problema, público, chamada para ação e recursos persuasivos; diferencie informação de apelo."],
           ["Questões de múltipla escolha", "Volte à evidência textual ou visual que sustenta a alternativa e descarte opções que extrapolam ou contradizem a fonte."]
         ], "Integre palavra e imagem: muitas questões dependem da relação entre os dois modos.")
@@ -2386,53 +2392,53 @@ Object.assign(starterLibrary, {
           ["Cognatos", "Palavras como cultura, problema e importante frequentemente se parecem e compartilham sentidos próximos."],
           ["Heterossemânticos", "Embarazada significa grávida; apellido é sobrenome; vaso é copo. O contexto ajuda a evitar traduções enganosas."],
           ["Falsos amigos em contexto", "Uma forma semelhante não garante significado igual. Leia a frase e verifique se a tradução faz sentido."],
-          ["Prefixos e sufixos", "Des-, re-, -ción e -mente oferecem pistas de negação, repetição, substantivos e advérbios."],
-          ["Inferência lexical", "Combine cognatos, classe gramatical, repetição e tema para inferir palavras desconhecidas."]
+          ["Prefixos e sufixos", "Prefixos como des- e re- e sufixos como -ción e -mente podem indicar negação, repetição ou classe gramatical. Use essas pistas com a frase, pois o afixo nem sempre determina sozinho o significado."],
+          ["Inferência lexical", "Combine cognatos, classe gramatical, palavras repetidas e tema para inferir vocábulos desconhecidos. Depois confira se o sentido escolhido funciona no restante da frase."]
         ], "O parentesco entre línguas ajuda na leitura, mas não elimina falsos cognatos e diferenças de uso."),
       curriculumPart("Gramática em contexto", "Artigos, pronomes e contrações",
         "Artigos e pronomes organizam referências no texto. Algumas formas espanholas diferem do português e podem alterar a interpretação.",
         [
-          ["Artigos definidos", "El, la, los e las concordam em gênero e número com o substantivo."],
+          ["Artigos definidos", "El, la, los e las identificam substantivos específicos e concordam com eles em gênero e número: “la casa”, “los libros”. O contexto indica se o referente já é conhecido."],
           ["Artigos indefinidos", "Un, una, unos e unas introduzem referências não específicas; uno pode mudar para un diante de substantivo masculino singular."],
-          ["Pronomes pessoais", "Yo, tú, él/ella, nosotros e ellos indicam participantes; formas de tratamento variam entre regiões."],
+          ["Pronomes pessoais", "Yo, tú, él/ella, nosotros e ellos indicam participantes; me, te, lo/la e nos podem funcionar como formas de objeto. Tratamentos como tú e usted variam conforme região e situação."],
           ["Contrações", "A preposição a + el forma al; de + el forma del. As contrações não se aplicam a nomes próprios iniciados por El."],
-          ["Referência no texto", "Acompanhe gênero, número e sentido para descobrir a qual pessoa ou ideia cada pronome se refere."]
+          ["Referência no texto", "Acompanhe gênero, número e sentido para identificar a que pessoa ou ideia cada pronome se refere. Em “Marta llegó y ella llamó”, “ella” retoma Marta, não a pessoa que escuta."]
         ], "Variedades regionais podem preferir formas diferentes de tratamento sem que uma única forma represente todo o espanhol."),
       curriculumPart("Gramática em contexto", "Presente, pretéritos e futuro",
         "As formas verbais situam ações e ajudam a construir sequência temporal. Marcadores e contexto distinguem hábitos, fatos concluídos e continuidade.",
         [
           ["Presente", "Verbos regulares terminam em -ar, -er ou -ir; as terminações variam conforme a pessoa e o grupo verbal."],
-          ["Pretérito indefinido", "Apresenta ações concluídas em um período passado, como ayer estudié."],
-          ["Pretérito imperfecto", "Pode expressar hábito, descrição ou ação em curso no passado, como cuando era niño."],
+          ["Pretérito indefinido", "O pretérito indefinido apresenta ações concluídas num período passado delimitado: “Ayer estudié”. Compare o marcador temporal e a relação da ação com o restante da narrativa."],
+          ["Pretérito imperfecto", "O pretérito imperfecto pode expressar hábitos, descrições ou ações em curso no passado: “Cuando era niño, jugaba aquí”. O contexto mostra se a ação se repetia ou servia de cenário."],
           ["Futuro e ir a", "O futuro pode ser formado por terminações próprias ou por ir + a + infinitivo para planos e previsões."],
           ["Marcadores de tempo", "Ayer, antes, mientras, siempre e mañana ajudam a interpretar a relação temporal, mas não determinam sozinhos o sentido."]
         ], "Compare indefinido e imperfecto observando se a ação é apresentada como concluída, habitual ou descritiva."),
       curriculumPart("Gramática em contexto", "Ser, estar, haber e verbos pronominais",
         "Verbos de alta frequência em espanhol têm usos que não correspondem exatamente ao português. A função na frase orienta a escolha.",
         [
-          ["Ser", "É comum para identidade, características, origem, profissão e hora, mas o contexto é determinante."],
-          ["Estar", "É comum para localização e estados ou condições; não equivale sempre a algo temporário."],
-          ["Hay e está", "Hay apresenta existência ou quantidade; está localiza ou identifica algo específico."],
+          ["Ser", "Ser é comum para identidade, características, origem, profissão e hora: “Es médica”, “son de Chile”. Observe a construção e o contexto, pois nem todo adjetivo se combina com ser da mesma maneira."],
+          ["Estar", "Estar é comum para localização e estados ou condições, mas não significa simplesmente “temporário”: há usos lexicalizados e diferenças por contexto. Compare “está en casa” e “está cansada”."],
+          ["Hay e está", "Hay apresenta existência ou quantidade (“Hay un libro”); está localiza ou identifica algo específico (“El libro está en la mesa”). Use hay para introduzir e está para situar um referente."],
           ["Verbos pronominais", "Pronome reflexivo acompanha verbos como levantarse e pode fazer parte do verbo ou indicar ação sobre si."],
-          ["Concordância", "Verifique pessoa e número do sujeito e reconheça sujeitos omitidos, frequentes em espanhol."]
+          ["Concordância", "Verifique pessoa e número do sujeito para selecionar a forma verbal; em espanhol, o sujeito pode estar omitido porque a terminação já ajuda a identificá-lo, como em “hablamos”."],
         ], "Compare hay libros (existem livros) com el libro está aquí (o livro está aqui)."),
       curriculumPart("Leitura em Espanhol", "Conectores, opinião e argumentação",
         "Conectores organizam textos e sinalizam causa, oposição, concessão e conclusão. Reconhecê-los ajuda a reconstruir a tese.",
         [
-          ["Adição e contraste", "Además acrescenta informação; pero e sin embargo introduzem contraste."],
+          ["Adição e contraste", "Además acrescenta uma ideia; pero e sin embargo introduzem contraste. Em “Quería salir, pero llovía”, a conjunção contrapõe vontade e situação."],
           ["Causa e consequência", "Porque e ya que podem introduzir causa; por eso e por lo tanto podem indicar consequência."],
           ["Concessão e condição", "Aunque introduz concessão; si pode apresentar condição. Leia o modo verbal e a relação entre as orações."],
-          ["Opinião e evidência", "Diferencie afirmações do autor, dados citados e posições atribuídas a outras pessoas."],
+          ["Opinião e evidência", "Diferencie a opinião do autor, os dados citados e as posições atribuídas a outras pessoas. Pergunte qual evidência sustenta uma afirmação e se a fonte é adequada ao tema."],
           ["Estratégia de leitura", "Localize a tese, os conectores, exemplos e conclusão e confirme a interpretação com evidências do texto."]
         ], "Conectores semelhantes podem ter usos distintos; confirme a relação lógica no trecho."),
       curriculumPart("Leitura em Espanhol", "Variedades, gêneros e textos multimodais",
         "O espanhol é falado em muitos países e apresenta variações lexicais, fonéticas e gramaticais. Textos de prova podem integrar imagem, gráfico e linguagem verbal.",
         [
           ["Diversidade linguística", "Léxico e pronúncia variam entre países e regiões; nenhuma variedade isolada representa todo o idioma."],
-          ["Gêneros e propósito", "Notícia, campanha, crônica, poema e postagem têm objetivos e convenções diferentes."],
-          ["Fonte e contexto", "Identifique autoria, local, data, público e situação antes de atribuir uma intenção ao texto."],
-          ["Elementos visuais", "Imagens, infográficos e legendas podem reforçar, limitar ou ironizar a mensagem escrita."],
-          ["Leitura crítica", "Observe quem fala, qual problema apresenta, quais evidências usa e que resposta espera do público."]
+          ["Gêneros e propósito", "Notícia, campanha, crônica, poema e postagem têm objetivos e convenções diferentes. Observe estrutura, linguagem e público para perceber se o texto informa, persuade, narra ou expressa."],
+          ["Fonte e contexto", "Identifique autoria, local, data, público e situação antes de atribuir intenção ao texto. Uma notícia republicada pode perder o contexto original ou apresentar informação desatualizada."],
+          ["Elementos visuais", "Imagens, infográficos e legendas podem reforçar, limitar ou ironizar a mensagem escrita. Leia títulos, escalas e fontes e confira se os elementos visuais sustentam a conclusão."],
+          ["Leitura crítica", "Observe quem fala, qual problema apresenta, quais evidências usa e que resposta espera do público. Separe dados verificáveis de opiniões e confira se a conclusão decorre das fontes."]
         ], "Use pistas regionais para compreender contexto, sem tratar diferenças como erros.")
     ]
   },
@@ -2442,7 +2448,7 @@ Object.assign(starterLibrary, {
         "Interpretar artes visuais envolve observar como elementos formais e contexto produzem sentidos. Não existe uma única leitura automática da imagem.",
         [
           ["Ponto, linha e forma", "Linhas e formas organizam o espaço, criam direção e podem sugerir movimento, estabilidade ou tensão."],
-          ["Cor, luz e contraste", "Paleta, luminosidade e contraste destacam elementos e influenciam a atmosfera da composição."],
+          ["Cor, luz e contraste", "Paleta, luminosidade e contraste destacam elementos e influenciam a atmosfera. Uma figura clara contra fundo escuro tende a atrair o olhar; explique o efeito citando a relação visual."],
           ["Composição e perspectiva", "Enquadramento, escala, equilíbrio e perspectiva orientam o olhar e constroem relações entre figuras."],
           ["Material e técnica", "Pintura, fotografia, colagem, escultura e meios digitais oferecem possibilidades e limites específicos."],
           ["Interpretação", "Relacione escolhas visuais ao contexto, ao tema e às condições de produção, citando elementos observáveis."]
@@ -2450,26 +2456,26 @@ Object.assign(starterLibrary, {
       curriculumPart("Linguagens artísticas", "Música: ritmo, timbre e contexto",
         "A música organiza sons no tempo e pode ser analisada por características sonoras, formas de produção e contextos culturais.",
         [
-          ["Ritmo e pulso", "Pulso é uma referência regular de tempo; ritmo organiza durações e acentos de maneiras variadas."],
+          ["Ritmo e pulso", "Pulso é uma referência regular de tempo, como uma batida constante; ritmo organiza durações e acentos sobre essa referência. Uma música pode manter o pulso e variar o desenho rítmico."],
           ["Melodia e harmonia", "Melodia organiza sucessões de alturas; harmonia relaciona sons simultâneos e pode apoiar ou tensionar a melodia."],
-          ["Timbre e dinâmica", "Timbre diferencia fontes sonoras; dinâmica indica variações de intensidade."],
+          ["Timbre e dinâmica", "Timbre permite distinguir fontes que tocam a mesma nota, como flauta e violão; dinâmica descreve variações de intensidade, do suave ao forte. Observe cada aspecto ao ouvir uma peça."],
           ["Gêneros e culturas", "Gêneros musicais se formam em contextos históricos e sociais, atravessando influências, tecnologias e deslocamentos."],
-          ["Escuta crítica", "Observe instrumentos, voz, repetição, letra e circulação para explicar como a obra produz efeitos."]
+          ["Escuta crítica", "Na escuta crítica, observe instrumentos, voz, repetição, letra e contexto de circulação. Sustente sua interpretação com elementos audíveis, distinguindo análise de preferência pessoal."]
         ], "Não confunda volume com altura: volume é intensidade; altura distingue sons graves e agudos."),
       curriculumPart("Linguagens artísticas", "Teatro, dança e performance",
         "Teatro, dança e performance articulam corpo, espaço, tempo e presença. A leitura considera tanto a composição quanto a relação com o público.",
         [
-          ["Corpo e gesto", "Postura, movimento e gesto podem comunicar relações e sentidos sem depender de fala."],
-          ["Espaço cênico", "Palco, rua, arena e outros espaços influenciam a proximidade e a participação do público."],
-          ["Elementos teatrais", "Atuação, texto, cenário, figurino, luz e som podem colaborar ou entrar em tensão."],
-          ["Dança e composição", "Movimento, ritmo, níveis e ocupação espacial formam sequências e estilos diversos."],
+          ["Corpo e gesto", "Postura, movimento e gesto podem comunicar relações sem fala: um corpo que recua pode sugerir medo ou recusa. Interprete a ação junto ao ritmo, ao espaço e ao contexto da cena."],
+          ["Espaço cênico", "Palco frontal, rua e arena organizam de formas diferentes a distância entre artistas e público. A disposição do espaço pode favorecer observação, circulação ou participação."],
+          ["Elementos teatrais", "Atuação, texto, cenário, figurino, luz e som constroem a cena em conjunto. Uma mudança de iluminação, por exemplo, pode alterar o foco ou criar contraste com a fala."],
+          ["Dança e composição", "Na dança, movimento, ritmo, níveis e ocupação espacial formam sequências. Uma mudança de formação ou velocidade pode criar contraste e orientar o olhar do público."],
           ["Performance", "A performance pode questionar fronteiras entre arte e vida, usando presença e contexto como parte da obra."]
         ], "Analise a relação entre corpo, espaço e espectador, não apenas o tema declarado."),
       curriculumPart("Arte e cultura", "Arte brasileira, modernismo e cultura popular",
         "A arte no Brasil se desenvolve por encontros, conflitos e trocas entre tradições indígenas, africanas, europeias e muitas outras.",
         [
-          ["Modernismo brasileiro", "Artistas modernistas experimentaram linguagens e discutiram criticamente representações do Brasil."],
-          ["Arte popular e cotidiana", "Práticas artesanais, festas, design e produção comunitária possuem repertórios e técnicas próprios."],
+          ["Modernismo brasileiro", "Artistas modernistas experimentaram linguagens e questionaram representações do Brasil, mas suas propostas foram diversas. Relacione forma, tema e contexto antes de tratar uma obra como representativa de todo o movimento."],
+          ["Arte popular e cotidiana", "Artesanato, festas, design e produção comunitária mobilizam repertórios e técnicas próprios. Considere função, autoria e contexto sem hierarquizá-los como inferiores à arte institucional."],
           ["Matrizes africanas e indígenas", "Produções diversas articulam memória, cosmologia, território e resistência; não são tradições uniformes ou apenas históricas."],
           ["Hibridismo cultural", "Linguagens artísticas podem combinar referências locais e globais, transformando materiais e repertórios."],
           ["Leitura crítica", "Questione quem define o que é arte, quais instituições legitimam obras e quais produções ficam invisibilizadas."]
@@ -2493,16 +2499,16 @@ Object.assign(starterLibrary, {
           ["Capacidades físicas", "Resistência, força, flexibilidade, velocidade e coordenação são capacidades diferentes e desenvolvidas por práticas variadas."],
           ["Princípios do treinamento", "Regularidade, progressão, especificidade e recuperação ajudam a organizar treino sem tratar corpos como iguais."],
           ["Frequência e intensidade", "A carga adequada depende de saúde, experiência, objetivo e resposta individual; progressão gradual reduz riscos."],
-          ["Aquecimento e recuperação", "Aquecimento prepara para a atividade; descanso, sono e hidratação participam da recuperação."],
+          ["Aquecimento e recuperação", "Aquecimento eleva gradualmente a prontidão para a atividade; descanso, sono e hidratação apoiam a recuperação. Ajuste a preparação à modalidade e à pessoa, sem supor que uma rotina única previne toda lesão."],
           ["Segurança e orientação", "Dor intensa, sintomas ou condição de saúde exigem interrupção e avaliação profissional, não a insistência no exercício."]
         ], "Recomendações gerais não substituem orientação individualizada de profissionais de saúde e educação física."),
       curriculumPart("Corpo e saúde", "Fisiologia do exercício e sistemas do corpo",
         "Durante o exercício, sistemas respiratório, circulatório, muscular e nervoso atuam de forma integrada para fornecer energia e controlar o movimento.",
         [
-          ["Sistema cardiovascular", "Coração e vasos transportam sangue, oxigênio, nutrientes e produtos do metabolismo."],
-          ["Sistema respiratório", "Ventilação e trocas gasosas contribuem para disponibilizar oxigênio e eliminar dióxido de carbono."],
+          ["Sistema cardiovascular", "Coração e vasos transportam sangue, oxigênio e nutrientes e ajudam a remover produtos do metabolismo. Durante o exercício, o fluxo e a frequência cardíaca tendem a aumentar conforme a demanda do corpo."],
+          ["Sistema respiratório", "A ventilação movimenta o ar e as trocas gasosas nos pulmões transferem oxigênio ao sangue e dióxido de carbono para fora dele. A circulação então distribui gases pelos tecidos."],
           ["Músculos e energia", "Contração muscular utiliza energia química; esforços variam na contribuição relativa de vias metabólicas."],
-          ["Adaptação e recuperação", "Adaptações dependem de estímulo, descanso, alimentação, condições de saúde e continuidade."],
+          ["Adaptação e recuperação", "Adaptações ao exercício dependem de estímulo adequado, descanso, alimentação, saúde e continuidade. A recuperação permite responder ao treino; aumentar carga sem considerar esses fatores pode prejudicar o desempenho."],
           ["Sinais do corpo", "Fadiga é esperada em algum grau, mas mal-estar intenso, dor aguda ou falta de ar incomum requerem atenção."]
         ], "O desempenho não depende de um único sistema; corpo e ambiente interagem durante a prática."),
       curriculumPart("Práticas corporais", "Esportes, regras, tática e cooperação",
@@ -2510,7 +2516,7 @@ Object.assign(starterLibrary, {
         [
           ["Esportes de invasão", "Equipes avançam em espaço compartilhado para criar oportunidades de pontuação e defender sua meta."],
           ["Esportes de rede e parede", "Jogadores enviam objetos ao campo adversário ou contra uma parede, com regras próprias de alternância."],
-          ["Esportes de marca e precisão", "O desempenho pode ser comparado por tempo, distância, altura ou proximidade de um alvo."],
+          ["Esportes de marca e precisão", "Em esportes de marca, compare resultados por tempo, distância ou altura, como numa corrida; nos de precisão, observe a proximidade de um alvo. As regras definem como medir o desempenho."],
           ["Tática e tomada de decisão", "Leitura do espaço, antecipação, cooperação e escolha de ações podem ser mais importantes que força isolada."],
           ["Regras e inclusão", "Regras podem ser adaptadas para ampliar participação sem apagar a lógica e os objetivos da prática."]
         ], "Diferencie técnica individual, estratégia coletiva e condições de acesso à modalidade."),
@@ -2519,23 +2525,23 @@ Object.assign(starterLibrary, {
         [
           ["Ginásticas", "Ginásticas podem envolver condicionamento, apresentação, competição, consciência corporal ou participação para todos."],
           ["Lutas", "Lutas possuem técnicas, regras, filosofias e contextos culturais próprios; não são sinônimo de violência descontrolada."],
-          ["Jogos e brincadeiras", "Regras podem ser negociadas e transformadas; jogos desenvolvem interação, estratégia e repertórios culturais."],
+          ["Jogos e brincadeiras", "Regras podem ser negociadas e transformadas; os jogos desenvolvem interação, estratégia e repertórios culturais. Uma adaptação pode ampliar a participação sem eliminar o desafio central."],
           ["Capoeira", "A capoeira articula luta, jogo, música e memória afro-brasileira, com histórias de resistência e transformação."],
           ["Respeito e segurança", "Práticas devem considerar consentimento, regras, espaço, materiais e diferenças entre participantes."]
         ], "Reconheça a origem cultural e os sentidos próprios de cada prática, em vez de reduzi-la a exercício."),
       curriculumPart("Corpo e sociedade", "Corpo, identidade, gênero e padrões estéticos",
         "Os sentidos atribuídos ao corpo são construídos socialmente e variam com cultura, mídia, época e relações de poder.",
         [
-          ["Padrões corporais", "Publicidade e redes difundem padrões que podem ser restritos e pouco representativos da diversidade real."],
+          ["Padrões corporais", "Publicidade e redes difundem padrões corporais que podem ser restritos e pouco representativos da diversidade. Analise quem os promove, quais corpos aparecem e que efeitos essas imagens podem ter."],
           ["Identidade e expressão", "Experiências corporais relacionam-se a gênero, raça, idade, deficiência, classe e pertencimento cultural."],
-          ["Estigma e discriminação", "Deboche e exclusão por aparência ou habilidade afetam participação, autoestima e acesso a práticas."],
+          ["Estigma e discriminação", "Deboche e exclusão por aparência ou habilidade podem afetar participação, autoestima e acesso às práticas. Reconhecer barreiras ajuda a propor ações inclusivas sem responsabilizar quem sofre discriminação."],
           ["Mídia e consumo", "Imagens editadas e publicidade podem vincular produtos a ideais corporais; analise interesses e efeitos."],
           ["Participação e respeito", "Ambientes inclusivos oferecem adaptações e combatem discriminação sem pressupor uma experiência corporal universal."]
         ], "Questione quem ganha com um padrão de corpo e quem é excluído por ele."),
       curriculumPart("Saúde e sociedade", "Saúde pública, lazer e qualidade de vida",
         "Saúde e atividade física dependem de condições individuais e coletivas, como tempo, segurança, renda, transporte, espaços públicos e acesso a serviços.",
         [
-          ["Conceito ampliado de saúde", "Saúde envolve dimensões físicas, mentais e sociais, não apenas ausência de doença."],
+          ["Conceito ampliado de saúde", "Saúde envolve dimensões físicas, mentais e sociais, não apenas ausência de doença. Moradia, renda, ambiente e acesso a serviços também influenciam as possibilidades de cuidado e bem-estar."],
           ["Lazer como direito", "O acesso a espaços, tempo livre e práticas culturais e corporais é influenciado por desigualdades sociais."],
           ["Políticas públicas", "Equipamentos comunitários, transporte, segurança e programas locais podem apoiar práticas acessíveis."],
           ["Sedentarismo e contexto", "Comportamentos são influenciados por trabalho, mobilidade, ambiente construído e oportunidades, não só por escolhas individuais."],
@@ -2566,7 +2572,7 @@ Object.assign(starterLibrary, {
       curriculumPart("Tecnologia e sociedade", "Exclusão digital e acessibilidade",
         "Acesso à tecnologia envolve conectividade, dispositivos, habilidades, acessibilidade e condições para usar serviços de modo significativo.",
         [
-          ["Acesso e conectividade", "Cobertura de internet e qualidade da conexão variam por região, renda e infraestrutura."],
+          ["Acesso e conectividade", "A cobertura e a qualidade da internet variam por região, renda e infraestrutura. Ter sinal não garante acesso efetivo: custo, dispositivo, velocidade e acessibilidade também podem criar barreiras."],
           ["Letramento digital", "Usar tecnologia inclui pesquisar, avaliar fontes, proteger dados e produzir conteúdo, não apenas operar dispositivos."],
           ["Acessibilidade", "Legendas, leitores de tela, navegação por teclado, contraste e linguagem clara podem ampliar participação."],
           ["Serviços essenciais", "Quando serviços migram para o digital, alternativas de atendimento e suporte são importantes para não excluir usuários."],
@@ -2588,7 +2594,7 @@ Object.assign(starterLibrary, {
           ["Apelos persuasivos", "Autoridade, emoção, urgência, humor e prova social são recursos que precisam ser avaliados criticamente."],
           ["Conteúdo patrocinado", "Publicidade nativa pode parecer conteúdo editorial; identificação e transparência ajudam a reconhecer o interesse comercial."],
           ["Economia da atenção", "Plataformas podem competir pelo tempo do usuário e favorecer conteúdos capazes de gerar interação."],
-          ["Leitura crítica", "Diferencie informação verificável, opinião, publicidade e chamada para ação."]
+          ["Leitura crítica", "Diferencie informação verificável, opinião, publicidade e chamada para ação. Confira autoria, evidências e contexto antes de aceitar uma afirmação ou compartilhar uma mensagem."]
         ], "Pergunte quem financia a mensagem e que ação espera de quem a recebe."),
       curriculumPart("Comunicação e cidadania", "Desinformação, checagem e circulação de conteúdo",
         "Verificar uma informação exige examinar origem, evidências, contexto e confirmação independente antes de compartilhar.",
@@ -2606,9 +2612,9 @@ Object.assign(starterLibrary, {
       curriculumPart("Estrutura do texto", "Leitura do tema, recorte e planejamento da redação",
         "Antes de escrever, identifique o tema e o problema específico solicitado. Um plano breve ajuda a manter foco e construir uma progressão argumentativa.",
         [
-          ["Tema e recorte", "Tema é o assunto amplo; recorte delimita o aspecto que a proposta pede para discutir."],
+          ["Tema e recorte", "Tema é o assunto amplo; recorte delimita o aspecto solicitado. Se o tema é tecnologia na educação, discutir acesso desigual à internet nas escolas é um recorte mais específico."],
           ["Palavras de comando", "Analise verbos e expressões do enunciado para identificar o problema e os limites da abordagem."],
-          ["Tese", "A tese responde ao recorte com uma posição clara que possa ser desenvolvida por razões."],
+          ["Tese", "A tese responde ao recorte com uma posição clara e discutível, que será sustentada por razões. Para o tema de descarte eletrônico, por exemplo, pode apontar falta de coleta e de informação como obstáculos."],
           ["Projeto de texto", "Organize introdução, argumentos e conclusão antes de redigir; cada parágrafo deve cumprir uma função."],
           ["Checagem de foco", "Ao revisar, confira se todos os parágrafos respondem ao tema e se a conclusão decorre da discussão."]
         ], "Uma introdução bem escrita não compensa uma redação que discute outro recorte."),
@@ -2625,7 +2631,7 @@ Object.assign(starterLibrary, {
         "A intervenção deve responder ao problema discutido e indicar elementos concretos de execução, respeitando os direitos humanos.",
         [
           ["Agente", "Identifique quem pode agir, como poder público, escola, comunidade ou organização, de acordo com sua competência."],
-          ["Ação e meio", "Diga o que será feito e como será executado, evitando verbos vagos sem mecanismo."],
+          ["Ação e meio", "Ação diz o que será feito; meio explica como. “A prefeitura instalará pontos de coleta por meio de parcerias com escolas” é mais específico que apenas “conscientizar a população”."],
           ["Finalidade", "Explique qual resultado a proposta busca e como se relaciona à causa ou consequência debatida."],
           ["Detalhamento", "Acrescente informação concreta sobre público, etapas, recursos ou acompanhamento, quando pertinente."],
           ["Direitos humanos", "A proposta não pode defender violência, discriminação ou supressão de direitos; avalie efeitos sobre grupos afetados."]
@@ -2634,9 +2640,9 @@ Object.assign(starterLibrary, {
         "Revisar de modo sistemático ajuda a identificar problemas de tema, argumento, coesão e convenções da escrita dentro do tempo disponível.",
         [
           ["Leitura do comando", "Reserve tempo inicial para delimitar tema, recorte e gênero, registrando uma tese e dois eixos argumentativos."],
-          ["Revisão de conteúdo", "Confira se há tese, progressão, evidências explicadas e conclusão ligada ao problema."],
-          ["Revisão linguística", "Verifique períodos longos, concordância, regência, pontuação, repetição e legibilidade."],
-          ["Revisão da intervenção", "Cheque agente, ação, meio, finalidade, detalhamento e respeito aos direitos humanos."],
+          ["Revisão de conteúdo", "Confira se a tese responde ao tema, se cada parágrafo avança o raciocínio e explica suas evidências e se a conclusão decorre da discussão. Remova afirmações contraditórias ou fora do recorte."],
+          ["Revisão linguística", "Revise períodos longos, concordância, regência, pontuação, repetição e legibilidade. Uma passagem focada em cada tipo de problema ajuda a revisar sem perder o sentido do argumento."],
+          ["Revisão da intervenção", "Cheque se a intervenção apresenta agente, ação, meio e finalidade, inclui detalhamento pertinente e respeita os direitos humanos. Confirme também se responde ao problema discutido."],
           ["Autoavaliação", "Use a matriz oficial e critérios publicados para localizar pontos de melhoria; estimativas pessoais não equivalem à nota oficial."]
         ], "Treine com tempo e critérios explícitos, mas consulte sempre as regras e a matriz da edição vigente.")
     ]
@@ -2650,4 +2656,54 @@ for (const [id, original] of Object.entries(preservedCurriculumSubjects)) {
     ...additions,
     parts: [...original.parts, ...additions.parts]
   };
+}
+
+const explanationStopWords = new Set([
+  "a", "ao", "aos", "as", "com", "como", "da", "das", "de", "do", "dos",
+  "e", "em", "entre", "o", "os", "ou", "para", "pela", "pelo", "por",
+  "qual", "quais", "que", "se", "um", "uma"
+]);
+
+function explainQuestionFromLesson(part, question) {
+  const correctAnswer = question.choices[question.answer];
+  if (typeof correctAnswer !== "string") return "";
+
+  const normalizeWords = value => value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .match(/[a-z0-9]+/g) || [];
+  const promptWords = new Set(
+    normalizeWords(`${question.text} ${correctAnswer}`)
+      .filter(word => word.length > 2 && !explanationStopWords.has(word))
+  );
+  let bestMatch;
+  let bestScore = 0;
+
+  for (const point of part.points) {
+    const labelWords = normalizeWords(point[0])
+      .filter(word => word.length > 2 && !explanationStopWords.has(word));
+    const detailWords = normalizeWords(point[1])
+      .filter(word => word.length > 3 && !explanationStopWords.has(word));
+    const labelScore = labelWords.reduce((score, word) => score + (promptWords.has(word) ? 4 : 0), 0);
+    const detailScore = detailWords.reduce((score, word) => score + (promptWords.has(word) ? 1 : 0), 0);
+    const score = labelScore + detailScore;
+    if (score > bestScore) {
+      bestMatch = point;
+      bestScore = score;
+    }
+  }
+
+  if (!bestMatch) return `A resposta correta é “${correctAnswer}”.`;
+  return `A resposta correta é “${correctAnswer}”. ${bestMatch[0]}: ${bestMatch[1]}`;
+}
+
+for (const subject of Object.values(starterLibrary)) {
+  for (const part of subject.parts) {
+    for (const question of part.questions || []) {
+      if (typeof question.explanation !== "string" || !question.explanation.trim()) {
+        question.explanation = explainQuestionFromLesson(part, question);
+      }
+    }
+  }
 }

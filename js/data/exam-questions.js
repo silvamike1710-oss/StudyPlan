@@ -53,9 +53,9 @@ const examQuestionBank = [
     }],
     statement: "A meta é manter o consumo abaixo de 400 L por dia. Em quantos dos dias registrados a meta foi atingida?",
     choices: ["Em nenhum dia", "Em um dia", "Em dois dias", "Em três dias", "Em quatro dias"],
-    answer: 1,
+    answer: 2,
     keepOrder: true,
-    explanation: "Terça-feira registrou 390 L e quinta-feira 340 L. Os dois valores estão abaixo de 400 L, portanto a meta foi atingida em dois dias.",
+    explanation: "Terça-feira registrou 390 L e quinta-feira, 340 L. Como ambos os valores são menores que 400 L, a meta foi atingida em dois dias, alternativa C.",
     lessonRef: { subjectId: "math", partTitle: "Tabelas, gráficos e medidas de tendência central" }
   },
   {
@@ -129,7 +129,7 @@ const examQuestionBank = [
     difficulty: "intermediate",
     support: [{
       type: "text",
-      content: "Em uma atividade escolar, dois grupos de plantas da mesma espécie receberam igual volume de água. Um grupo ficou exposto à luz; o outro permaneceu no escuro. Após alguns dias, folhas dos dois grupos foram analisadas quanto à presença de amido.",
+      content: "Em uma atividade escolar, dois grupos semelhantes de plantas da mesma espécie foram mantidos sob as mesmas condições, inclusive com igual volume de água; a única diferença foi a iluminação. Após um período de adaptação no escuro para reduzir o amido já armazenado, um grupo ficou exposto à luz e o outro permaneceu no escuro. Depois, folhas dos dois grupos foram analisadas quanto à presença de amido.",
       source: "Experimento hipotético elaborado para esta questão."
     }],
     statement: "Qual resultado é mais compatível com a produção de matéria orgânica pela fotossíntese?",
@@ -141,7 +141,7 @@ const examQuestionBank = [
       "Produção de amido apenas nas raízes, já que folhas não participam do processo."
     ],
     answer: 0,
-    explanation: "A luz fornece energia para a fotossíntese. Mantidas condições adequadas, folhas iluminadas tendem a sintetizar mais carboidratos, que podem ser armazenados como amido.",
+    explanation: "Como os grupos diferem apenas pela iluminação e o amido previamente armazenado foi reduzido, a comparação destaca o efeito da luz. Ela fornece energia para a fotossíntese; por isso, folhas iluminadas tendem a produzir mais carboidratos, parte dos quais pode ser armazenada como amido.",
     lessonRef: { subjectId: "biology", partTitle: "Fotossíntese, respiração e fermentação" }
   },
   {
@@ -258,7 +258,7 @@ const examQuestionBank = [
     difficulty: "intermediate",
     support: [{
       type: "text",
-      content: "Ao estudar uma revolta regional do século XIX, uma turma compara cartas de participantes, registros administrativos e relatos escritos décadas depois. As fontes apresentam interpretações diferentes sobre as motivações e os grupos envolvidos.",
+      content: "Ao estudar a Revolução Farroupilha e a imigração no sul do Brasil, uma turma compara cartas de participantes, registros administrativos e relatos escritos décadas depois. As fontes apresentam interpretações diferentes sobre as motivações da revolta e os grupos envolvidos.",
       source: "Situação didática original."
     }],
     statement: "Que procedimento ajuda a construir uma interpretação histórica mais consistente?",

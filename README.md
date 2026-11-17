@@ -12,7 +12,7 @@ Site de estudos sem dependências nem etapa de build. Abra `index.html` no naveg
 - `js/practice.js` — quizzes, simulados por dia/área, cronômetros, revisão de erros, histórico e prática de redação.
 - `js/app.js` — inicialização, armazenamento local, navegação, busca e renderização das telas.
 
-Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicada no fim de `index.html`, para compartilhar os dados e as funções da aplicação. Os exemplos da teoria podem ser ajustados na terceira posição de cada item `points` (`[conceito, explicação, exemplo]`); quando ela não é informada, a aplicação usa um exemplo relacionado à matéria e ao conceito.
+Os arquivos JavaScript são carregados como scripts clássicos, na ordem indicada no fim de `index.html`, para compartilhar os dados e as funções da aplicação. Os exemplos da teoria podem ser ajustados na terceira posição de cada item `points` (`[conceito, explicação, exemplo]`); quando ela não é informada, a aplicação usa um exemplo relacionado à matéria e ao conceito. Na aula, cada exemplo fica recolhido e pode ser aberto pelo botão abaixo do conceito.
 
 ## Provas e dados salvos
 
