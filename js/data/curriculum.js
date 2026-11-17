@@ -2037,11 +2037,11 @@ Object.assign(starterLibrary, {
       curriculumPart("Leitura em Espanhol", "Interpretação, vocabulário e variedades",
         "A leitura em Espanhol exige observar contexto, gênero e variedades regionais. Semelhanças com o português ajudam, mas também podem induzir a erros.",
         [
-          ["Interpretação e intenção", "Identifique tema, público e propósito; charges e tirinhas articulam elementos visuais e verbais."],
+          ["Interpretação e intenção", "Identifique tema, público e propósito para explicar o efeito do texto. Em charges e tirinhas, combine imagem, fala, expressões e contexto; uma legenda isolada pode não revelar a ironia."],
           ["Vocabulário e falsos cognatos", "Cognatos ajudam na compreensão; falsos cognatos como embarazada (grávida) exigem atenção ao contexto."],
           ["Variações regionais", "O vocabulário, a pronúncia e alguns usos variam entre países e comunidades hispanofalantes. Identifique a região e a situação antes de concluir que uma forma é incorreta."],
           ["Expressões idiomáticas", "Expressões fixas podem ter sentido diferente da soma literal das palavras; interprete-as na situação."],
-          ["Conjunções e advérbios", "Conjunções conectam ideias; advérbios acrescentam informações de tempo, modo, lugar ou intensidade."]
+          ["Conjunções e advérbios", "Conjunções conectam orações ou ideias, enquanto advérbios acrescentam informações de tempo, modo, lugar ou intensidade. Em “chegou cedo, mas saiu depressa”, os termos destacados cumprem funções distintas."]
         ], "Não trate o espanhol como uniforme: considere país, comunidade e situação comunicativa."),
       curriculumPart("Leitura em Espanhol", "Gramática em contexto",
         "Reconhecer classes de palavras e formas verbais ajuda a acompanhar o sentido do texto sem transformar a leitura em tradução palavra por palavra.",
@@ -2106,7 +2106,7 @@ Object.assign(starterLibrary, {
           ["Corpo e saúde", "Saúde envolve dimensões físicas, mentais e sociais; prática corporal pode contribuir para o bem-estar conforme contexto e segurança."],
           ["Sedentarismo e qualidade de vida", "Reduzir longos períodos sedentários e buscar movimento adequado pode beneficiar a saúde; recomendações dependem de idade e condição individual."],
           ["Esporte e sociedade", "Esportes refletem identidades, economia, relações de poder, profissionalização e participação comunitária."],
-          ["Padrões de beleza e mídia", "Representações midiáticas influenciam percepções corporais e podem reforçar padrões excludentes."],
+          ["Padrões de beleza e mídia", "Representações midiáticas influenciam percepções corporais e podem reforçar padrões excludentes. Compare quais corpos são mostrados, quais ficam de fora e como edição ou publicidade moldam a imagem."],
           ["Direito ao esporte", "Acesso, acessibilidade, respeito e segurança são importantes para inclusão de diferentes corpos e habilidades."]
         ], "Prática física deve respeitar condições individuais; busque orientação de profissionais de saúde quando necessário.")
     ]
@@ -2120,7 +2120,7 @@ Object.assign(starterLibrary, {
         [
           ["TIC e comunicação digital", "Tecnologias da informação e comunicação conectam pessoas e serviços por redes e dispositivos; acesso e habilidades são desiguais."],
           ["Meios e linguagem digital", "Cada meio oferece formatos, limites e recursos próprios; textos digitais podem combinar escrita, som, imagem e interação."],
-          ["Redes sociais e cultura digital", "Plataformas organizam circulação de conteúdo por regras, interfaces e sistemas de recomendação."],
+          ["Redes sociais e cultura digital", "Plataformas organizam a circulação de conteúdo por regras, interfaces e sistemas de recomendação. Esses mecanismos afetam o que cada pessoa vê, mas não determinam sozinhos todas as escolhas ou opiniões."],
           ["Publicidade e mídia", "Mensagens publicitárias buscam influenciar escolhas; analise público-alvo, evidências, interesses e estratégias."]
         ], "Considere quem produz, financia e distribui uma mensagem e quais dados ela apresenta."),
       curriculumPart("Cultura digital", "Desinformação e impacto social",
@@ -2145,7 +2145,7 @@ Object.assign(starterLibrary, {
           ["Desenvolvimento 1 e 2", "Cada parágrafo deve sustentar uma parte do raciocínio com explicação, evidências ou repertório pertinente."],
           ["Argumentação e repertório", "Use repertório sociocultural relevante, explicado e conectado ao tema; uma citação isolada não substitui análise."],
           ["Conclusão e intervenção", "Retome o encaminhamento do texto e apresente uma proposta de intervenção viável, detalhada e ligada ao problema."],
-          ["Projeto de texto", "Planeje a sequência de ideias, evite tangenciar ou fugir do tema e reserve tempo para revisar."]
+          ["Projeto de texto", "Antes de redigir, planeje uma sequência de ideias que responda ao recorte temático; cada parágrafo deve cumprir uma função. Reserve tempo para revisar se argumentos e conclusão mantêm esse foco."]
         ], "A proposta deve decorrer dos argumentos apresentados, não surgir desconectada na conclusão."),
       curriculumPart("Competências do ENEM", "As cinco competências da redação",
         "A avaliação da redação considera domínio da escrita formal, compreensão do tema, organização argumentativa, coesão e proposta de intervenção.",
@@ -2154,7 +2154,7 @@ Object.assign(starterLibrary, {
           ["Competência 2", "Compreender a proposta e desenvolver o tema dentro dos limites estruturais do texto dissertativo-argumentativo."],
           ["Competência 3", "Selecionar, relacionar, organizar e interpretar informações, fatos, opiniões e argumentos em defesa de um ponto de vista."],
           ["Competência 4", "Demonstrar conhecimento dos mecanismos linguísticos necessários para construir a argumentação e a coesão."],
-          ["Competência 5", "Elaborar proposta de intervenção relacionada ao problema e respeitosa aos direitos humanos."]
+          ["Competência 5", "A proposta de intervenção deve responder ao problema discutido e respeitar os direitos humanos. Explique quem pode agir, o que fará, como e para qual finalidade, acrescentando detalhe pertinente."]
         ], "As competências se relacionam; uma boa redação precisa integrar conteúdo, organização e linguagem."),
       curriculumPart("Técnicas de escrita", "Argumentação, coesão e revisão",
         "Escrever bem exige desenvolver ideias e conectar evidências ao argumento central. Revisões ajudam a corrigir problemas de clareza, estrutura e convenções.",
@@ -2162,7 +2162,7 @@ Object.assign(starterLibrary, {
           ["Dados, citações e repertório", "Apresente fontes e explique a relação de dados, citações ou conhecimentos históricos e culturais com a tese."],
           ["Conectivos e parágrafos", "Conectivos expressam causa, contraste e conclusão; cada parágrafo precisa ter uma função e se ligar logicamente aos demais."],
           ["Proposta de intervenção", "Indique agente, ação, meio ou modo, finalidade ou efeito e detalhamento, respeitando os direitos humanos."],
-          ["Fuga e tangenciamento", "Mantenha o foco no recorte temático e responda ao problema proposto em todos os parágrafos."],
+          ["Fuga e tangenciamento", "Fuga ocorre quando o texto abandona o tema; tangenciamento é tratar apenas de assunto próximo, sem responder ao recorte pedido. Confira se cada parágrafo contribui para abordar o problema proposto."],
           ["Revisão e tempo", "Reserve tempo para verificar concordância, regência, pontuação, legibilidade e se a conclusão completa a proposta."]
         ], "A intervenção deve ser específica e viável, sem violar direitos humanos."),
       curriculumPart("Temas para treinar", "Repertório para temas sociais",
@@ -2171,7 +2171,7 @@ Object.assign(starterLibrary, {
           ["Educação, saúde e desigualdade", "Treine temas sobre educação no Brasil, saúde pública, desigualdade social, racismo, violência e segurança pública."],
           ["Ambiente e tecnologia", "Discuta meio ambiente, mudanças climáticas, tecnologia e inteligência artificial, redes sociais e desinformação."],
           ["Direitos e grupos sociais", "Estude saúde mental, inclusão de pessoas com deficiência, direitos de idosos, crianças e adolescentes e desafios das populações indígenas."],
-          ["Trabalho e cidade", "Explore desigualdade de gênero, trabalho e desemprego e mobilidade urbana com dados e contexto."],
+          ["Trabalho e cidade", "Temas de trabalho e cidade podem envolver desigualdade de gênero, desemprego e mobilidade urbana. Use dados contextualizados para explicar quem é afetado e por quais mecanismos, em vez de apenas listar problemas."],
           ["Cultura e história", "Ao discutir cultura, relacione práticas e memórias ao contexto histórico e às condições de preservação e acesso. Use referências pertinentes e explique como sustentam a tese, sem generalizações."]
         ], "Construa repertório com fontes verificáveis e use-o para explicar o tema, não apenas para ornamentar o texto.")
     ]
@@ -2271,7 +2271,7 @@ Object.assign(starterLibrary, {
         [
           ["Variação regional e social", "Pronúncia, vocabulário e construções variam entre regiões e grupos; diversidade linguística é parte da cultura."],
           ["Registro formal e informal", "Escolhas linguísticas dependem do interlocutor, objetivo, gênero e contexto. Adequação não significa que exista uma única forma legítima de falar."],
-          ["Mudança histórica", "A língua se transforma ao longo do tempo; palavras e regras podem mudar de uso e significado."],
+          ["Mudança histórica", "A língua se transforma ao longo do tempo: palavras ganham ou perdem sentidos e usos se alteram. Compare textos de épocas diferentes sem tratar uma mudança, por si só, como erro ou decadência."]
           ["Preconceito linguístico", "Desvalorizar falantes por sua variedade reforça desigualdades e confunde diferença linguística com falta de inteligência."],
           ["Norma-padrão", "Convenções formais são exigidas em certos gêneros e avaliações; aprender essas convenções amplia repertório sem apagar outras variedades."]
         ], "Identifique quem fala, para quem, com qual objetivo e em que contexto antes de avaliar a adequação de uma forma.")
@@ -2426,7 +2426,7 @@ Object.assign(starterLibrary, {
         "Conectores organizam textos e sinalizam causa, oposição, concessão e conclusão. Reconhecê-los ajuda a reconstruir a tese.",
         [
           ["Adição e contraste", "Además acrescenta uma ideia; pero e sin embargo introduzem contraste. Em “Quería salir, pero llovía”, a conjunção contrapõe vontade e situação."],
-          ["Causa e consequência", "Porque e ya que podem introduzir causa; por eso e por lo tanto podem indicar consequência."],
+          ["Causa e consequência", "Porque e ya que podem introduzir uma causa; por eso e por lo tanto costumam indicar consequência. Em “No salí porque llovía”, a chuva explica a decisão; em “Llovía, por eso no salí”, a ordem é causa seguida de resultado."],
           ["Concessão e condição", "Aunque introduz concessão; si pode apresentar condição. Leia o modo verbal e a relação entre as orações."],
           ["Opinião e evidência", "Diferencie a opinião do autor, os dados citados e as posições atribuídas a outras pessoas. Pergunte qual evidência sustenta uma afirmação e se a fonte é adequada ao tema."],
           ["Estratégia de leitura", "Localize a tese, os conectores, exemplos e conclusão e confirme a interpretação com evidências do texto."]
@@ -2514,11 +2514,11 @@ Object.assign(starterLibrary, {
       curriculumPart("Práticas corporais", "Esportes, regras, tática e cooperação",
         "Esportes são práticas culturais com regras e objetivos variados. A análise pode considerar habilidades, estratégias, inclusão e relações sociais.",
         [
-          ["Esportes de invasão", "Equipes avançam em espaço compartilhado para criar oportunidades de pontuação e defender sua meta."],
+          ["Esportes de invasão", "Nos esportes de invasão, equipes avançam em espaço compartilhado para criar oportunidades de pontuação e defender sua meta. Futebol e basquete são exemplos; ocupar espaços e cooperar são decisões táticas."],
           ["Esportes de rede e parede", "Jogadores enviam objetos ao campo adversário ou contra uma parede, com regras próprias de alternância."],
           ["Esportes de marca e precisão", "Em esportes de marca, compare resultados por tempo, distância ou altura, como numa corrida; nos de precisão, observe a proximidade de um alvo. As regras definem como medir o desempenho."],
           ["Tática e tomada de decisão", "Leitura do espaço, antecipação, cooperação e escolha de ações podem ser mais importantes que força isolada."],
-          ["Regras e inclusão", "Regras podem ser adaptadas para ampliar participação sem apagar a lógica e os objetivos da prática."]
+          ["Regras e inclusão", "Regras podem ser adaptadas para ampliar a participação sem apagar a lógica e os objetivos da prática. Alterar tamanho da equipe ou equipamento pode facilitar acesso, preservando o desafio central."]
         ], "Diferencie técnica individual, estratégia coletiva e condições de acesso à modalidade."),
       curriculumPart("Práticas corporais", "Ginásticas, lutas, jogos e brincadeiras",
         "Práticas corporais incluem modalidades com histórias e sentidos diversos. Contextualizar suas origens ajuda a evitar estereótipos.",
@@ -2555,10 +2555,10 @@ Object.assign(starterLibrary, {
         "Serviços digitais coletam e processam dados em diferentes etapas. Compreender consentimento, finalidade e riscos ajuda a avaliar práticas de plataformas.",
         [
           ["Dados pessoais", "Informações que identificam ou podem identificar alguém merecem proteção e uso compatível com uma finalidade legítima."],
-          ["Rastros digitais", "Buscas, localização, cliques e cadastros podem gerar perfis, inclusive quando dados são combinados."],
+          ["Rastros digitais", "Buscas, localização, cliques e cadastros podem gerar perfis, inclusive quando dados de diferentes serviços são combinados. Por isso, avalie permissões, configurações e quem pode acessar as informações."],
           ["Consentimento e transparência", "Avisos devem explicar que dados são coletados, para quê, por quanto tempo e com quem são compartilhados."],
           ["Segurança e golpes", "Senhas únicas, autenticação em dois fatores e verificação de links reduzem alguns riscos, mas não eliminam todo abuso."],
-          ["Direitos e responsabilidade", "Privacidade, acesso, correção e proteção de dados envolvem direitos, deveres e regras legais."]
+          ["Direitos e responsabilidade", "Privacidade, acesso, correção e proteção de dados envolvem direitos, deveres e regras legais. Antes de compartilhar informação pessoal, considere a finalidade, o consentimento e os possíveis riscos."]
         ], "Antes de fornecer dados, pergunte se são necessários e qual uso foi informado."),
       curriculumPart("Cultura digital", "Algoritmos, inteligência artificial e vieses",
         "Algoritmos processam dados segundo regras; sistemas de inteligência artificial aprendem padrões de conjuntos de dados e podem reproduzir limitações desses dados.",
@@ -2584,16 +2584,16 @@ Object.assign(starterLibrary, {
           ["Automação de tarefas", "Sistemas podem substituir algumas tarefas, complementar outras e criar novas demandas de qualificação."],
           ["Plataformas de trabalho", "Aplicativos conectam clientes e trabalhadores, mas regras de remuneração, avaliação e proteção variam."],
           ["Vigilância e gestão", "Métricas digitais podem acompanhar produtividade e distribuir tarefas, afetando autonomia e privacidade."],
-          ["Desigualdade e formação", "A transição tecnológica distribui custos e oportunidades de modo desigual entre setores e grupos."],
+          ["Desigualdade e formação", "A transição tecnológica distribui custos e oportunidades de modo desigual entre setores e grupos. Algumas tarefas mudam ou desaparecem enquanto outras surgem, exigindo acesso a formação e proteção durante a transição."],
           ["Análise de impactos", "Compare produtividade, qualidade do emprego, remuneração, segurança, acesso e distribuição dos ganhos."]
         ], "Tecnologia não determina sozinha o resultado social; instituições e decisões coletivas também importam."),
       curriculumPart("Comunicação e mídia", "Publicidade, persuasão e economia da atenção",
         "Mensagens persuasivas combinam linguagem, imagem, dados e estratégias de circulação para captar atenção e influenciar decisões.",
         [
-          ["Público-alvo", "Anúncios adaptam linguagem e canais a públicos definidos, às vezes usando dados comportamentais."],
+          ["Público-alvo", "Anúncios adaptam linguagem, imagens e canais a públicos definidos; às vezes usam dados comportamentais para direcionamento. Observe a quem a mensagem parece falar e que ação pretende provocar."],
           ["Apelos persuasivos", "Autoridade, emoção, urgência, humor e prova social são recursos que precisam ser avaliados criticamente."],
           ["Conteúdo patrocinado", "Publicidade nativa pode parecer conteúdo editorial; identificação e transparência ajudam a reconhecer o interesse comercial."],
-          ["Economia da atenção", "Plataformas podem competir pelo tempo do usuário e favorecer conteúdos capazes de gerar interação."],
+          ["Economia da atenção", "Plataformas podem competir pelo tempo do usuário e favorecer conteúdos capazes de gerar interação. Recomendações e notificações influenciam a circulação; observe também quem se beneficia desse modelo."]
           ["Leitura crítica", "Diferencie informação verificável, opinião, publicidade e chamada para ação. Confira autoria, evidências e contexto antes de aceitar uma afirmação ou compartilhar uma mensagem."]
         ], "Pergunte quem financia a mensagem e que ação espera de quem a recebe."),
       curriculumPart("Comunicação e cidadania", "Desinformação, checagem e circulação de conteúdo",
@@ -2601,7 +2601,7 @@ Object.assign(starterLibrary, {
         [
           ["Origem e autoria", "Localize a publicação original e identifique quem produziu o conteúdo e com que experiência ou interesse."],
           ["Data e contexto", "Conteúdo antigo ou verdadeiro pode ser apresentado fora de contexto para sustentar uma afirmação enganosa."],
-          ["Evidência e fonte", "Abra links, procure documentos e dados originais e compare com fontes independentes e confiáveis."],
+          ["Evidência e fonte", "Para verificar uma afirmação, abra os links, procure documentos e dados originais e compare com fontes independentes e confiáveis. Confira autoria, data e contexto antes de concluir que a informação foi confirmada."]
           ["Imagens e vídeos", "Buscas reversas e quadros-chave podem ajudar a encontrar a origem, mas resultados precisam ser conferidos."],
           ["Compartilhamento responsável", "Se não for possível confirmar, não amplifique; corrija com evidências sem repetir desnecessariamente o boato."]
         ], "Verifique a afirmação original, não apenas manchetes, capturas de tela ou comentários sobre ela.")
@@ -2613,18 +2613,18 @@ Object.assign(starterLibrary, {
         "Antes de escrever, identifique o tema e o problema específico solicitado. Um plano breve ajuda a manter foco e construir uma progressão argumentativa.",
         [
           ["Tema e recorte", "Tema é o assunto amplo; recorte delimita o aspecto solicitado. Se o tema é tecnologia na educação, discutir acesso desigual à internet nas escolas é um recorte mais específico."],
-          ["Palavras de comando", "Analise verbos e expressões do enunciado para identificar o problema e os limites da abordagem."],
+          ["Palavras de comando", "Analise verbos e expressões do enunciado para identificar o problema e os limites da abordagem. Circule o tema, o recorte e o comando antes de escolher argumentos."],
           ["Tese", "A tese responde ao recorte com uma posição clara e discutível, que será sustentada por razões. Para o tema de descarte eletrônico, por exemplo, pode apontar falta de coleta e de informação como obstáculos."],
-          ["Projeto de texto", "Organize introdução, argumentos e conclusão antes de redigir; cada parágrafo deve cumprir uma função."],
-          ["Checagem de foco", "Ao revisar, confira se todos os parágrafos respondem ao tema e se a conclusão decorre da discussão."]
+          ["Projeto de texto", "Organize introdução, argumentos e conclusão antes de redigir; cada parágrafo deve cumprir uma função no raciocínio. Essa sequência ajuda a evitar repetição e a ligar evidências à tese."],
+          ["Checagem de foco", "Ao revisar, confira se todos os parágrafos respondem ao recorte do tema e se a conclusão decorre da discussão. Remova trechos apenas relacionados ao assunto, mas que não sustentam a resposta."]
         ], "Uma introdução bem escrita não compensa uma redação que discute outro recorte."),
       curriculumPart("Argumentação", "Tese, evidências e desenvolvimento de argumentos",
         "Um argumento eficaz combina afirmação, justificativa e evidência pertinente. Dados ou citações precisam ser interpretados e conectados à tese.",
         [
-          ["Afirmação", "Apresente a ideia central do parágrafo e mostre como ela contribui para responder ao tema."],
-          ["Justificativa", "Explique mecanismos, causas ou consequências; não deixe a relação entre ideia e tese implícita."],
+          ["Afirmação", "Apresente a ideia central do parágrafo em uma frase clara e mostre como ela responde ao tema. Em seguida, desenvolva a afirmação com razões e evidências, em vez de repeti-la com outras palavras."],
+          ["Justificativa", "Explique mecanismos, causas ou consequências que sustentam a afirmação; não deixe a relação com a tese implícita. Pergunte “como?” ou “por quê?” e responda com raciocínio e evidência pertinente."],
           ["Evidências", "Exemplos históricos, dados e repertório podem sustentar o raciocínio quando são confiáveis e relevantes."],
-          ["Contra-argumento", "Reconhecer uma objeção pertinente pode fortalecer a análise se ela for respondida com razões."],
+          ["Contra-argumento", "Reconhecer uma objeção pertinente pode fortalecer a análise se ela for respondida com razões. Apresente a posição alternativa de forma justa e explique por que ela não invalida a tese ou exige uma ressalva."],
           ["Progressão", "Cada parágrafo deve acrescentar uma etapa do raciocínio, evitando repetição ou afirmações sem apoio."]
         ], "Não use um dado apenas como decoração: explique o que ele demonstra e quais são seus limites."),
       curriculumPart("Competências do ENEM", "Proposta de intervenção completa e direitos humanos",
@@ -2632,7 +2632,7 @@ Object.assign(starterLibrary, {
         [
           ["Agente", "Identifique quem pode agir, como poder público, escola, comunidade ou organização, de acordo com sua competência."],
           ["Ação e meio", "Ação diz o que será feito; meio explica como. “A prefeitura instalará pontos de coleta por meio de parcerias com escolas” é mais específico que apenas “conscientizar a população”."],
-          ["Finalidade", "Explique qual resultado a proposta busca e como se relaciona à causa ou consequência debatida."],
+          ["Finalidade", "Explique qual resultado a proposta busca e como ele se relaciona à causa ou consequência debatida. Uma finalidade clara mostra por que a ação escolhida pode ajudar a enfrentar o problema."]
           ["Detalhamento", "Acrescente informação concreta sobre público, etapas, recursos ou acompanhamento, quando pertinente."],
           ["Direitos humanos", "A proposta não pode defender violência, discriminação ou supressão de direitos; avalie efeitos sobre grupos afetados."]
         ], "A intervenção deve ser viável, específica e coerente com a argumentação desenvolvida."),
